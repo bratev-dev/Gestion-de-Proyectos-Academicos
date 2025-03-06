@@ -8,13 +8,14 @@ package com.mycompany.gestionproyectosacademicos.presentacion;
  *
  * @author bryan
  */
-public class GUIMenu extends javax.swing.JFrame {
+public class GUICoordinatorProfile extends javax.swing.JFrame {
 
     /**
      * Creates new form GUIMenu
      */
-    public GUIMenu() {
+    public GUICoordinatorProfile() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -26,18 +27,23 @@ public class GUIMenu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        jpFondo = new javax.swing.JPanel();
+        jpIzq = new javax.swing.JPanel();
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(960, 540));
+        setPreferredSize(new java.awt.Dimension(960, 540));
+        setSize(new java.awt.Dimension(960, 540));
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jpFondo.setBackground(new java.awt.Color(255, 255, 255));
+        jpFondo.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jpIzq.setBackground(new java.awt.Color(19, 45, 70));
+        jpIzq.setLayout(new javax.swing.BoxLayout(jpIzq, javax.swing.BoxLayout.LINE_AXIS));
+        jpFondo.add(jpIzq, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 40, 237, 450));
+
+        getContentPane().add(jpFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 540));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -59,24 +65,27 @@ public class GUIMenu extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GUIMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GUICoordinatorProfile.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GUIMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GUICoordinatorProfile.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GUIMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GUICoordinatorProfile.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GUIMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GUICoordinatorProfile.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new GUIMenu().setVisible(true);
+                new GUICoordinatorProfile().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel jpFondo;
+    private javax.swing.JPanel jpIzq;
     // End of variables declaration//GEN-END:variables
 }
