@@ -4,7 +4,7 @@
  */
 package com.mycompany.gestionproyectosacademicos.main;
 
-import com.mycompany.gestionproyectosacademicos.presentacion.GUICoordinatorProfile;
+import com.mycompany.gestionproyectosacademicos.presentacion.GUICoordinator;
 import javax.swing.JFrame;
 
 /**
@@ -22,7 +22,7 @@ public class Main {
         instance.setVisible(true);
         */
 
-        GUICoordinatorProfile instance = new GUICoordinatorProfile();
+        GUICoordinator instance = new GUICoordinator();
         instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
         instance.setVisible(true);
     }
