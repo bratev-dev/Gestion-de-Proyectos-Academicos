@@ -5,6 +5,7 @@
 package com.mycompany.gestionproyectosacademicos.main;
 
 import com.mycompany.gestionproyectosacademicos.presentacion.GUICoordinator;
+import com.mycompany.gestionproyectosacademicos.presentacion.GUILogin;
 import javax.swing.JFrame;
 
 /**
@@ -24,6 +25,9 @@ public class Main {
 
         GUICoordinator instance = new GUICoordinator();
         instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        instance.setVisible(true);
+        instance.setVisible(false);
+        
+        GUILogin login = new GUILogin();
+        login.setVisible(true);
     }
 }

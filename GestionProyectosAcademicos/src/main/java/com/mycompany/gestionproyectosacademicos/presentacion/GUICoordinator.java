@@ -47,8 +47,6 @@ public class GUICoordinator extends javax.swing.JFrame {
         btnConnections = new javax.swing.JButton();
         btnCloseSession = new javax.swing.JButton();
         pnlDer = new javax.swing.JPanel();
-        pnlPerfil = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
         pnlRequests = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
@@ -65,6 +63,8 @@ public class GUICoordinator extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         pnlConnections = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
+        pnlPerfil = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(960, 540));
@@ -83,6 +83,7 @@ public class GUICoordinator extends javax.swing.JFrame {
         lblCoordinator.setText("Coordinador");
 
         sepUserCoord.setBackground(new java.awt.Color(155, 70, 47));
+        sepUserCoord.setForeground(new java.awt.Color(155, 70, 47));
 
         btnPerfil.setBackground(new java.awt.Color(98, 114, 129));
         btnPerfil.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -220,12 +221,6 @@ public class GUICoordinator extends javax.swing.JFrame {
         pnlDer.setBackground(new java.awt.Color(255, 255, 255));
         pnlDer.setLayout(new java.awt.CardLayout());
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
-        jLabel2.setText("Perfil");
-        pnlPerfil.add(jLabel2);
-
-        pnlDer.add(pnlPerfil, "card3");
-
         pnlRequests.setLayout(new java.awt.BorderLayout());
         pnlRequests.add(jPanel1, java.awt.BorderLayout.PAGE_END);
         pnlRequests.add(jPanel2, java.awt.BorderLayout.LINE_END);
@@ -273,6 +268,12 @@ public class GUICoordinator extends javax.swing.JFrame {
         pnlConnections.add(jLabel5);
 
         pnlDer.add(pnlConnections, "card7");
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
+        jLabel2.setText("Perfil");
+        pnlPerfil.add(jLabel2);
+
+        pnlDer.add(pnlPerfil, "card3");
 
         getContentPane().add(pnlDer, java.awt.BorderLayout.CENTER);
 
