@@ -6,7 +6,14 @@ package com.mycompany.gestionproyectosacademicos.presentacion;
 
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import javax.swing.border.EmptyBorder;
+import javax.swing.table.JTableHeader;
 import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.table.DefaultTableCellRenderer;
+
 
 /**
  *
@@ -47,14 +54,13 @@ public class GUICoordinator extends javax.swing.JFrame {
         btnConnections = new javax.swing.JButton();
         btnCloseSession = new javax.swing.JButton();
         pnlDer = new javax.swing.JPanel();
+        pnlPerfil = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
         pnlRequests = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
-        jPanel5 = new javax.swing.JPanel();
+        lblSolicitudes = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblSolicitudes = new javax.swing.JTable();
         pnlMonitoring = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         pnlAssingment = new javax.swing.JPanel();
@@ -63,8 +69,6 @@ public class GUICoordinator extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         pnlConnections = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        pnlPerfil = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(960, 540));
@@ -86,7 +90,7 @@ public class GUICoordinator extends javax.swing.JFrame {
         sepUserCoord.setForeground(new java.awt.Color(155, 70, 47));
 
         btnPerfil.setBackground(new java.awt.Color(98, 114, 129));
-        btnPerfil.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnPerfil.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         btnPerfil.setForeground(new java.awt.Color(255, 255, 255));
         btnPerfil.setText("Perfil");
         btnPerfil.setBorder(null);
@@ -97,7 +101,7 @@ public class GUICoordinator extends javax.swing.JFrame {
         });
 
         btnRequests.setBackground(new java.awt.Color(98, 114, 129));
-        btnRequests.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnRequests.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         btnRequests.setForeground(new java.awt.Color(255, 255, 255));
         btnRequests.setText("Solicitudes");
         btnRequests.setBorder(null);
@@ -108,7 +112,7 @@ public class GUICoordinator extends javax.swing.JFrame {
         });
 
         btnMonitoring.setBackground(new java.awt.Color(98, 114, 129));
-        btnMonitoring.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnMonitoring.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         btnMonitoring.setForeground(new java.awt.Color(255, 255, 255));
         btnMonitoring.setText("Monitoreo");
         btnMonitoring.setBorder(null);
@@ -119,7 +123,7 @@ public class GUICoordinator extends javax.swing.JFrame {
         });
 
         btnAssignment.setBackground(new java.awt.Color(98, 114, 129));
-        btnAssignment.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnAssignment.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         btnAssignment.setForeground(new java.awt.Color(255, 255, 255));
         btnAssignment.setText("Asignación");
         btnAssignment.setBorder(null);
@@ -130,7 +134,7 @@ public class GUICoordinator extends javax.swing.JFrame {
         });
 
         btnReports.setBackground(new java.awt.Color(98, 114, 129));
-        btnReports.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnReports.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         btnReports.setForeground(new java.awt.Color(255, 255, 255));
         btnReports.setText("Reportes");
         btnReports.setBorder(null);
@@ -141,7 +145,7 @@ public class GUICoordinator extends javax.swing.JFrame {
         });
 
         btnConnections.setBackground(new java.awt.Color(98, 114, 129));
-        btnConnections.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnConnections.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         btnConnections.setForeground(new java.awt.Color(255, 255, 255));
         btnConnections.setText("Conexiones");
         btnConnections.setBorder(null);
@@ -211,7 +215,7 @@ public class GUICoordinator extends javax.swing.JFrame {
                 .addComponent(btnReports, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnConnections, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 115, Short.MAX_VALUE)
                 .addComponent(btnCloseSession, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(19, 19, 19))
         );
@@ -221,27 +225,64 @@ public class GUICoordinator extends javax.swing.JFrame {
         pnlDer.setBackground(new java.awt.Color(255, 255, 255));
         pnlDer.setLayout(new java.awt.CardLayout());
 
-        pnlRequests.setLayout(new java.awt.BorderLayout());
-        pnlRequests.add(jPanel1, java.awt.BorderLayout.PAGE_END);
-        pnlRequests.add(jPanel2, java.awt.BorderLayout.LINE_END);
-        pnlRequests.add(jPanel3, java.awt.BorderLayout.WEST);
-        pnlRequests.add(jPanel5, java.awt.BorderLayout.PAGE_START);
-        pnlRequests.add(jPanel4, java.awt.BorderLayout.PAGE_START);
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
+        jLabel2.setText("Perfil");
+        pnlPerfil.add(jLabel2);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        pnlDer.add(pnlPerfil, "card3");
+
+        pnlRequests.setLayout(new java.awt.BorderLayout());
+
+        lblSolicitudes.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
+        lblSolicitudes.setText("Solicitudes de Proyectos");
+        lblSolicitudes.setBorder(new EmptyBorder(70, 50, 20, 20)); // Margen superior, izquierdo, inferior, derecho
+        pnlRequests.add(lblSolicitudes, java.awt.BorderLayout.NORTH);
+
+        jPanel4.setLayout(new java.awt.BorderLayout());
+
+        tblSolicitudes.setBackground(new java.awt.Color(232, 232, 232));
+        tblSolicitudes.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        tblSolicitudes.setForeground(new java.awt.Color(40, 40, 40));
+        tblSolicitudes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {"JuanCompanies", "Muñecas Inflables", "Ver más"},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Empresa", "Proyecto", "Opciones"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        // Personalizar el contenido de la tabla
+        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+        renderer.setHorizontalAlignment(JLabel.CENTER); // Centrar el contenido
 
-        pnlRequests.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+        // Aplicar el renderizador a todas las columnas
+        for (int i = 0; i < tblSolicitudes.getColumnCount(); i++) {
+            tblSolicitudes.getColumnModel().getColumn(i).setCellRenderer(renderer);
+        }
+
+        // Personalizar el encabezado de la tabla
+        JTableHeader header = tblSolicitudes.getTableHeader();
+        header.setBackground(new Color(157, 157, 157)); // Color de fondo del encabezado
+        header.setForeground(new Color(255, 255, 255)); // Color del texto del encabezado
+        header.setFont(new Font("Tahoma", Font.BOLD, 24)); // Fuente del encabezado
+
+        // Ajustar la altura del encabezado para que coincida con las filas
+        header.setPreferredSize(new Dimension(header.getPreferredSize().width, 80)); // Ancho automático, altura establecida manualmente
+        tblSolicitudes.setRowHeight(70);
+        DefaultTableCellRenderer headerRenderer = (DefaultTableCellRenderer) header.getDefaultRenderer();
+        headerRenderer.setHorizontalAlignment(JLabel.CENTER);   // Centrar el contenido
+        tblSolicitudes.setShowHorizontalLines(true);
+        tblSolicitudes.setShowVerticalLines(false);
+        jScrollPane1.setViewportView(tblSolicitudes);
+        jScrollPane1.setBorder(new EmptyBorder(20,50,50,50)); // Margen superior, izquierdo, inferior, derecho
+        jPanel4.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+
+        jPanel4.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+
+        pnlRequests.add(jPanel4, java.awt.BorderLayout.CENTER);
 
         pnlDer.add(pnlRequests, "card2");
 
@@ -268,12 +309,6 @@ public class GUICoordinator extends javax.swing.JFrame {
         pnlConnections.add(jLabel5);
 
         pnlDer.add(pnlConnections, "card7");
-
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
-        jLabel2.setText("Perfil");
-        pnlPerfil.add(jLabel2);
-
-        pnlDer.add(pnlPerfil, "card3");
 
         getContentPane().add(pnlDer, java.awt.BorderLayout.CENTER);
 
@@ -387,15 +422,11 @@ public class GUICoordinator extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JPanel jpIzq;
     private javax.swing.JLabel lblCoordinator;
+    private javax.swing.JLabel lblSolicitudes;
     private javax.swing.JLabel lblUser;
     private javax.swing.JPanel pnlAssingment;
     private javax.swing.JPanel pnlConnections;
@@ -405,5 +436,6 @@ public class GUICoordinator extends javax.swing.JFrame {
     private javax.swing.JPanel pnlReports;
     private javax.swing.JPanel pnlRequests;
     private javax.swing.JSeparator sepUserCoord;
+    private javax.swing.JTable tblSolicitudes;
     // End of variables declaration//GEN-END:variables
 }

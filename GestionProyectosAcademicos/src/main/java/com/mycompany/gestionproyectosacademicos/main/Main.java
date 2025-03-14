@@ -25,9 +25,9 @@ public class Main {
 
         GUICoordinator instance = new GUICoordinator();
         instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        instance.setVisible(false);
+        instance.setVisible(true);
         
         GUILogin login = new GUILogin();
-        login.setVisible(true);
+        login.setVisible(false);
     }
 }
