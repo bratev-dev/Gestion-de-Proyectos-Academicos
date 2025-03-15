@@ -10,7 +10,7 @@ import javax.swing.JButton;
 
 /**
  *
- * @author bryan
+ * @author bratev
  */
 public class GUICoordinator extends javax.swing.JFrame {
     // Colores personalizados

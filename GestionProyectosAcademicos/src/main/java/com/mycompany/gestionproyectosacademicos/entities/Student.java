@@ -8,15 +8,15 @@ package com.mycompany.gestionproyectosacademicos.entities;
 public class Student {
    
     private int id;
-    private String nombre;
-    private String semestre;
-    private String habilidades;
+    private String name;
+    private String semester;
+    private String skills;
     
-    public Student(int id, String nombre, String semestre, String habilidades){
+    public Student(int id, String name, String semester, String skills){
         this. id = id;
-        this.nombre = nombre;
-        this.semestre = semestre;
-        this.habilidades = habilidades;
+        this.name = name;
+        this.semester = semester;
+        this.skills = skills;
     }
     
     //Getters y Setters
@@ -27,25 +27,25 @@ public class Student {
         this.id = p_id;
     }
     
-    public String getNombre(){
-        return nombre;
+    public String getName(){
+        return name;
     }
-    public void setNombre(String p_nombre){
-        this.nombre = p_nombre;
-    }
-    
-    public String getSemestre(){
-        return semestre;
-    }
-    public void setSemestre(String p_semestre){
-        this.semestre = p_semestre;
+    public void setName(String p_name){
+        this.name = p_name;
     }
     
-    public String getHabilidades(){
-        return habilidades;
+    public String getSemester(){
+        return semester;
     }
-    public void setHabilidades(String p_habilidades){
-        this.habilidades = p_habilidades;
+    public void setSemester(String p_semester){
+        this.semester = p_semester;
+    }
+    
+    public String getSkills(){
+        return skills;
+    }
+    public void setSkills(String p_skills){
+        this.skills = p_skills;
     }
     
 }
