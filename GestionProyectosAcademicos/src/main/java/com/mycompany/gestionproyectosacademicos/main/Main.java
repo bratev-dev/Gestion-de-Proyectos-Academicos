@@ -4,6 +4,9 @@
  */
 package com.mycompany.gestionproyectosacademicos.main;
 
+import com.mycompany.gestionproyectosacademicos.presentation.GUICoordinator;
+import com.mycompany.gestionproyectosacademicos.presentation.GUILogin;
+
 import com.mycompany.gestionproyectosacademicos.access.Factory;
 import com.mycompany.gestionproyectosacademicos.access.IUserRepository;
 import com.mycompany.gestionproyectosacademicos.access.UserArrayRepository;
@@ -28,21 +31,16 @@ public class Main {
         instance.setVisible(true);
         */
       
-        /* RAMA JONATHAN
         GUICoordinator instance = new GUICoordinator();
         instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
         instance.setVisible(true);
-        */
+        
       
-        /* RAMA BRATEV
-        GUILogin login = new GUILogin();
-        login.setVisible(false);
-
-        IUserRepository userRepo = new UserArrayRepository(); // Usando datos en memoria
+        /*IUserRepository userRepo = new UserArrayRepository(); // Usando datos en memoria
         AuthService authService = new AuthService(userRepo);
 
         GUILogin loginGUI = new GUILogin(authService);
-        loginGUI.setVisible(true);
-        */
+        loginGUI.setVisible(true);*/
+       
     }
 }
