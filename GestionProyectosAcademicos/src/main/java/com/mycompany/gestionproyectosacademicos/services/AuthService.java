@@ -4,7 +4,7 @@ import com.mycompany.gestionproyectosacademicos.entities.User;
 import com.mycompany.gestionproyectosacademicos.access.IUserRepository;
 //import com.mycompany.gestionproyectosacademicos.presentacion.GUIAdmin;
 //import com.mycompany.gestionproyectosacademicos.presentacion.GUICompany;
-import com.mycompany.gestionproyectosacademicos.presentacion.GUICoordinator;
+import com.mycompany.gestionproyectosacademicos.presentation.GUICoordinator;
 //import com.mycompany.gestionproyectosacademicos.presentacion.GUIStudent;
 import javax.swing.JFrame;
 
