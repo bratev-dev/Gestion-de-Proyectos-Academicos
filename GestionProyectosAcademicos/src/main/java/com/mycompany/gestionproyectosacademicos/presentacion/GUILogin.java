@@ -28,8 +28,8 @@ public class GUILogin extends javax.swing.JFrame {
         setLocationRelativeTo(null); // Para centrar la ventana
         this.authService = new AuthService(new UserArrayRepository());
         // Agregar placeholders después de que se inicialicen los componentes
-        agregarPlaceholder(txtEmail, "Ingrese su correo");
-        agregarPlaceholder(txtPassword, "Ingrese su contraseña");
+        agregarPlaceholder(txtEmail, "Ingrese su correo!");
+        agregarPlaceholder(txtPassword, "Ingrese su contraseña!");
     }
     
     
