@@ -4,8 +4,13 @@
  */
 package com.mycompany.gestionproyectosacademicos.main;
 
+import com.mycompany.gestionproyectosacademicos.access.Factory;
+import com.mycompany.gestionproyectosacademicos.access.IUserRepository;
+import com.mycompany.gestionproyectosacademicos.access.UserArrayRepository;
 import com.mycompany.gestionproyectosacademicos.presentacion.GUICoordinator;
 import com.mycompany.gestionproyectosacademicos.presentacion.GUILogin;
+import com.mycompany.gestionproyectosacademicos.services.AuthService;
+import com.mycompany.gestionproyectosacademicos.services.UserServices;
 import javax.swing.JFrame;
 
 /**
@@ -22,12 +27,10 @@ public class Main {
         instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
         instance.setVisible(true);
         */
+        IUserRepository userRepo = new UserArrayRepository(); // Usando datos en memoria
+        AuthService authService = new AuthService(userRepo);
 
-        GUICoordinator instance = new GUICoordinator();
-        instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        instance.setVisible(false);
-        
-        GUILogin login = new GUILogin();
-        login.setVisible(true);
+        GUILogin loginGUI = new GUILogin(authService);
+        loginGUI.setVisible(true);
     }
 }
