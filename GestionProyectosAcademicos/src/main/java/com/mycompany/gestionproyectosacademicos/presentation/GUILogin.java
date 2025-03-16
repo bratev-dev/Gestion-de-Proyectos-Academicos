@@ -4,7 +4,11 @@
  */
 package com.mycompany.gestionproyectosacademicos.presentation;
 
+import com.mycompany.gestionproyectosacademicos.access.UserArrayRepository;
 import com.mycompany.gestionproyectosacademicos.infra.Messages;
+import com.mycompany.gestionproyectosacademicos.entities.User;
+import com.mycompany.gestionproyectosacademicos.services.AuthService;
+import com.mycompany.gestionproyectosacademicos.services.UserServices;
 import java.awt.Color;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
@@ -12,18 +16,20 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class GUILogin extends javax.swing.JFrame {
-
-    public GUILogin() {
+    private final AuthService authService;
+    
+    public GUILogin(AuthService authService) {
         initComponents(); // Llamada al código autogenerado
         setLocationRelativeTo(null); // Para centrar la ventana
-
+        this.authService = new AuthService(new UserArrayRepository());
         // Agregar placeholders después de que se inicialicen los componentes
-        agregarPlaceholder(txtEmail, "Ingrese su correo");
-        agregarPlaceholder(txtPassword, "Ingrese su contraseña");
+        agregarPlaceholder(txtEmail, "Ingrese su correo!");
+        agregarPlaceholder(txtPassword, "Ingrese su contraseña!");
     }
     
     
@@ -82,7 +88,6 @@ public class GUILogin extends javax.swing.JFrame {
 =======
         setMaximumSize(new java.awt.Dimension(400, 400));
         setMinimumSize(new java.awt.Dimension(400, 400));
-        setPreferredSize(new java.awt.Dimension(400, 400));
         setResizable(false);
         setSize(new java.awt.Dimension(400, 400));
 >>>>>>> 8b1a1ffa02edac09e15fd5975f71496af03b5a5f:GestionProyectosAcademicos/src/main/java/com/mycompany/gestionproyectosacademicos/presentacion/GUILogin.java
@@ -254,80 +259,50 @@ public class GUILogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        String email = txtEmail.getText().trim();
-        String password = txtPassword.getText().trim();
+    String email = txtEmail.getText().trim();
+    String password = txtPassword.getText().trim(); // Para evitar espacios en blanco
 
-        // Regular expression for email
-        String regExEmail = "^[A-Za-z0-9+_.-]+@(.+)\\.com$";
-
-        Pattern patternEmail = Pattern.compile(regExEmail);
-        
-        // Matcher for email
-        Matcher matcherEmail = patternEmail.matcher(email);
-        
-        // If Email is not valid, show message
-        if(!matcherEmail.matches()){
-            Messages.showMessageDialog("El email ingresado no es válido.", "Atención");
-            txtEmail.requestFocus();
-            return;
-        }
-        
-        // Regular expression for password
-        String regExPassword = "^(?=.*[A-Z])(?=.*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?]).{6,}$";
-        
-        Pattern patternPass = Pattern.compile(regExPassword);
-        
-        // Matcher for password
-        Matcher matcherPass = patternPass.matcher(password);
-        
-        // If password is not valid, show message
-        if(!matcherPass.matches()){
-            Messages.showMessageDialog("La contraseña ingresada no es válida.", "Atención");
-            txtPassword.requestFocus();
-            return;
-        }
-        if (email.equals("")){
-            Messages.showMessageDialog("Debe agregar el Email", "Atención");
-            txtEmail.requestFocus();
-            return;
-        }
-    }//GEN-LAST:event_btnLoginActionPerformed
+    // Expresión regular para validar el correo
+    String regExEmail = "^[A-Za-z0-9+_.-]+@(.+)\\.com$";
+    Pattern patternEmail = Pattern.compile(regExEmail);
+    Matcher matcherEmail = patternEmail.matcher(email);
     
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GUILogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GUILogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GUILogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GUILogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new GUILogin().setVisible(true);
-            }
-        });
+    // Si el email no es válido, mostrar mensaje y detener el proceso
+    if (!matcherEmail.matches()) {
+        Messages.showMessageDialog("El email ingresado no es válido.", "Atención");
+        txtEmail.requestFocus();
+        return;
     }
-    
+
+    // Si el email está vacío
+    if (email.isEmpty()) {
+        Messages.showMessageDialog("Debe agregar el Email", "Atención");
+        txtEmail.requestFocus();
+        return;
+    }
+
+    // Si la contraseña está vacía
+    if (password.isEmpty()) {
+        Messages.showMessageDialog("Debe ingresar la contraseña", "Atención");
+        txtPassword.requestFocus();
+        return;
+    }
+
+    // Llamar a AuthService para autenticar al usuario
+    JFrame nextGUI = authService.login(email, password);
+
+    if (nextGUI != null) {
+        Messages.showMessageDialog("Inicio de sesión exitoso", "Éxito");
+        nextGUI.setVisible(true); // Mostrar la GUI correspondiente
+        this.dispose(); // Cerrar la ventana de login
+    } else {
+        Messages.showMessageDialog("Credenciales incorrectas", "Error");
+    }
+
+
+        
+    }//GEN-LAST:event_btnLoginActionPerformed
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
