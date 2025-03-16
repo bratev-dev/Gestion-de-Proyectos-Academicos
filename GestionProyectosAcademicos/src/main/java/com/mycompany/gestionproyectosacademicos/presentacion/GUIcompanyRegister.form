@@ -426,9 +426,6 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Sector"/>
               </Properties>
-              <AccessibilityProperties>
-                <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="Sector"/>
-              </AccessibilityProperties>
             </Component>
             <Component class="java.awt.Label" name="label11">
               <Properties>

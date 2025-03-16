@@ -8,7 +8,7 @@ import com.mycompany.gestionproyectosacademicos.presentacion.PanelRound;
 
 /**
  *
- * @author rubei
+ * @author Rubeiro ROmero
  */
 public class GUIcompanyRegister extends javax.swing.JFrame {
 
