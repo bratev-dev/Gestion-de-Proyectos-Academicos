@@ -27,10 +27,17 @@ public class Main {
         instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
         instance.setVisible(true);
         */
+      
+        /* RAMA JONATHAN
+        GUICoordinator instance = new GUICoordinator();
+        instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        instance.setVisible(true);
+        
         IUserRepository userRepo = new UserArrayRepository(); // Usando datos en memoria
         AuthService authService = new AuthService(userRepo);
 
         GUILogin loginGUI = new GUILogin(authService);
         loginGUI.setVisible(true);
+        */
     }
 }
