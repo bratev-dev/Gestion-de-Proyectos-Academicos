@@ -5,6 +5,7 @@
 
 package com.mycompany.gestionproyectosacademicos.presentacion;
 import com.mycompany.gestionproyectosacademicos.presentacion.PanelRound;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -30,6 +31,7 @@ public class GUIcompanyRegister extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        textField1 = new java.awt.TextField();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
@@ -41,20 +43,22 @@ public class GUIcompanyRegister extends javax.swing.JFrame {
         label6 = new java.awt.Label();
         label7 = new java.awt.Label();
         label8 = new java.awt.Label();
-        textField4 = new java.awt.TextField();
-        textField5 = new java.awt.TextField();
-        textField6 = new java.awt.TextField();
-        textField7 = new java.awt.TextField();
+        JContactLastName = new java.awt.TextField();
+        JContactPosition = new java.awt.TextField();
+        JCompanyNIT = new java.awt.TextField();
+        JContactNumber = new java.awt.TextField();
         label9 = new java.awt.Label();
         label10 = new java.awt.Label();
         label11 = new java.awt.Label();
-        textField8 = new java.awt.TextField();
-        textField9 = new java.awt.TextField();
-        textField10 = new java.awt.TextField();
+        JCompanyEmail = new java.awt.TextField();
+        JContactName = new java.awt.TextField();
+        JCompanyName = new java.awt.TextField();
         label12 = new java.awt.Label();
-        textField11 = new java.awt.TextField();
+        JCompanySector = new java.awt.TextField();
         jSeparator2 = new javax.swing.JSeparator();
         jSeparator1 = new javax.swing.JSeparator();
+
+        textField1.setText("textField1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(600, 400));
@@ -96,7 +100,7 @@ public class GUIcompanyRegister extends javax.swing.JFrame {
         label4.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         label4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         label4.setForeground(new java.awt.Color(19, 45, 70));
-        label4.setText("Nombres");
+        label4.setText("Nombres*");
 
         label5.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         label5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -106,83 +110,94 @@ public class GUIcompanyRegister extends javax.swing.JFrame {
         label6.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         label6.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         label6.setForeground(new java.awt.Color(19, 45, 70));
-        label6.setText("Telefono");
+        label6.setText("Telefono*");
 
         label7.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         label7.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         label7.setForeground(new java.awt.Color(19, 45, 70));
-        label7.setText("Apellidos");
+        label7.setText("Apellidos*");
 
         label8.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         label8.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         label8.setForeground(new java.awt.Color(19, 45, 70));
-        label8.setText("Cargo");
+        label8.setText("Cargo*");
 
-        textField4.addActionListener(new java.awt.event.ActionListener() {
+        JContactLastName.setText("1");
+        JContactLastName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textField4ActionPerformed(evt);
+                JContactLastNameActionPerformed(evt);
             }
         });
 
-        textField5.addActionListener(new java.awt.event.ActionListener() {
+        JContactPosition.setName(""); // NOI18N
+        JContactPosition.setText("1");
+        JContactPosition.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textField5ActionPerformed(evt);
+                JContactPositionActionPerformed(evt);
             }
         });
 
-        textField6.addActionListener(new java.awt.event.ActionListener() {
+        JCompanyNIT.setName(""); // NOI18N
+        JCompanyNIT.setText("1");
+        JCompanyNIT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textField6ActionPerformed(evt);
+                JCompanyNITActionPerformed(evt);
             }
         });
 
-        textField7.addActionListener(new java.awt.event.ActionListener() {
+        JContactNumber.setName(""); // NOI18N
+        JContactNumber.setText("1");
+        JContactNumber.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textField7ActionPerformed(evt);
+                JContactNumberActionPerformed(evt);
             }
         });
 
         label9.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         label9.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         label9.setForeground(new java.awt.Color(19, 45, 70));
-        label9.setText("NIT de la empresa");
+        label9.setText("NIT de la empresa*");
 
         label10.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         label10.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         label10.setForeground(new java.awt.Color(19, 45, 70));
-        label10.setText("Sector");
+        label10.setText("Sector*");
 
         label11.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         label11.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         label11.setForeground(new java.awt.Color(19, 45, 70));
-        label11.setText("Nombre");
+        label11.setText("Nombre*");
 
-        textField8.addActionListener(new java.awt.event.ActionListener() {
+        JCompanyEmail.setText("1");
+        JCompanyEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textField8ActionPerformed(evt);
+                JCompanyEmailActionPerformed(evt);
             }
         });
 
-        textField9.addActionListener(new java.awt.event.ActionListener() {
+        JContactName.setText("1");
+        JContactName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textField9ActionPerformed(evt);
+                JContactNameActionPerformed(evt);
             }
         });
 
-        textField10.addActionListener(new java.awt.event.ActionListener() {
+        JCompanyName.setText("1");
+        JCompanyName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textField10ActionPerformed(evt);
+                JCompanyNameActionPerformed(evt);
             }
         });
 
         label12.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         label12.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         label12.setForeground(new java.awt.Color(19, 45, 70));
-        label12.setText("Email");
+        label12.setText("Email*");
 
-        textField11.addActionListener(new java.awt.event.ActionListener() {
+        JCompanySector.setText("1");
+        JCompanySector.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textField11ActionPerformed(evt);
+                JCompanySectorActionPerformed(evt);
             }
         });
 
@@ -209,15 +224,15 @@ public class GUIcompanyRegister extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(textField11, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(textField8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(JCompanySector, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(JCompanyEmail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(29, 29, 29)))
                         .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(20, 20, 20)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(label8, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(textField7, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)
-                            .addComponent(textField5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(JContactNumber, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)
+                            .addComponent(JContactPosition, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(2, 2, 2)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -227,27 +242,27 @@ public class GUIcompanyRegister extends javax.swing.JFrame {
                                         .addGap(0, 203, Short.MAX_VALUE)
                                         .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(jPanel4Layout.createSequentialGroup()
-                                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(label9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(label11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(label11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(label4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(label7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(label7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel4Layout.createSequentialGroup()
                                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(textField10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(textField6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                            .addComponent(JCompanyName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(JCompanyNIT, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                         .addGap(51, 51, 51))
                                     .addGroup(jPanel4Layout.createSequentialGroup()
                                         .addComponent(label12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(textField9, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)
+                                    .addComponent(JContactName, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)
                                     .addComponent(label6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(textField4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                                    .addComponent(JContactLastName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addComponent(label9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(label4, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(25, 25, 25))
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(153, 153, 153)
@@ -269,46 +284,49 @@ public class GUIcompanyRegister extends javax.swing.JFrame {
                             .addComponent(label4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, 0)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(textField6, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(textField9, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(JContactName, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(JCompanyNIT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addGap(2, 2, 2)
                                 .addComponent(label11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(label7, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(textField4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(textField10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(JContactLastName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(JCompanyName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(0, 0, 0)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addComponent(label6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, 0)
-                                .addComponent(textField7, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(JContactNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addComponent(label12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, 0)
-                                .addComponent(textField8, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(JCompanyEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, 0)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addComponent(label8, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(2, 2, 2)
-                                .addComponent(textField5, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(JContactPosition, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addComponent(label10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, 0)
-                                .addComponent(textField11, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(JCompanySector, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
+        label4.getAccessibleContext().setAccessibleName("Nombres*");
+        label4.getAccessibleContext().setAccessibleDescription("Nombres");
+        JCompanyNIT.getAccessibleContext().setAccessibleDescription("");
         label9.getAccessibleContext().setAccessibleName("Nit de  la empresa");
-        label10.getAccessibleContext().setAccessibleName("Sector");
 
         jSeparator1.setForeground(new java.awt.Color(153, 51, 0));
         jSeparator1.setPreferredSize(new java.awt.Dimension(50, 30));
@@ -323,7 +341,7 @@ public class GUIcompanyRegister extends javax.swing.JFrame {
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 76, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(169, 169, 169)
@@ -347,41 +365,63 @@ public class GUIcompanyRegister extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void textField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textField5ActionPerformed
+    private void JContactPositionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JContactPositionActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_textField5ActionPerformed
+    }//GEN-LAST:event_JContactPositionActionPerformed
 
-    private void textField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textField4ActionPerformed
+    private void JContactLastNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JContactLastNameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_textField4ActionPerformed
+    }//GEN-LAST:event_JContactLastNameActionPerformed
 
     private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
         // TODO add your handling code here:
+        
+        if(JCompanyNIT.getText().isEmpty()
+                ||JCompanyEmail.getText().isEmpty()
+                ||JCompanyName.getText().isEmpty()
+                ||JCompanySector.getText().isEmpty()
+                ||JContactName.getText().isEmpty()
+                ||JContactNumber.getText().isEmpty()
+                ||JContactLastName.getText().isEmpty()
+                || JContactPosition.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null
+                    ,"Por favor dijite los campos obligatorios. "
+                            + "Estan marcados con: * "
+                    , "¡ERROR!",JOptionPane.WARNING_MESSAGE);
+        }else{
+            JOptionPane.showMessageDialog(null
+                    ," Datos de la mpresa registrados correctamente"
+                    , "AVISO",JOptionPane.INFORMATION_MESSAGE);
+                   GUIAssignCompanyPassword newFrame = new GUIAssignCompanyPassword();
+                   newFrame.setVisible(true);
+                   
+                   this.dispose();
+        }
     }//GEN-LAST:event_button1ActionPerformed
 
-    private void textField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textField6ActionPerformed
+    private void JCompanyNITActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JCompanyNITActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_textField6ActionPerformed
+    }//GEN-LAST:event_JCompanyNITActionPerformed
 
-    private void textField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textField7ActionPerformed
+    private void JContactNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JContactNumberActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_textField7ActionPerformed
+    }//GEN-LAST:event_JContactNumberActionPerformed
 
-    private void textField8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textField8ActionPerformed
+    private void JCompanyEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JCompanyEmailActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_textField8ActionPerformed
+    }//GEN-LAST:event_JCompanyEmailActionPerformed
 
-    private void textField9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textField9ActionPerformed
+    private void JContactNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JContactNameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_textField9ActionPerformed
+    }//GEN-LAST:event_JContactNameActionPerformed
 
-    private void textField10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textField10ActionPerformed
+    private void JCompanyNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JCompanyNameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_textField10ActionPerformed
+    }//GEN-LAST:event_JCompanyNameActionPerformed
 
-    private void textField11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textField11ActionPerformed
+    private void JCompanySectorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JCompanySectorActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_textField11ActionPerformed
+    }//GEN-LAST:event_JCompanySectorActionPerformed
 
 
     /**
@@ -421,6 +461,14 @@ public class GUIcompanyRegister extends javax.swing.JFrame {
 
   
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private java.awt.TextField JCompanyEmail;
+    private java.awt.TextField JCompanyNIT;
+    private java.awt.TextField JCompanyName;
+    private java.awt.TextField JCompanySector;
+    private java.awt.TextField JContactLastName;
+    private java.awt.TextField JContactName;
+    private java.awt.TextField JContactNumber;
+    private java.awt.TextField JContactPosition;
     private java.awt.Button button1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
@@ -438,13 +486,6 @@ public class GUIcompanyRegister extends javax.swing.JFrame {
     private java.awt.Label label7;
     private java.awt.Label label8;
     private java.awt.Label label9;
-    private java.awt.TextField textField10;
-    private java.awt.TextField textField11;
-    private java.awt.TextField textField4;
-    private java.awt.TextField textField5;
-    private java.awt.TextField textField6;
-    private java.awt.TextField textField7;
-    private java.awt.TextField textField8;
-    private java.awt.TextField textField9;
+    private java.awt.TextField textField1;
     // End of variables declaration//GEN-END:variables
 }
