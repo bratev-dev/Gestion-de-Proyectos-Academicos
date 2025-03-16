@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package com.mycompany.gestionproyectosacademicos.presentacion;
+package com.mycompany.gestionproyectosacademicos.presentation;
 
 import com.mycompany.gestionproyectosacademicos.access.UserArrayRepository;
 import com.mycompany.gestionproyectosacademicos.infra.Messages;
@@ -82,10 +82,15 @@ public class GUILogin extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocation(new java.awt.Point(0, 0));
+<<<<<<< HEAD:GestionProyectosAcademicos/src/main/java/com/mycompany/gestionproyectosacademicos/presentation/GUILogin.java
+        setMinimumSize(new java.awt.Dimension(600, 400));
+        setSize(new java.awt.Dimension(600, 400));
+=======
         setMaximumSize(new java.awt.Dimension(400, 400));
         setMinimumSize(new java.awt.Dimension(400, 400));
         setResizable(false);
         setSize(new java.awt.Dimension(400, 400));
+>>>>>>> 8b1a1ffa02edac09e15fd5975f71496af03b5a5f:GestionProyectosAcademicos/src/main/java/com/mycompany/gestionproyectosacademicos/presentacion/GUILogin.java
 
         jPanel1.setBackground(new java.awt.Color(19, 45, 70));
         jPanel1.setMaximumSize(new java.awt.Dimension(400, 400));

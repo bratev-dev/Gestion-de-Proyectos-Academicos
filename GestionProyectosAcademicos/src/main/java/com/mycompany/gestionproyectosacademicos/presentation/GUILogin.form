@@ -6,9 +6,12 @@
     <Property name="location" type="java.awt.Point" editor="org.netbeans.beaninfo.editors.PointEditor">
       <Point value="[0, 0]"/>
     </Property>
+<<<<<<< HEAD:GestionProyectosAcademicos/src/main/java/com/mycompany/gestionproyectosacademicos/presentation/GUILogin.form
+=======
     <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
       <Dimension value="[400, 400]"/>
     </Property>
+>>>>>>> 8b1a1ffa02edac09e15fd5975f71496af03b5a5f:GestionProyectosAcademicos/src/main/java/com/mycompany/gestionproyectosacademicos/presentacion/GUILogin.form
     <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
       <Dimension value="[400, 400]"/>
     </Property>

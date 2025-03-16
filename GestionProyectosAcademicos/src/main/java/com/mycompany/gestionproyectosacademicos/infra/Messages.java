@@ -15,5 +15,4 @@ public class Messages {
     public static int showConfirmDialog(String message, String title) {
         return JOptionPane.showConfirmDialog(null, message, title, JOptionPane.INFORMATION_MESSAGE);
     }
-
 }
