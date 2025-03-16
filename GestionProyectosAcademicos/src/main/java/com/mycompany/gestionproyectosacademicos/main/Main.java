@@ -7,6 +7,7 @@ package com.mycompany.gestionproyectosacademicos.main;
 import com.mycompany.gestionproyectosacademicos.presentation.GUICoordinator;
 import com.mycompany.gestionproyectosacademicos.presentation.GUILogin;
 
+/*
 import com.mycompany.gestionproyectosacademicos.access.Factory;
 import com.mycompany.gestionproyectosacademicos.access.IUserRepository;
 import com.mycompany.gestionproyectosacademicos.access.UserArrayRepository;
@@ -14,6 +15,7 @@ import com.mycompany.gestionproyectosacademicos.presentacion.GUICoordinator;
 import com.mycompany.gestionproyectosacademicos.presentacion.GUILogin;
 import com.mycompany.gestionproyectosacademicos.services.AuthService;
 import com.mycompany.gestionproyectosacademicos.services.UserServices;
+*/
 import javax.swing.JFrame;
 
 /**
