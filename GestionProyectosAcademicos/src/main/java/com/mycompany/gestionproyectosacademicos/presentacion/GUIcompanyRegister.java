@@ -4,8 +4,14 @@
  */
 
 package com.mycompany.gestionproyectosacademicos.presentacion;
+import com.mycompany.gestionproyectosacademicos.entities.ConexionPostgreSQL;
+import com.mycompany.gestionproyectosacademicos.entities.SaveDateCompany;
 import com.mycompany.gestionproyectosacademicos.presentacion.PanelRound;
 import javax.swing.JOptionPane;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 /**
  *
@@ -372,7 +378,7 @@ public class GUIcompanyRegister extends javax.swing.JFrame {
     private void JContactLastNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JContactLastNameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_JContactLastNameActionPerformed
-
+ SaveDateCompany company = new SaveDateCompany(); 
     private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
         // TODO add your handling code here:
         
@@ -389,6 +395,17 @@ public class GUIcompanyRegister extends javax.swing.JFrame {
                             + "Estan marcados con: * "
                     , "¡ERROR!",JOptionPane.WARNING_MESSAGE);
         }else{
+            
+       company.saveCompany( Integer.parseInt(JCompanyNIT.getText()), // Convierte el NIT a int
+                   JCompanyEmail.getText(), // Obtiene el texto
+                JCompanyName.getText(),
+                JCompanySector.getText(),
+                JContactName.getText(),
+                JContactLastName.getText(),
+               Integer.parseInt(JContactNumber.getText()), // Convierte a int
+                JContactPosition.getText()
+        );
+
             JOptionPane.showMessageDialog(null
                     ," Datos de la mpresa registrados correctamente"
                     , "AVISO",JOptionPane.INFORMATION_MESSAGE);

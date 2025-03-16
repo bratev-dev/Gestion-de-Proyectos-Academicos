@@ -327,7 +327,6 @@
                 <Property name="text" type="java.lang.String" value="Nombres*"/>
               </Properties>
               <AccessibilityProperties>
-                <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="Nombres*"/>
                 <Property name="AccessibleContext.accessibleDescription" type="java.lang.String" value="Nombres"/>
               </AccessibilityProperties>
             </Component>
