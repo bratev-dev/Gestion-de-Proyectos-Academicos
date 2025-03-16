@@ -17,7 +17,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 
 /**
  *
- * @author bryan
+ * @author bratev
  */
 public class GUICoordinator extends javax.swing.JFrame {
     // Colores personalizados
