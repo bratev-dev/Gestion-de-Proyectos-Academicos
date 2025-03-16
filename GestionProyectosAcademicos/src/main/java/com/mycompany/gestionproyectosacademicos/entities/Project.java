@@ -30,4 +30,38 @@ public class Project {
         this.company = company;
         this.students = students;
     }
+    
+    public int getId(){
+        return id;
+    }
+    
+    public String getDescription(){
+        return description;
+    }
+    
+    public String getState(){
+        return state;
+    }
+   
+    public String getName(){
+        return name;
+    }
+    
+    
+    
+    public void addObserver(Observer observer){
+        observers.add(observer);
+    }
+    
+    public void notifyObservers(){
+        for(Observer observer : observers){
+            observer.update(this);
+        }
+    }
+    
+    public void changeState(ProjectState state){
+        this.state = state.getClass().getSimpleName();
+        notifyObservers();
+    }
+    
 }

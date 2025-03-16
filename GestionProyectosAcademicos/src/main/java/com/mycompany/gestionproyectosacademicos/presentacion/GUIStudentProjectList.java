@@ -1,20 +1,25 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package com.mycompany.gestionproyectosacademicos.presentacion;
+
+import com.mycompany.gestionproyectosacademicos.entities.Project;
+import com.mycompany.gestionproyectosacademicos.observer.Observer;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.util.List;
 
 /**
  *
  * @author Jhonatan
  */
-public class GUIStudentProjectList extends javax.swing.JFrame {
+public class GUIStudentProjectList extends javax.swing.JFrame implements Observer{
 
+    private JTable projectTable;
+    private DefaultTableModel tableModel;
     /**
      * Creates new form GUIStudentProjectList
      */
     public GUIStudentProjectList() {
         initComponents();
+        initTable();
     }
 
     /**
@@ -186,6 +191,12 @@ public class GUIStudentProjectList extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void initTable() {
+        tableModel = new DefaultTableModel(new Object[]{"ID", "Nombre", "Descripción", "Estado"}, 0);
+        projectTable = new JTable();
+        jPanelProjectList.add(new JScrollPane(projectTable));
+    }
+    
     private void btnCloseSessionStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseSessionStudentActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnCloseSessionStudentActionPerformed
@@ -238,4 +249,14 @@ public class GUIStudentProjectList extends javax.swing.JFrame {
     private javax.swing.JLabel lblUser;
     private javax.swing.JSeparator sepUserCoord;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void update(Project project) {
+        tableModel.addRow(new Object[]{
+            project.getId(),
+            project.getName(),
+            project.getDescription(),
+            project.getState()
+        });
+    }
 }

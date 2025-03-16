@@ -21,7 +21,6 @@ public class Main {
         instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
         instance.setVisible(true);
         */
-
         GUICoordinator instance = new GUICoordinator();
         instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
         instance.setVisible(true);
