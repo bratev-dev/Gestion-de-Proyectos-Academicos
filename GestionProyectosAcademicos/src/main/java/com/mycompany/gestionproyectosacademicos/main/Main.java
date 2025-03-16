@@ -32,7 +32,12 @@ public class Main {
         GUICoordinator instance = new GUICoordinator();
         instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
         instance.setVisible(true);
-        
+        */
+      
+        /* RAMA BRATEV
+        GUILogin login = new GUILogin();
+        login.setVisible(false);
+
         IUserRepository userRepo = new UserArrayRepository(); // Usando datos en memoria
         AuthService authService = new AuthService(userRepo);
 
