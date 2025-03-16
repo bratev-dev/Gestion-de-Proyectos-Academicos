@@ -232,7 +232,8 @@ public class GUIAssignCompanyPassword extends javax.swing.JFrame {
             "¡ERROR!", JOptionPane.WARNING_MESSAGE);
     } else {
         JOptionPane.showMessageDialog(null,
-            "Contraseña guardada correctamente",
+            "Contraseña creada correctamente. "
+                    + "\nAhora puede iniciar sesion con el correo y su contraseña",
             "AVISO", JOptionPane.INFORMATION_MESSAGE);
         GUILogin newFrame = new GUILogin();
         newFrame.setVisible(true);
