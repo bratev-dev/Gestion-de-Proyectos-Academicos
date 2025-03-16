@@ -4,8 +4,8 @@
  */
 package com.mycompany.gestionproyectosacademicos.main;
 
-import com.mycompany.gestionproyectosacademicos.presentacion.GUICoordinator;
-import com.mycompany.gestionproyectosacademicos.presentacion.GUILogin;
+import com.mycompany.gestionproyectosacademicos.presentation.GUICoordinator;
+import com.mycompany.gestionproyectosacademicos.presentation.GUILogin;
 import javax.swing.JFrame;
 
 /**

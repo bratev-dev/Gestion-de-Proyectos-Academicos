@@ -6,6 +6,6 @@ import javax.swing.JOptionPane;
  *
  * @author bryan
  */
-public class Messages {
+public class Mensajes {
     
 }
