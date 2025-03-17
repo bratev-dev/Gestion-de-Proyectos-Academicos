@@ -36,7 +36,9 @@ public class AuthService {
                 return new GUICompany();
              */       
             case "COORDINATOR":
-                return new GUICoordinator();
+                GUICoordinator instance = new GUICoordinator();
+                instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
+                return instance;
             default:
                 return null;
         }
