@@ -225,12 +225,17 @@ public class GUIAssignCompanyPassword extends javax.swing.JFrame {
 } else {
     String password1 = new String(JCompanyPassword1.getText()); // Convertimos a String
     String password2 = new String(JCompanyPassword2.getText());
+    
 
     if (!password1.equals(password2)) { // Comparación correcta
         JOptionPane.showMessageDialog(null,
             "Las contraseñas no coinciden",
             "¡ERROR!", JOptionPane.WARNING_MESSAGE);
     } else {
+        
+        
+       // Company
+        
         JOptionPane.showMessageDialog(null,
             "Contraseña creada correctamente. "
                     + "\nAhora puede iniciar sesion con el correo y su contraseña",

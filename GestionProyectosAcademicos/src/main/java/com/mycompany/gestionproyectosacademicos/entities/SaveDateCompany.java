@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
 
 public class SaveDateCompany {
 
-    public void saveCompany(int companyNIT, String companyEmail, String companyName, String companySector, 
+    public void saveCompany(int companyNIT, String companyName, String companyEmail,  String companySector, 
                         String contactName, String contactLastName, int contactNumber, String contactPosition) {
         String sql = "INSERT INTO company (companyNIT, companyName, companyEmail, companySector, " +
                      "contactName, contactLastName, contactNumber, contactPosition) " +
