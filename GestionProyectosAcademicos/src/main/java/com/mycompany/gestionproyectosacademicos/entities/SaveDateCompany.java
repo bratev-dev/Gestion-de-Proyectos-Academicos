@@ -18,8 +18,7 @@ import javax.swing.JOptionPane;
 
 public class SaveDateCompany {
 
-    public void saveCompany(int companyNIT, String companyName, String companyEmail,  String companySector, 
-                        String contactName, String contactLastName, int contactNumber, String contactPosition) {
+    public void saveCompany(Company company) {
         String sql = "INSERT INTO company (companyNIT, companyName, companyEmail, companySector, " +
                      "contactName, contactLastName, contactNumber, contactPosition) " +
                      "VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
@@ -27,14 +26,14 @@ public class SaveDateCompany {
         try (Connection conexion = ConexionPostgreSQL.conectar();
              PreparedStatement pstmt = conexion.prepareStatement(sql)) {
 
-            pstmt.setInt(1, companyNIT);
-            pstmt.setString(2, companyName);
-            pstmt.setString(3, companyEmail);
-            pstmt.setString(4, companySector);
-            pstmt.setString(5, contactName);
-            pstmt.setString(6, contactLastName);
-            pstmt.setInt(7, contactNumber);
-            pstmt.setString(8, contactPosition);
+            pstmt.setInt(1, company.getNit());
+            pstmt.setString(2, company.getName());
+            pstmt.setString(3, company.getEmail());
+            pstmt.setString(4, company.getSector());
+            pstmt.setString(5, company.getContactName());
+            pstmt.setString(6, company.getContactLastName());
+            pstmt.setInt(7, company.getContactNumber());
+            pstmt.setString(8, company.getContactPosition());
 
             pstmt.executeUpdate();
             JOptionPane.showMessageDialog(null, "✅ Empresa registrada con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
