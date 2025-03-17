@@ -7,6 +7,8 @@ package com.mycompany.gestionproyectosacademicos.presentation;
 import com.mycompany.gestionproyectosacademicos.entities.Company;
 import com.mycompany.gestionproyectosacademicos.entities.ConexionPostgreSQL;
 import com.mycompany.gestionproyectosacademicos.entities.SaveDateCompany;
+import com.mycompany.gestionproyectosacademicos.entities.SaveDateUser;
+import com.mycompany.gestionproyectosacademicos.entities.User;
 import com.mycompany.gestionproyectosacademicos.services.AuthService;
 
 //import com.mycompany.gestionproyectosacademicos.presentacion.PanelRound;
@@ -447,7 +449,10 @@ public class GUIcompanyRegister extends javax.swing.JFrame {
                     JContactPosition.getText().trim()
                 );
 
-                // Aquí puedes llamar a tu método DAO para guardar en la base de datos
+                User user=new User(nit,JCompanyName.getText().trim(),
+                        password.getText().trim(), jSector.getSelectedItem().toString().trim());
+                SaveDateUser saveUser = new SaveDateUser();
+                saveUser.saveUser(user);
                 JOptionPane.showMessageDialog(null, "Empresa registrada correctamente.");
 
             } catch (NumberFormatException e) {
