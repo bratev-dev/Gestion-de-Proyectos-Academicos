@@ -7,6 +7,7 @@ import com.mycompany.gestionproyectosacademicos.entities.Project;
 import com.mycompany.gestionproyectosacademicos.observer.IObserver;
 import com.mycompany.gestionproyectosacademicos.services.CoordinatorService;
 import com.mycompany.gestionproyectosacademicos.services.ProjectService;
+import com.mycompany.gestionproyectosacademicos.services.AuthService;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -568,7 +569,11 @@ public class GUICoordinator extends javax.swing.JFrame implements IObserver{
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCloseSessionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseSessionActionPerformed
-
+        
+        AuthService authService = new AuthService(null); // Crear la instancia del servicio de autenticación
+        GUILogin login = new GUILogin(authService); // Pasar la instancia al constructor
+        login.setVisible(true); // Mostrar la ventana
+        this.dispose();
     }//GEN-LAST:event_btnCloseSessionActionPerformed
 
     private void btnRequestsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRequestsActionPerformed

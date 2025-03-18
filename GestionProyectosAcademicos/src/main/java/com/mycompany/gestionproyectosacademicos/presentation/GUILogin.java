@@ -198,6 +198,11 @@ public class GUILogin extends javax.swing.JFrame {
         jButtonRegistrar.setForeground(new java.awt.Color(255, 255, 255));
         jButtonRegistrar.setText("Registrar Empresa");
         jButtonRegistrar.setFocusPainted(false);
+        jButtonRegistrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRegistrarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -304,11 +309,19 @@ public class GUILogin extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnLoginActionPerformed
 
-    private void txtPasswordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPasswordKeyPressed
+  
+    private void txtPasswordKeyPressed(java.awt.event.KeyEvent evt) {
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             btnLogin.doClick();
         }
-    }//GEN-LAST:event_txtPasswordKeyPressed
+    }
+  
+    private void jButtonRegistrarActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+        GUIcompanyRegister newFrame = new GUIcompanyRegister();
+         newFrame.setVisible(true);
+         this.dispose();
+    }
 
 
 
