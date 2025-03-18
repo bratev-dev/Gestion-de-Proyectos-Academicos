@@ -19,7 +19,7 @@ public class Company {
     private String contactPosition;
     
     public Company(String name, int nit, String email, String sector, String contactName,
-            String cotactLasName, int contactNumber, String contactPosition){
+            String contactLastName, int contactNumber, String contactPosition){
     
         this.name = name;
         this.nit = nit;

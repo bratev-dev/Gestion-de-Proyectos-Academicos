@@ -300,7 +300,6 @@ public class GUIcompanyRegister extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(label5, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(label3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -357,7 +356,6 @@ public class GUIcompanyRegister extends javax.swing.JFrame {
         label4.getAccessibleContext().setAccessibleDescription("Nombres");
         JCompanyNIT.getAccessibleContext().setAccessibleDescription("");
         label9.getAccessibleContext().setAccessibleName("Nit de  la empresa");
-        label13.getAccessibleContext().setAccessibleName("Contraseña*");
 
         jSeparator1.setForeground(new java.awt.Color(153, 51, 0));
         jSeparator1.setPreferredSize(new java.awt.Dimension(50, 30));
@@ -370,14 +368,11 @@ public class GUIcompanyRegister extends javax.swing.JFrame {
                 .addGap(70, 70, 70)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 47, Short.MAX_VALUE)))
-                .addContainerGap())
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(169, 169, 169)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(99, 99, 99)
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(112, 112, 112))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -388,7 +383,7 @@ public class GUIcompanyRegister extends javax.swing.JFrame {
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addContainerGap(56, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 580, 420));
@@ -448,21 +443,23 @@ public class GUIcompanyRegister extends javax.swing.JFrame {
                     telefono,
                     JContactPosition.getText().trim()
                 );
+                SaveDateCompany saveCompany = new SaveDateCompany();
+                boolean save = saveCompany.saveCompany(company);
 
-                User user=new User(nit,JCompanyName.getText().trim(),
-                        password.getText().trim(), jSector.getSelectedItem().toString().trim());
+                if (save){
+                    User user=new User(nit,JCompanyEmail.getText().trim(),
+                        password.getText().trim(), "Empresa");
                 SaveDateUser saveUser = new SaveDateUser();
                 saveUser.saveUser(user);
-                JOptionPane.showMessageDialog(null, "Empresa registrada correctamente.");
+                }else{
+                    return;
+                }
+                
 
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(null, "Error: Ingrese solo números en el NIT y el número de contacto.", "Error", JOptionPane.ERROR_MESSAGE);
             }
 
-
-            JOptionPane.showMessageDialog(null
-                    ," Datos de la mpresa registrados correctamente"
-                    , "AVISO",JOptionPane.INFORMATION_MESSAGE);
                    AuthService authService = new AuthService(null); // Crear la instancia del servicio de autenticación
                    GUILogin login = new GUILogin(authService); // Pasar la instancia al constructor
                    login.setVisible(true); // Mostrar la ventana

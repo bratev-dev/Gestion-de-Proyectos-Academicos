@@ -35,8 +35,11 @@ public class SaveDateUser {
             pstmt.setString(3, user.getRole());
 
             pstmt.executeUpdate();
+            JOptionPane.showMessageDialog(null, "✅ Usuario registrado con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+
             return true;
         } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "❌ Error al guardar El usuario: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
             return false;
         }
