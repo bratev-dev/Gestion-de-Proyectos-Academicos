@@ -1,5 +1,6 @@
 
 package com.mycompany.gestionproyectosacademicos.access;
+import com.mycompany.gestionproyectosacademicos.infra.Messages;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,17 +21,17 @@ public class Factory {
 
         // Definir diferentes implementaciones según el tipo
         Map<Class<?>, Object> arraysRepositories = new HashMap<>();
-       // arraysRepositories.put(ICompanyRepository.class, new CompanyArraysRepository());
+        //arraysRepositories.put(ICompanyRepository.class, new CompanyArraysRepository());
         arraysRepositories.put(IUserRepository.class, new UserArrayRepository());
         //arraysRepositories.put(IStudentRepository.class, new StudentArrayRepository());
-        //arraysRepositories.put(IProjectRepository.class, new ProjectArrayRepository());
-
+        arraysRepositories.put(IProjectRepository.class, new ProjectArrayRepository());
+        arraysRepositories.put(ICoordinatorRepository.class, new CoordinatorArrayRepository());
         //Map<Class<?>, Object> sqliteRepositories = new HashMap<>();
         //sqliteRepositories.put(ICompanyRepository.class, new CompanySqliteRepository());
         //sqliteRepositories.put(IUserRepository.class, new UserSqliteRepository());
         //sqliteRepositories.put(IStudentRepository.class, new StudentSqliteRepository());
         //sqliteRepositories.put(IProjectRepository.class, new ProjectSqliteRepository());
-
+        
         // Agregar tipos de almacenamiento a la fábrica
         repositoriesByType.put("ARRAYS", arraysRepositories);
        // repositoriesByType.put("SQLITE", sqliteRepositories);

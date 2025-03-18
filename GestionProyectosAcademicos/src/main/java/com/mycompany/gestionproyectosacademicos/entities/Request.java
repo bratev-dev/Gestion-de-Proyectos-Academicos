@@ -17,6 +17,9 @@ public class Request {
         this.requestId = id;
         this.requestDetails = details;
     }
+
+    public Request() {
+    }
     
     public int getId(){
         return requestId;

@@ -6,7 +6,11 @@ import com.mycompany.gestionproyectosacademicos.entities.Project;
  * @author Jhonatan
  */
 public class Accepted {
-  public void manageState(Project project) {
-        System.out.println("Proyecto recibido.");
-    }  
+    public void manageState(Project project) {
+        project.setState(getStateName());
+    }
+    
+    public String getStateName() {
+        return "aceptado";
+    }
 }

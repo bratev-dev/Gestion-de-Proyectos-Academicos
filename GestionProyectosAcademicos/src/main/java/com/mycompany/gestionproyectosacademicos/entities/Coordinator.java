@@ -1,23 +1,19 @@
 package com.mycompany.gestionproyectosacademicos.entities;
 
-/**
- *
- * @author bratev
- */
 public class Coordinator {
-    private String id;
+    private int id;
     private String name;
 
-    public Coordinator(String nit, String name) {
+    public Coordinator(int id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
