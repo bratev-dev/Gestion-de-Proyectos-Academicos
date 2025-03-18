@@ -164,6 +164,9 @@
               <Dimension value="[28, 17]"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnProfileStudentActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnProjectList">
           <Properties>

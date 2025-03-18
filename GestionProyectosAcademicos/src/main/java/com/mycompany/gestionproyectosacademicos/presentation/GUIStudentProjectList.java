@@ -75,6 +75,11 @@ public class GUIStudentProjectList extends javax.swing.JFrame implements IObserv
         btnProfileStudent.setMaximumSize(new java.awt.Dimension(28, 17));
         btnProfileStudent.setMinimumSize(new java.awt.Dimension(28, 17));
         btnProfileStudent.setPreferredSize(new java.awt.Dimension(28, 17));
+        btnProfileStudent.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProfileStudentActionPerformed(evt);
+            }
+        });
 
         btnProjectList.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnProjectList.setForeground(new java.awt.Color(19, 45, 70));
@@ -111,15 +116,10 @@ public class GUIStudentProjectList extends javax.swing.JFrame implements IObserv
             .addGroup(jPanelDashboardLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelDashboardLayout.createSequentialGroup()
-                        .addComponent(btnProfileStudent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(jPanelDashboardLayout.createSequentialGroup()
-                        .addComponent(btnProjectList, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(jPanelDashboardLayout.createSequentialGroup()
-                        .addComponent(btnMyProjects, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())))
+                    .addComponent(btnProfileStudent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnProjectList, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnMyProjects, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
             .addGroup(jPanelDashboardLayout.createSequentialGroup()
                 .addGap(107, 107, 107)
                 .addComponent(lblEstudiante)
@@ -200,6 +200,10 @@ public class GUIStudentProjectList extends javax.swing.JFrame implements IObserv
     private void btnCloseSessionStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseSessionStudentActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnCloseSessionStudentActionPerformed
+
+    private void btnProfileStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProfileStudentActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnProfileStudentActionPerformed
 
     /**
      * @param args the command line arguments
