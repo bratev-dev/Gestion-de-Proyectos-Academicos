@@ -46,7 +46,7 @@ public class GUICoordinator extends javax.swing.JFrame implements IObserver{
         initComponents();
     }
     
-    private void fillProjects() {
+    /*private void fillProjects() {
         List<Project> projects = projectService.getProjects();
         DefaultTableModel model = new DefaultTableModel(new String[]{"Nombre", "Empresa", "Opciones"}, 0);
 
@@ -62,7 +62,7 @@ public class GUICoordinator extends javax.swing.JFrame implements IObserver{
         
         centerContentCells(tblRequests);
         //update(projectService.getProjects());   // Llamar a update() para llenar la tabla
-    }
+    }*/
     
     private void centerContentCells(JTable table) {
         // Crear un renderizador centrado
@@ -120,12 +120,13 @@ public class GUICoordinator extends javax.swing.JFrame implements IObserver{
         lblCompanyContactLastNames = new javax.swing.JLabel();
         lblCompanyContactPosition = new javax.swing.JLabel();
         jpLeft = new javax.swing.JPanel();
-        lblUser = new javax.swing.JLabel();
-        lblCoordinator = new javax.swing.JLabel();
-        sepUserCoord = new javax.swing.JSeparator();
         btnPerfil = new javax.swing.JButton();
         btnRequests = new javax.swing.JButton();
         btnCloseSession = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        lblUser = new javax.swing.JLabel();
+        sepUserCoord = new javax.swing.JSeparator();
+        lblCoordinator = new javax.swing.JLabel();
         pnlRight = new javax.swing.JPanel();
         pnlPerfil = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -239,9 +240,10 @@ public class GUICoordinator extends javax.swing.JFrame implements IObserver{
                     .addComponent(lblGUISummary)
                     .addComponent(lblSummary))
                 .addGap(18, 18, 18)
-                .addGroup(pnlProjectDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblGUIGoals)
-                    .addComponent(lblGoals))
+                .addGroup(pnlProjectDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblGoals, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(pnlProjectDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblGUIGoals)))
                 .addGap(18, 18, 18)
                 .addGroup(pnlProjectDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblGUIDescription)
@@ -383,17 +385,6 @@ public class GUICoordinator extends javax.swing.JFrame implements IObserver{
         jpLeft.setAlignmentX(0.0F);
         jpLeft.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        lblUser.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        lblUser.setForeground(new java.awt.Color(255, 255, 255));
-        lblUser.setText("Usuario");
-
-        lblCoordinator.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        lblCoordinator.setForeground(new java.awt.Color(255, 255, 255));
-        lblCoordinator.setText("Coordinador");
-
-        sepUserCoord.setBackground(new java.awt.Color(155, 70, 47));
-        sepUserCoord.setForeground(new java.awt.Color(155, 70, 47));
-
         btnPerfil.setBackground(new java.awt.Color(98, 114, 129));
         btnPerfil.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         btnPerfil.setForeground(new java.awt.Color(255, 255, 255));
@@ -427,6 +418,23 @@ public class GUICoordinator extends javax.swing.JFrame implements IObserver{
             }
         });
 
+        jPanel1.setBackground(new java.awt.Color(19, 45, 70));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lblUser.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        lblUser.setForeground(new java.awt.Color(255, 255, 255));
+        lblUser.setText("Usuario");
+        jPanel1.add(lblUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 30, -1, -1));
+
+        sepUserCoord.setBackground(new java.awt.Color(155, 70, 47));
+        sepUserCoord.setForeground(new java.awt.Color(155, 70, 47));
+        jPanel1.add(sepUserCoord, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 80, 174, 14));
+
+        lblCoordinator.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblCoordinator.setForeground(new java.awt.Color(255, 255, 255));
+        lblCoordinator.setText("Coordinador");
+        jPanel1.add(lblCoordinator, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 90, -1, -1));
+
         javax.swing.GroupLayout jpLeftLayout = new javax.swing.GroupLayout(jpLeft);
         jpLeft.setLayout(jpLeftLayout);
         jpLeftLayout.setHorizontalGroup(
@@ -434,37 +442,20 @@ public class GUICoordinator extends javax.swing.JFrame implements IObserver{
             .addComponent(btnPerfil, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnRequests, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpLeftLayout.createSequentialGroup()
-                .addGroup(jpLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jpLeftLayout.createSequentialGroup()
-                        .addContainerGap(95, Short.MAX_VALUE)
-                        .addComponent(lblUser))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpLeftLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(jpLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(sepUserCoord, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jpLeftLayout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(btnCloseSession, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(90, 90, 90))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpLeftLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(lblCoordinator)
-                .addGap(101, 101, 101))
+                .addGap(6, 96, Short.MAX_VALUE)
+                .addComponent(btnCloseSession, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(109, 109, 109))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jpLeftLayout.setVerticalGroup(
             jpLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpLeftLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(lblUser)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(sepUserCoord, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblCoordinator)
-                .addGap(42, 42, 42)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(btnPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(btnRequests, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 319, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 315, Short.MAX_VALUE)
                 .addComponent(btnCloseSession, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(19, 19, 19))
         );
@@ -581,9 +572,6 @@ public class GUICoordinator extends javax.swing.JFrame implements IObserver{
         cl.show(pnlRight, "card2");
         changeColorBtn(btnRequests);
         
-        // Registrar observer solo una vez
-        //this.projectService.addObserver(new projectsCoordinatorObserver(coordinator, projectService, tblRequests, jScrollPane1));
-        
         // Notificar a los observers para llenar la tabla
         this.projectService.notifyObservers();
     }//GEN-LAST:event_btnRequestsActionPerformed
@@ -609,7 +597,33 @@ public class GUICoordinator extends javax.swing.JFrame implements IObserver{
     public static void main(String args[]) {
         
     }
-    
+
+    @Override
+        public void update(Object o) {
+            // Verificar si el objeto notificado es una lista de proyectos
+            if (o instanceof List<?>) {
+                List<?> projects = (List<?>) o;
+
+                // Crear un modelo de tabla para tblRequests
+                DefaultTableModel model = new DefaultTableModel(new String[]{"Nombre", "Empresa", "Opciones"}, 0);
+
+                // Llenar la tabla con los proyectos
+                for (Object project : projects) {
+                    if (project instanceof Project) {
+                        Project p = (Project) project;
+                        model.addRow(new Object[]{p.getName(), p.getCompany().getName(), ""});
+                    }
+                }
+
+                // Asignar el modelo a la tabla
+                tblRequests.setModel(model);
+                tblRequests.getColumn("Opciones").setCellRenderer(new ButtonRenderer());
+                tblRequests.getColumn("Opciones").setCellEditor(new ButtonEditor(new JCheckBox()));
+                
+                // Centrar el contenido de las celdas en las columnas
+                centerContentCells(tblRequests);
+            }
+        }    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFrame SeeDetails;
@@ -622,6 +636,7 @@ public class GUICoordinator extends javax.swing.JFrame implements IObserver{
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel jpLeft;
@@ -673,27 +688,4 @@ public class GUICoordinator extends javax.swing.JFrame implements IObserver{
     private javax.swing.JTable tblRequests;
     // End of variables declaration//GEN-END:variables
 
-    @Override
-    public void update(Object o) {
-        // Verificar si el objeto notificado es una lista de proyectos
-        if (o instanceof List<?>) {
-            List<?> projects = (List<?>) o;
-
-            // Crear un modelo de tabla para tblRequests
-            DefaultTableModel model = new DefaultTableModel(new String[]{"Nombre", "Empresa", "Opciones"}, 0);
-
-            // Llenar la tabla con los proyectos
-            for (Object project : projects) {
-                if (project instanceof Project) {
-                    Project p = (Project) project;
-                    model.addRow(new Object[]{p.getName(), p.getCompany().getName(), ""});
-                }
-            }
-
-            // Asignar el modelo a la tabla
-            tblRequests.setModel(model);
-            tblRequests.getColumn("Opciones").setCellRenderer(new ButtonRenderer());
-            tblRequests.getColumn("Opciones").setCellEditor(new ButtonEditor(new JCheckBox()));
-        }
-    }
 }

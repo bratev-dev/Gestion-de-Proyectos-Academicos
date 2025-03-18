@@ -15,11 +15,11 @@ public class Company {
     private String sector;
     private String contactName;
     private String contactLastName;
-    private int contactNumber;
+    private String contactNumber;
     private String contactPosition;
     
     public Company(String name, int nit, String email, String sector, String contactName,
-            String contactLastName, int contactNumber, String contactPosition){
+            String contactLastName, String contactNumber, String contactPosition){
     
         this.name = name;
         this.nit = nit;
@@ -113,14 +113,14 @@ public class Company {
     /**
      * @return the contactNumber
      */
-    public int getContactNumber() {
+    public String getContactNumber() {
         return contactNumber;
     }
 
     /**
      * @param contactNumber the contactNumber to set
      */
-    public void setContactNumber(int contactNumber) {
+    public void setContactNumber(String contactNumber) {
         this.contactNumber = contactNumber;
     }
 
