@@ -1,26 +1,31 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package com.mycompany.gestionproyectosacademicos.presentation;
 
+import com.mycompany.gestionproyectosacademicos.access.Factory;
+import com.mycompany.gestionproyectosacademicos.access.IProjectRepository;
+import com.mycompany.gestionproyectosacademicos.entities.Coordinator;
+import com.mycompany.gestionproyectosacademicos.entities.Project;
+import com.mycompany.gestionproyectosacademicos.observer.IObserver;
+import com.mycompany.gestionproyectosacademicos.services.CoordinatorService;
+import com.mycompany.gestionproyectosacademicos.services.ProjectService;
 import com.mycompany.gestionproyectosacademicos.services.AuthService;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.util.List;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.JTableHeader;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 
 
-/**
- *
- * @author bratev
- */
-public class GUICoordinator extends javax.swing.JFrame {
+public class GUICoordinator extends javax.swing.JFrame implements IObserver{
+    private final Coordinator coordinator;
+    private final ProjectService projectService;
     // Colores personalizados
     private final Color colorBackSelect = new Color(217, 217, 217); // #D9D9D9
     private final Color colorTxtSelect = new Color(19, 45, 70);    // #132D46
@@ -29,11 +34,46 @@ public class GUICoordinator extends javax.swing.JFrame {
     /**
      * Creates new form GUIMenu
      */
-    public GUICoordinator() {
+    public GUICoordinator(CoordinatorService coordinatorService, int idCoordinator) {
+        IProjectRepository projectRepository = Factory.getInstance().getRepository(IProjectRepository.class, "ARRAYS");
+        
+        this.projectService = new ProjectService(projectRepository);
+        this.coordinator = coordinatorService.getCoordinator(idCoordinator);
+        
+        // Registrar GUICoordinator como observador de ProjectService
+        this.projectService.addObserver(this);
+        
         initComponents();
-        this.setLocationRelativeTo(null);
     }
+    
+    private void fillProjects() {
+        List<Project> projects = projectService.getProjects();
+        DefaultTableModel model = new DefaultTableModel(new String[]{"Nombre", "Empresa", "Opciones"}, 0);
 
+        model.setRowCount(0); // Limpiar la tabla antes de llenarla
+        for (Project project : projects) {
+            model.addRow(new Object[]{project.getName(), project.getCompany().getName(),""});
+        }
+        tblRequests.setModel(model);
+        
+        // Configurar el renderizador y editor para la columna "Opciones"
+        tblRequests.getColumn("Opciones").setCellRenderer(new ButtonRenderer());
+        tblRequests.getColumn("Opciones").setCellEditor(new ButtonEditor(new JCheckBox()));
+        
+        centerContentCells(tblRequests);
+        //update(projectService.getProjects());   // Llamar a update() para llenar la tabla
+    }
+    
+    private void centerContentCells(JTable table) {
+        // Crear un renderizador centrado
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER); // Centrar el contenido
+
+        for (int i = 0; i < table.getColumnCount(); i++) {
+        table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+    }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -43,16 +83,48 @@ public class GUICoordinator extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        SeeDetails = new javax.swing.JFrame();
+        pnlProjectData = new javax.swing.JPanel();
+        lblProyecto = new javax.swing.JLabel();
+        lblProjectName = new javax.swing.JLabel();
+        lblGUISummary = new javax.swing.JLabel();
+        lblGUIGoals = new javax.swing.JLabel();
+        lblGUIDescription = new javax.swing.JLabel();
+        lblGUIMaxTimeInMonths = new javax.swing.JLabel();
+        lblGUIBudget = new javax.swing.JLabel();
+        lblGUIDate = new javax.swing.JLabel();
+        btnChangeState = new javax.swing.JButton();
+        lblGUIState = new javax.swing.JLabel();
+        lblSummary = new javax.swing.JLabel();
+        lblGoals = new javax.swing.JLabel();
+        lblDescription = new javax.swing.JLabel();
+        lblMaxTimeInMonths = new javax.swing.JLabel();
+        lblBudget = new javax.swing.JLabel();
+        lblDate = new javax.swing.JLabel();
+        lblState = new javax.swing.JLabel();
+        pnlCompanyData = new javax.swing.JPanel();
+        lblCompany = new javax.swing.JLabel();
+        lblCompanyName = new javax.swing.JLabel();
+        lblGUICompanyNit = new javax.swing.JLabel();
+        lblGUICompanyEmail = new javax.swing.JLabel();
+        lblGUICompanySector = new javax.swing.JLabel();
+        lblGUICompanyContactPhone = new javax.swing.JLabel();
+        lblGUICompanyContactNames = new javax.swing.JLabel();
+        lblGUICompanyContactLastNames = new javax.swing.JLabel();
+        lblGUICompanyContactPosition = new javax.swing.JLabel();
+        lblCompanyNit = new javax.swing.JLabel();
+        lblCompanyEmail = new javax.swing.JLabel();
+        lblCompanySector = new javax.swing.JLabel();
+        lblCompanyContactPhone = new javax.swing.JLabel();
+        lblCompanyContactNames = new javax.swing.JLabel();
+        lblCompanyContactLastNames = new javax.swing.JLabel();
+        lblCompanyContactPosition = new javax.swing.JLabel();
         jpLeft = new javax.swing.JPanel();
         lblUser = new javax.swing.JLabel();
         lblCoordinator = new javax.swing.JLabel();
         sepUserCoord = new javax.swing.JSeparator();
         btnPerfil = new javax.swing.JButton();
         btnRequests = new javax.swing.JButton();
-        btnMonitoring = new javax.swing.JButton();
-        btnAssignment = new javax.swing.JButton();
-        btnReports = new javax.swing.JButton();
-        btnConnections = new javax.swing.JButton();
         btnCloseSession = new javax.swing.JButton();
         pnlRight = new javax.swing.JPanel();
         pnlPerfil = new javax.swing.JPanel();
@@ -61,7 +133,7 @@ public class GUICoordinator extends javax.swing.JFrame {
         lblSolicitudes = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblSolicitudes = new javax.swing.JTable();
+        tblRequests = new javax.swing.JTable();
         pnlMonitoring = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         pnlAssingment = new javax.swing.JPanel();
@@ -70,6 +142,238 @@ public class GUICoordinator extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         pnlConnections = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
+
+        SeeDetails.getContentPane().setLayout(new javax.swing.BoxLayout(SeeDetails.getContentPane(), javax.swing.BoxLayout.LINE_AXIS));
+
+        lblProyecto.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblProyecto.setText("Proyecto");
+
+        lblProjectName.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblProjectName.setText("nombreProyecto");
+
+        lblGUISummary.setText("Resumen:");
+
+        lblGUIGoals.setText("Objetivos:");
+
+        lblGUIDescription.setText("Descripción:");
+
+        lblGUIMaxTimeInMonths.setText("Tiempo máximo en meses: ");
+
+        lblGUIBudget.setText("Presupuesto: ");
+
+        lblGUIDate.setText("Fecha:");
+
+        btnChangeState.setText("Cambiar estado");
+
+        lblGUIState.setText("Estado:");
+
+        lblSummary.setText("jLabel6");
+
+        lblGoals.setText("jLabel7");
+
+        lblDescription.setText("jLabel8");
+
+        lblMaxTimeInMonths.setText("jLabel9");
+
+        lblBudget.setText("jLabel10");
+
+        lblDate.setText("jLabel11");
+
+        lblState.setText("jLabel12");
+
+        javax.swing.GroupLayout pnlProjectDataLayout = new javax.swing.GroupLayout(pnlProjectData);
+        pnlProjectData.setLayout(pnlProjectDataLayout);
+        pnlProjectDataLayout.setHorizontalGroup(
+            pnlProjectDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlProjectDataLayout.createSequentialGroup()
+                .addGroup(pnlProjectDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnChangeState)
+                    .addGroup(pnlProjectDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(pnlProjectDataLayout.createSequentialGroup()
+                            .addGap(98, 98, 98)
+                            .addComponent(lblProyecto, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(pnlProjectDataLayout.createSequentialGroup()
+                            .addGap(60, 60, 60)
+                            .addComponent(lblProjectName, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(pnlProjectDataLayout.createSequentialGroup()
+                            .addGap(22, 22, 22)
+                            .addGroup(pnlProjectDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(pnlProjectDataLayout.createSequentialGroup()
+                                    .addGap(98, 98, 98)
+                                    .addComponent(lblGUIState)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(lblState))
+                                .addGroup(pnlProjectDataLayout.createSequentialGroup()
+                                    .addGap(77, 77, 77)
+                                    .addGroup(pnlProjectDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(lblGUIGoals)
+                                        .addComponent(lblGUIDescription)
+                                        .addComponent(lblGUISummary))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addGroup(pnlProjectDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(lblGoals, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(lblDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(lblSummary, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(pnlProjectDataLayout.createSequentialGroup()
+                                    .addGroup(pnlProjectDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(pnlProjectDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(lblGUIBudget)
+                                            .addComponent(lblGUIMaxTimeInMonths, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(lblGUIDate, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGap(18, 18, 18)
+                                    .addGroup(pnlProjectDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(lblDate)
+                                        .addComponent(lblBudget)
+                                        .addComponent(lblMaxTimeInMonths, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
+                .addContainerGap(127, Short.MAX_VALUE))
+        );
+        pnlProjectDataLayout.setVerticalGroup(
+            pnlProjectDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlProjectDataLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblProyecto)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblProjectName)
+                .addGap(26, 26, 26)
+                .addGroup(pnlProjectDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblGUISummary)
+                    .addComponent(lblSummary))
+                .addGap(18, 18, 18)
+                .addGroup(pnlProjectDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblGUIGoals)
+                    .addComponent(lblGoals))
+                .addGap(18, 18, 18)
+                .addGroup(pnlProjectDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblGUIDescription)
+                    .addComponent(lblDescription))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnlProjectDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblGUIMaxTimeInMonths)
+                    .addComponent(lblMaxTimeInMonths))
+                .addGap(18, 18, 18)
+                .addGroup(pnlProjectDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblGUIBudget)
+                    .addComponent(lblBudget))
+                .addGap(18, 18, 18)
+                .addGroup(pnlProjectDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblGUIDate)
+                    .addComponent(lblDate))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnlProjectDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblGUIState)
+                    .addComponent(lblState))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addComponent(btnChangeState)
+                .addGap(17, 17, 17))
+        );
+
+        SeeDetails.getContentPane().add(pnlProjectData);
+
+        lblCompany.setText("Empresa");
+
+        lblCompanyName.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblCompanyName.setText("nombreEmpresa");
+
+        lblGUICompanyNit.setText("Nit:");
+
+        lblGUICompanyEmail.setText("Email:");
+
+        lblGUICompanySector.setText("Sector:");
+
+        lblGUICompanyContactPhone.setText("Teléfono de contacto:");
+
+        lblGUICompanyContactNames.setText("Nombres del contacto:");
+
+        lblGUICompanyContactLastNames.setText("Apellidos del contacto:");
+
+        lblGUICompanyContactPosition.setText("Cargo del contacto:");
+
+        lblCompanyNit.setText("jLabel6");
+
+        lblCompanyEmail.setText("jLabel7");
+
+        lblCompanySector.setText("jLabel8");
+
+        lblCompanyContactPhone.setText("jLabel9");
+
+        lblCompanyContactNames.setText("jLabel10");
+
+        lblCompanyContactLastNames.setText("jLabel11");
+
+        lblCompanyContactPosition.setText("jLabel12");
+
+        javax.swing.GroupLayout pnlCompanyDataLayout = new javax.swing.GroupLayout(pnlCompanyData);
+        pnlCompanyData.setLayout(pnlCompanyDataLayout);
+        pnlCompanyDataLayout.setHorizontalGroup(
+            pnlCompanyDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlCompanyDataLayout.createSequentialGroup()
+                .addContainerGap(48, Short.MAX_VALUE)
+                .addGroup(pnlCompanyDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCompanyDataLayout.createSequentialGroup()
+                        .addGroup(pnlCompanyDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblGUICompanyEmail, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblGUICompanyNit, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblGUICompanyContactNames, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblGUICompanyContactPhone, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblGUICompanySector, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblGUICompanyContactLastNames, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblGUICompanyContactPosition, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGap(18, 18, 18)
+                        .addGroup(pnlCompanyDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblCompanyNit, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblCompanyEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblCompanySector, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblCompanyContactPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblCompanyContactNames)
+                            .addComponent(lblCompanyContactLastNames)
+                            .addComponent(lblCompanyContactPosition))
+                        .addGap(97, 97, 97))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCompanyDataLayout.createSequentialGroup()
+                        .addComponent(lblCompanyName, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(62, 62, 62))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCompanyDataLayout.createSequentialGroup()
+                        .addComponent(lblCompany, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(116, 116, 116))))
+        );
+        pnlCompanyDataLayout.setVerticalGroup(
+            pnlCompanyDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlCompanyDataLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblCompany)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblCompanyName)
+                .addGap(31, 31, 31)
+                .addGroup(pnlCompanyDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblGUICompanyNit)
+                    .addComponent(lblCompanyNit))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnlCompanyDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblGUICompanyEmail)
+                    .addComponent(lblCompanyEmail))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnlCompanyDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblGUICompanySector)
+                    .addComponent(lblCompanySector))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnlCompanyDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblGUICompanyContactPhone)
+                    .addComponent(lblCompanyContactPhone))
+                .addGap(18, 18, 18)
+                .addGroup(pnlCompanyDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblGUICompanyContactNames)
+                    .addComponent(lblCompanyContactNames))
+                .addGap(18, 18, 18)
+                .addGroup(pnlCompanyDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblGUICompanyContactLastNames)
+                    .addComponent(lblCompanyContactLastNames))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnlCompanyDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblGUICompanyContactPosition)
+                    .addComponent(lblCompanyContactPosition))
+                .addContainerGap(78, Short.MAX_VALUE))
+        );
+
+        SeeDetails.getContentPane().add(pnlCompanyData);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(960, 540));
@@ -112,50 +416,6 @@ public class GUICoordinator extends javax.swing.JFrame {
             }
         });
 
-        btnMonitoring.setBackground(new java.awt.Color(98, 114, 129));
-        btnMonitoring.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        btnMonitoring.setForeground(new java.awt.Color(255, 255, 255));
-        btnMonitoring.setText("Monitoreo");
-        btnMonitoring.setBorder(null);
-        btnMonitoring.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnMonitoringActionPerformed(evt);
-            }
-        });
-
-        btnAssignment.setBackground(new java.awt.Color(98, 114, 129));
-        btnAssignment.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        btnAssignment.setForeground(new java.awt.Color(255, 255, 255));
-        btnAssignment.setText("Asignación");
-        btnAssignment.setBorder(null);
-        btnAssignment.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAssignmentActionPerformed(evt);
-            }
-        });
-
-        btnReports.setBackground(new java.awt.Color(98, 114, 129));
-        btnReports.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        btnReports.setForeground(new java.awt.Color(255, 255, 255));
-        btnReports.setText("Reportes");
-        btnReports.setBorder(null);
-        btnReports.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnReportsActionPerformed(evt);
-            }
-        });
-
-        btnConnections.setBackground(new java.awt.Color(98, 114, 129));
-        btnConnections.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        btnConnections.setForeground(new java.awt.Color(255, 255, 255));
-        btnConnections.setText("Conexiones");
-        btnConnections.setBorder(null);
-        btnConnections.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnConnectionsActionPerformed(evt);
-            }
-        });
-
         btnCloseSession.setBackground(new java.awt.Color(98, 114, 129));
         btnCloseSession.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnCloseSession.setForeground(new java.awt.Color(255, 255, 255));
@@ -173,7 +433,6 @@ public class GUICoordinator extends javax.swing.JFrame {
             jpLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(btnPerfil, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnRequests, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btnMonitoring, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpLeftLayout.createSequentialGroup()
                 .addGroup(jpLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jpLeftLayout.createSequentialGroup()
@@ -187,9 +446,6 @@ public class GUICoordinator extends javax.swing.JFrame {
                                 .addGap(6, 6, 6)
                                 .addComponent(btnCloseSession, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(90, 90, 90))
-            .addComponent(btnAssignment, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btnReports, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btnConnections, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpLeftLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(lblCoordinator)
@@ -208,15 +464,7 @@ public class GUICoordinator extends javax.swing.JFrame {
                 .addComponent(btnPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnRequests, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnMonitoring, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnAssignment, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnReports, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnConnections, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 115, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 319, Short.MAX_VALUE)
                 .addComponent(btnCloseSession, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(19, 19, 19))
         );
@@ -241,10 +489,10 @@ public class GUICoordinator extends javax.swing.JFrame {
 
         jPanel4.setLayout(new java.awt.BorderLayout());
 
-        tblSolicitudes.setBackground(new java.awt.Color(232, 232, 232));
-        tblSolicitudes.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        tblSolicitudes.setForeground(new java.awt.Color(40, 40, 40));
-        tblSolicitudes.setModel(new javax.swing.table.DefaultTableModel(
+        tblRequests.setBackground(new java.awt.Color(232, 232, 232));
+        tblRequests.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        tblRequests.setForeground(new java.awt.Color(40, 40, 40));
+        tblRequests.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"JuanCompanies", "Muñecas Inflables", "Ver más"},
                 {null, null, null},
@@ -260,24 +508,28 @@ public class GUICoordinator extends javax.swing.JFrame {
         renderer.setHorizontalAlignment(JLabel.CENTER); // Centrar el contenido
 
         // Aplicar el renderizador a todas las columnas
-        for (int i = 0; i < tblSolicitudes.getColumnCount(); i++) {
-            tblSolicitudes.getColumnModel().getColumn(i).setCellRenderer(renderer);
+        for (int i = 0; i < tblRequests.getColumnCount(); i++) {
+            tblRequests.getColumnModel().getColumn(i).setCellRenderer(renderer);
         }
 
+        // Ajustar solo columna "Opciones"
+        tblRequests.getColumnModel().getColumn(2).setPreferredWidth(250);
+
         // Personalizar el encabezado de la tabla
-        JTableHeader header = tblSolicitudes.getTableHeader();
+        JTableHeader header = tblRequests.getTableHeader();
         header.setBackground(new Color(157, 157, 157)); // Color de fondo del encabezado
         header.setForeground(new Color(255, 255, 255)); // Color del texto del encabezado
         header.setFont(new Font("Tahoma", Font.BOLD, 24)); // Fuente del encabezado
 
         // Ajustar la altura del encabezado para que coincida con las filas
         header.setPreferredSize(new Dimension(header.getPreferredSize().width, 80)); // Ancho automático, altura establecida manualmente
-        tblSolicitudes.setRowHeight(70);
         DefaultTableCellRenderer headerRenderer = (DefaultTableCellRenderer) header.getDefaultRenderer();
         headerRenderer.setHorizontalAlignment(JLabel.CENTER);   // Centrar el contenido
-        tblSolicitudes.setShowHorizontalLines(true);
-        tblSolicitudes.setShowVerticalLines(false);
-        jScrollPane1.setViewportView(tblSolicitudes);
+        tblRequests.setRowHeight(60);
+        tblRequests.setShowHorizontalLines(true);
+        tblRequests.setShowVerticalLines(false);
+        jScrollPane1.setViewportView(tblRequests);
+        centerContentCells(tblRequests);
         jScrollPane1.setBorder(new EmptyBorder(20,50,50,50)); // Margen superior, izquierdo, inferior, derecho
         jPanel4.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
@@ -324,34 +576,16 @@ public class GUICoordinator extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnCloseSessionActionPerformed
 
-    private void btnConnectionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConnectionsActionPerformed
-        CardLayout cl = (CardLayout) pnlRight.getLayout();
-        cl.show(pnlRight, "card7");
-        changeColorBtn(btnConnections);
-    }//GEN-LAST:event_btnConnectionsActionPerformed
-
-    private void btnReportsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportsActionPerformed
-        CardLayout cl = (CardLayout) pnlRight.getLayout();
-        cl.show(pnlRight, "card6");
-        changeColorBtn(btnReports);
-    }//GEN-LAST:event_btnReportsActionPerformed
-
-    private void btnAssignmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAssignmentActionPerformed
-        CardLayout cl = (CardLayout) pnlRight.getLayout();
-        cl.show(pnlRight, "card5");
-        changeColorBtn(btnAssignment);
-    }//GEN-LAST:event_btnAssignmentActionPerformed
-
-    private void btnMonitoringActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMonitoringActionPerformed
-        CardLayout cl = (CardLayout) pnlRight.getLayout();
-        cl.show(pnlRight, "card4");
-        changeColorBtn(btnMonitoring);
-    }//GEN-LAST:event_btnMonitoringActionPerformed
-
     private void btnRequestsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRequestsActionPerformed
         CardLayout cl = (CardLayout) pnlRight.getLayout();
         cl.show(pnlRight, "card2");
         changeColorBtn(btnRequests);
+        
+        // Registrar observer solo una vez
+        //this.projectService.addObserver(new projectsCoordinatorObserver(coordinator, projectService, tblRequests, jScrollPane1));
+        
+        // Notificar a los observers para llenar la tabla
+        this.projectService.notifyObservers();
     }//GEN-LAST:event_btnRequestsActionPerformed
 
     private void btnPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPerfilActionPerformed
@@ -362,7 +596,7 @@ public class GUICoordinator extends javax.swing.JFrame {
 
     private void changeColorBtn(JButton botonSeleccionado) {
         // Restaurar el estilo de todos los botones
-        for (JButton boton : new JButton[]{btnPerfil, btnRequests, btnMonitoring, btnAssignment, btnReports, btnConnections}) {
+        for (JButton boton : new JButton[]{btnPerfil, btnRequests}) {
             boton.setBackground(colorBackOrigin);
             boton.setForeground(colorTxtOrigin);
         }
@@ -372,79 +606,16 @@ public class GUICoordinator extends javax.swing.JFrame {
         botonSeleccionado.setForeground(colorTxtSelect);
     }
     
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GUICoordinator.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GUICoordinator.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GUICoordinator.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GUICoordinator.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new GUICoordinator().setVisible(true);
-            }
-        });
+        
     }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAssignment;
+    private javax.swing.JFrame SeeDetails;
+    private javax.swing.JButton btnChangeState;
     private javax.swing.JButton btnCloseSession;
-    private javax.swing.JButton btnConnections;
-    private javax.swing.JButton btnMonitoring;
     private javax.swing.JButton btnPerfil;
-    private javax.swing.JButton btnReports;
     private javax.swing.JButton btnRequests;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -454,17 +625,75 @@ public class GUICoordinator extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel jpLeft;
+    private javax.swing.JLabel lblBudget;
+    private javax.swing.JLabel lblCompany;
+    private javax.swing.JLabel lblCompanyContactLastNames;
+    private javax.swing.JLabel lblCompanyContactNames;
+    private javax.swing.JLabel lblCompanyContactPhone;
+    private javax.swing.JLabel lblCompanyContactPosition;
+    private javax.swing.JLabel lblCompanyEmail;
+    private javax.swing.JLabel lblCompanyName;
+    private javax.swing.JLabel lblCompanyNit;
+    private javax.swing.JLabel lblCompanySector;
     private javax.swing.JLabel lblCoordinator;
+    private javax.swing.JLabel lblDate;
+    private javax.swing.JLabel lblDescription;
+    private javax.swing.JLabel lblGUIBudget;
+    private javax.swing.JLabel lblGUICompanyContactLastNames;
+    private javax.swing.JLabel lblGUICompanyContactNames;
+    private javax.swing.JLabel lblGUICompanyContactPhone;
+    private javax.swing.JLabel lblGUICompanyContactPosition;
+    private javax.swing.JLabel lblGUICompanyEmail;
+    private javax.swing.JLabel lblGUICompanyNit;
+    private javax.swing.JLabel lblGUICompanySector;
+    private javax.swing.JLabel lblGUIDate;
+    private javax.swing.JLabel lblGUIDescription;
+    private javax.swing.JLabel lblGUIGoals;
+    private javax.swing.JLabel lblGUIMaxTimeInMonths;
+    private javax.swing.JLabel lblGUIState;
+    private javax.swing.JLabel lblGUISummary;
+    private javax.swing.JLabel lblGoals;
+    private javax.swing.JLabel lblMaxTimeInMonths;
+    private javax.swing.JLabel lblProjectName;
+    private javax.swing.JLabel lblProyecto;
     private javax.swing.JLabel lblSolicitudes;
+    private javax.swing.JLabel lblState;
+    private javax.swing.JLabel lblSummary;
     private javax.swing.JLabel lblUser;
     private javax.swing.JPanel pnlAssingment;
+    private javax.swing.JPanel pnlCompanyData;
     private javax.swing.JPanel pnlConnections;
     private javax.swing.JPanel pnlMonitoring;
     private javax.swing.JPanel pnlPerfil;
+    private javax.swing.JPanel pnlProjectData;
     private javax.swing.JPanel pnlReports;
     private javax.swing.JPanel pnlRequests;
     private javax.swing.JPanel pnlRight;
     private javax.swing.JSeparator sepUserCoord;
-    private javax.swing.JTable tblSolicitudes;
+    private javax.swing.JTable tblRequests;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void update(Object o) {
+        // Verificar si el objeto notificado es una lista de proyectos
+        if (o instanceof List<?>) {
+            List<?> projects = (List<?>) o;
+
+            // Crear un modelo de tabla para tblRequests
+            DefaultTableModel model = new DefaultTableModel(new String[]{"Nombre", "Empresa", "Opciones"}, 0);
+
+            // Llenar la tabla con los proyectos
+            for (Object project : projects) {
+                if (project instanceof Project) {
+                    Project p = (Project) project;
+                    model.addRow(new Object[]{p.getName(), p.getCompany().getName(), ""});
+                }
+            }
+
+            // Asignar el modelo a la tabla
+            tblRequests.setModel(model);
+            tblRequests.getColumn("Opciones").setCellRenderer(new ButtonRenderer());
+            tblRequests.getColumn("Opciones").setCellEditor(new ButtonEditor(new JCheckBox()));
+        }
+    }
 }

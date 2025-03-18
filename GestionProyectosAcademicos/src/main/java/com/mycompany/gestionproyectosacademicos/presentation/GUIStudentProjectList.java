@@ -1,16 +1,16 @@
-package com.mycompany.gestionproyectosacademicos.presentacion;
+package com.mycompany.gestionproyectosacademicos.presentation;
 
 import com.mycompany.gestionproyectosacademicos.entities.Project;
-import com.mycompany.gestionproyectosacademicos.observer.Observer;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.util.List;
+import com.mycompany.gestionproyectosacademicos.observer.IObserver;
 
 /**
  *
  * @author Jhonatan
  */
-public class GUIStudentProjectList extends javax.swing.JFrame implements Observer{
+public class GUIStudentProjectList extends javax.swing.JFrame implements IObserver{
 
     private JTable projectTable;
     private DefaultTableModel tableModel;
@@ -250,6 +250,7 @@ public class GUIStudentProjectList extends javax.swing.JFrame implements Observe
     private javax.swing.JSeparator sepUserCoord;
     // End of variables declaration//GEN-END:variables
 
+    /*
     @Override
     public void update(Project project) {
         tableModel.addRow(new Object[]{
@@ -258,5 +259,10 @@ public class GUIStudentProjectList extends javax.swing.JFrame implements Observe
             project.getDescription(),
             project.getState()
         });
+    }*/
+
+    @Override
+    public void update(Object o) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

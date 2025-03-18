@@ -1,8 +1,13 @@
 
 package com.mycompany.gestionproyectosacademicos.services;
 
+import com.mycompany.gestionproyectosacademicos.access.Factory;
+import com.mycompany.gestionproyectosacademicos.access.ICoordinatorRepository;
+import com.mycompany.gestionproyectosacademicos.access.IProjectRepository;
 import com.mycompany.gestionproyectosacademicos.entities.User;
 import com.mycompany.gestionproyectosacademicos.access.IUserRepository;
+import com.mycompany.gestionproyectosacademicos.access.ProjectArrayRepository;
+import com.mycompany.gestionproyectosacademicos.infra.Messages;
 //import com.mycompany.gestionproyectosacademicos.presentacion.GUIAdmin;
 //import com.mycompany.gestionproyectosacademicos.presentacion.GUICompany;
 import com.mycompany.gestionproyectosacademicos.presentation.GUICoordinator;
@@ -14,6 +19,7 @@ import javax.swing.JFrame;
  */
 public class AuthService {
     private final IUserRepository userRepository;
+    //private final IProjectRepository projectRepository = Factory.getInstance().getRepository(IProjectRepository.class, "ARRAYS");
 
     public AuthService(IUserRepository userRepository) {
         this.userRepository = userRepository;
@@ -37,7 +43,18 @@ public class AuthService {
                 return new GUICompany();
              */       
             case "COORDINATOR":
-                GUICoordinator instance = new GUICoordinator();
+                ICoordinatorRepository coordRepo = Factory.getInstance().getRepository(ICoordinatorRepository.class, "ARRAYS");
+                /*if(coordRepo != null) {
+                    Messages.showMessageDialog("Repositorio traido con la fábrica", "Atención");
+                }else{
+                    Messages.showMessageDialog("Repositorio no encontrado en AuthService", "Atención");
+                }*/
+                CoordinatorService coordService = new CoordinatorService(coordRepo);
+                /*if(coordService != null) {
+                    Messages.showMessageDialog("Servicio creado con el repositorio", "Atención");
+                }*/
+                
+                GUICoordinator instance = new GUICoordinator(coordService, user.getId());
                 instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
                 return instance;
             default:

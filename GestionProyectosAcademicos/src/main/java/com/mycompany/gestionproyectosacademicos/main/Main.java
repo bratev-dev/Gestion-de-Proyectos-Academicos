@@ -14,10 +14,6 @@ import com.mycompany.gestionproyectosacademicos.services.UserServices;
 
 import javax.swing.JFrame;
 
-/**
- *
- * @author bryan
- */
 public class Main {
     public static void main(String[] args) {
         /*Example: ICompanyRepository repository = Factory.getInstance().getRepository("ARRAYS");// Podria ir SQLITE*/ 
@@ -29,7 +25,7 @@ public class Main {
         instance.setVisible(true);
         */
         
-        IUserRepository userRepo = new UserArrayRepository(); // Usando datos en memoria
+        IUserRepository userRepo = Factory.getInstance().getRepository(IUserRepository.class, "ARRAYS"); // Usando datos en memoria
         AuthService authService = new AuthService(userRepo);
         
         GUILogin loginGUI = new GUILogin(authService);

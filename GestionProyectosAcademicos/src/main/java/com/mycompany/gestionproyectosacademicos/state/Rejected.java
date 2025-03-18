@@ -7,6 +7,10 @@ import com.mycompany.gestionproyectosacademicos.entities.Project;
  */
 public class Rejected {
     public void manageState(Project project) {
-        System.out.println("Proyecto recibido.");
+        project.setState(getStateName());
+    }
+    
+    public String getStateName() {
+        return "rechazado";
     }
 }

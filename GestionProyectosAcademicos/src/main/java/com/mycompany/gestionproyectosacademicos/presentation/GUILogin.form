@@ -300,6 +300,9 @@
                 </Property>
                 <Property name="doubleBuffered" type="boolean" value="true"/>
               </Properties>
+              <Events>
+                <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtPasswordKeyPressed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="jButtonRegistrar">
               <Properties>

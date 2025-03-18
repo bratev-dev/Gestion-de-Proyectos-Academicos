@@ -12,6 +12,7 @@ import com.mycompany.gestionproyectosacademicos.services.UserServices;
 import java.awt.Color;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.KeyEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -186,6 +187,11 @@ public class GUILogin extends javax.swing.JFrame {
 
         txtPassword.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtPassword.setDoubleBuffered(true);
+        txtPassword.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtPasswordKeyPressed(evt);
+            }
+        });
 
         jButtonRegistrar.setBackground(new java.awt.Color(102, 0, 0));
         jButtonRegistrar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -303,12 +309,19 @@ public class GUILogin extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnLoginActionPerformed
 
-    private void jButtonRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegistrarActionPerformed
+  
+    private void txtPasswordKeyPressed(java.awt.event.KeyEvent evt) {
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            btnLogin.doClick();
+        }
+    }
+  
+    private void jButtonRegistrarActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
         GUIcompanyRegister newFrame = new GUIcompanyRegister();
          newFrame.setVisible(true);
          this.dispose();
-    }//GEN-LAST:event_jButtonRegistrarActionPerformed
+    }
 
 
 

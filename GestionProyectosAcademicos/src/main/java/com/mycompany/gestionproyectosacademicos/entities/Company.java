@@ -20,6 +20,9 @@ public class Company {
         this.sector = sector;
         this.contact = contact;
     }
+
+    public Company() {
+    }
     
     //Getters
     public String getName(){
