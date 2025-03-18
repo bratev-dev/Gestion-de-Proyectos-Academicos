@@ -24,10 +24,10 @@ public class ConexionPostgreSQL {
         try {
             Class.forName("org.postgresql.Driver"); // Cargar el driver
             conexion = DriverManager.getConnection(URL, USUARIO, PASSWORD);
-            JOptionPane.showMessageDialog(null
+          /*  JOptionPane.showMessageDialog(null
                     ,"✅ Conexión exitosa a PostgreSQL"
                     , "AVISO",JOptionPane.WARNING_MESSAGE);
-            
+            */
         } catch (ClassNotFoundException e) {
             JOptionPane.showMessageDialog(null
                     ,"❌ Error: No se encontró el Driver de PostgreSQL"
