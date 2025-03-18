@@ -56,7 +56,7 @@ public class SaveDateCompany {
             pstmt.setString(4, company.getSector());
             pstmt.setString(5, company.getContactName());
             pstmt.setString(6, company.getContactLastName());
-            pstmt.setInt(7, company.getContactNumber());
+            pstmt.setString(7, company.getContactNumber());
             pstmt.setString(8, company.getContactPosition());
 
             pstmt.executeUpdate();

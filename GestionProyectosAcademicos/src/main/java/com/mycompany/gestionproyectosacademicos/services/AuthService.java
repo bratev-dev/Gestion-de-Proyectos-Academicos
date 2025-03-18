@@ -39,9 +39,10 @@ public class AuthService {
                 return new GUIAdmin();
             case "STUDENT":
                 return new GUIStudent();
-            case "COMPANY":
-                return new GUICompany();
-             */       
+            */
+            /*case "COMPANY":
+                return new GUICompany();*/
+                   
             case "COORDINATOR":
                 ICoordinatorRepository coordRepo = Factory.getInstance().getRepository(ICoordinatorRepository.class, "ARRAYS");
                 /*if(coordRepo != null) {

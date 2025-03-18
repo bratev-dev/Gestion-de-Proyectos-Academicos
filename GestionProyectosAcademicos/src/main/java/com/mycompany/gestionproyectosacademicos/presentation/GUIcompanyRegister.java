@@ -440,7 +440,7 @@ public class GUIcompanyRegister extends javax.swing.JFrame {
                     jSector.getSelectedItem().toString().trim(),
                     JContactName.getText().trim(),
                     JContactLastName.getText().trim(),
-                    telefono,
+                    JContactNumber.getText().trim(),
                     JContactPosition.getText().trim()
                 );
                 SaveDateCompany saveCompany = new SaveDateCompany();
