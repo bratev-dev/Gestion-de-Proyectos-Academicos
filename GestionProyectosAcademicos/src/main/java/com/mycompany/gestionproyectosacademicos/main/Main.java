@@ -25,7 +25,7 @@ public class Main {
         instance.setVisible(true);
         */
         
-        IUserRepository userRepo = Factory.getInstance().getRepository(IUserRepository.class, "ARRAYS"); // Usando datos en memoria
+        IUserRepository userRepo = Factory.getInstance().getRepository(IUserRepository.class, "POSTGRE"); // Usando datos en memoria
         AuthService authService = new AuthService(userRepo);
         
         GUILogin loginGUI = new GUILogin(authService);
