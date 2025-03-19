@@ -13,11 +13,12 @@ import java.util.List;
  */
 public class ProjectService implements IObservable{
     private IProjectRepository repository;
-    private List<Project> projects = new ArrayList<>();
+    private List<Project> projects;
     private final List<IObserver> observers = new ArrayList<>();
     
     public ProjectService(IProjectRepository repository) {
         this.repository = repository;
+        this.projects = repository.getProjectsByAcademicPeriod("2");
     }
     
     public void addProject(Project project) {
@@ -47,7 +48,6 @@ public class ProjectService implements IObservable{
 
     @Override
     public void notifyObservers() {
-        List<Project> projects = repository.getProjectsByAcademicPeriod("2");
         for (IObserver observer : observers) {
             observer.update(projects); // Notificar a los observadores con la lista de proyectos
         }

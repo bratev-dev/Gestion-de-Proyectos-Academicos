@@ -6,14 +6,16 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ButtonEditor extends DefaultCellEditor {
+public class GUICoordinatorButtonEditor extends DefaultCellEditor {
     private JPanel panel;
     private JButton btnSeeDetails;
     private JButton btnComment;
     private int currentRow;
+    private GUICoordinator guiCoordinator;
 
-    public ButtonEditor(JCheckBox checkBox) {
+    public GUICoordinatorButtonEditor(JCheckBox checkBox, GUICoordinator guiCoordinator) {
         super(checkBox);
+        this.guiCoordinator = guiCoordinator;
         panel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 0));
         panel.setOpaque(true);
         
@@ -27,7 +29,9 @@ public class ButtonEditor extends DefaultCellEditor {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Lógica para el botón "Ver más"
-                JOptionPane.showMessageDialog(panel, "Ver más en la fila: " + currentRow);
+                if (guiCoordinator != null) {
+                    guiCoordinator.openSeeDetails(currentRow); // Llamar a un método en GUICoordinator
+                }
                 fireEditingStopped();
             }
         });
@@ -36,7 +40,11 @@ public class ButtonEditor extends DefaultCellEditor {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Lógica para el botón "Comentar"
-                JOptionPane.showMessageDialog(panel, "Comentar en la fila: " + currentRow);
+                
+                if (guiCoordinator != null) {
+                    guiCoordinator.comment(currentRow);
+                }
+                
                 fireEditingStopped();
             }
         });
@@ -56,7 +64,9 @@ public class ButtonEditor extends DefaultCellEditor {
     @Override
     public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
         currentRow = row;
+        panel.setBackground(table.getSelectionBackground());
         return panel;
+
     }
 
     @Override

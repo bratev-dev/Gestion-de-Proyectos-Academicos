@@ -1,14 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.gestionproyectosacademicos.services;
-
-/**
- *
- * @author rubei
- */
-
 
 import com.mycompany.gestionproyectosacademicos.access.CompanyPostgreSQLRepository;
 import com.mycompany.gestionproyectosacademicos.entities.Company;
@@ -27,11 +17,19 @@ public class CompanyService {
     public CompanyService(ICompanyRepository companyRepository) {
         this.companyRepository = companyRepository;
     }
-
+  
     public boolean registrarEmpresa(String nit, String name, String email, String sector,
                                     String contactName, String contactLastName, String contactNumber,
                                     String contactPosition) {
         try {
+            pstmt.setString(1, company.getNit());
+            pstmt.setString(2, company.getName());
+            pstmt.setString(3, company.getEmail());
+            pstmt.setString(4, company.getSector());
+            pstmt.setString(5, company.getContactNames());
+            pstmt.setString(6, company.getContactLastNames());
+            pstmt.setString(7, company.getContactPhoneNumber());
+            pstmt.setString(8, company.getContactPosition());
 
             Company company = new Company(nit, name, email, sector, contactName, contactLastName, contactNumber, contactPosition);
 
