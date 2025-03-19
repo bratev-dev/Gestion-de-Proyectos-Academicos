@@ -21,13 +21,13 @@ import javax.swing.JOptionPane;
 
 public class CompanyService {
 
-    public boolean existsCompany(int nit, String email) {
+    public boolean existsCompany(String nit, String email) {
         String sql = "SELECT COUNT(*) FROM company WHERE companynit = ? OR companyemail = ?";
         
         try (Connection conexion = CompanyPostgreSQLRepository.conectar();
              PreparedStatement pstmt = conexion.prepareStatement(sql)) {
 
-            pstmt.setInt(1, nit);
+            pstmt.setString(1, nit);
             pstmt.setString(2, email);
             ResultSet rs = pstmt.executeQuery();
             
@@ -52,7 +52,7 @@ public class CompanyService {
         try (Connection conexion = CompanyPostgreSQLRepository.conectar();
              PreparedStatement pstmt = conexion.prepareStatement(sql)) {
 
-            pstmt.setInt(1, company.getNit());
+            pstmt.setString(1, company.getNit());
             pstmt.setString(2, company.getName());
             pstmt.setString(3, company.getEmail());
             pstmt.setString(4, company.getSector());

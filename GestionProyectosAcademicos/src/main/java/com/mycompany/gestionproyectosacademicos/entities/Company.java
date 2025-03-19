@@ -10,7 +10,7 @@ package com.mycompany.gestionproyectosacademicos.entities;
  */
 public class Company {
     private String name;
-    private int nit;
+    private String nit;
     private String email;
     private String sector;
     private String contactName;
@@ -18,7 +18,7 @@ public class Company {
     private String contactNumber;
     private String contactPosition;
     
-    public Company(String name, int nit, String email, String sector, String contactName,
+    public Company(String name, String nit, String email, String sector, String contactName,
             String contactLastName, String contactNumber, String contactPosition){
     
         this.name = name;
@@ -39,7 +39,7 @@ public class Company {
         return name;
     }
     
-    public int getNit(){
+    public String getNit(){
         return nit;
     }
     
@@ -57,7 +57,7 @@ public class Company {
     /**
      * @param nit the nit to set
      */
-    public void setNit(int nit) {
+    public void setNit(String nit) {
         this.nit = nit;
     }
 

@@ -20,7 +20,7 @@ public class UserServices {
         return user != null;
     }
     public boolean saveUser(User user) {
-        String sql = "INSERT INTO users (email, password, role) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO users (nit, email, password, role) VALUES (?,?, ?, ?)";
         
         try (Connection conexion = CompanyPostgreSQLRepository.conectar();
              PreparedStatement pstmt = conexion.prepareStatement(sql)) {
@@ -28,9 +28,10 @@ public class UserServices {
             // Hashear la contraseña antes de guardarla
            // String hashedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
 
-            pstmt.setString(1, user.getEmail());
-            pstmt.setString(2, user.getPassword() );
-            pstmt.setString(3, user.getRole());
+            pstmt.setInt(1, user.getId());
+            pstmt.setString(2, user.getEmail());
+            pstmt.setString(3, user.getPassword() );
+            pstmt.setString(4, user.getRole());
 
             pstmt.executeUpdate();
             JOptionPane.showMessageDialog(null, "✅ Usuario registrado con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
