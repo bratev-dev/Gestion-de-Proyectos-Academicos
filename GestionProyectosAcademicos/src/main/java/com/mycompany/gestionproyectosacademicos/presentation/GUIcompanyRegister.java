@@ -5,11 +5,13 @@
 
 package com.mycompany.gestionproyectosacademicos.presentation;
 import com.mycompany.gestionproyectosacademicos.entities.Company;
-import com.mycompany.gestionproyectosacademicos.entities.ConexionPostgreSQL;
-import com.mycompany.gestionproyectosacademicos.entities.SaveDateCompany;
-import com.mycompany.gestionproyectosacademicos.entities.SaveDateUser;
+
+import com.mycompany.gestionproyectosacademicos.entities.Sector;
+import com.mycompany.gestionproyectosacademicos.services.CompanyService;
+
 import com.mycompany.gestionproyectosacademicos.entities.User;
 import com.mycompany.gestionproyectosacademicos.services.AuthService;
+import com.mycompany.gestionproyectosacademicos.services.UserServices;
 
 //import com.mycompany.gestionproyectosacademicos.presentacion.PanelRound;
 import javax.swing.JOptionPane;
@@ -17,6 +19,7 @@ import javax.swing.JOptionPane;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -31,6 +34,14 @@ public class GUIcompanyRegister extends javax.swing.JFrame {
     public GUIcompanyRegister() {
         initComponents();
         this.setLocationRelativeTo(null);
+        SwingUtilities.invokeLater(() -> fillSectors()); 
+    }
+    
+    private void fillSectors(){
+        jSector.removeAllItems();
+        for(Sector sector: Sector.values()){
+            jSector.addItem(sector.toString());
+        }
     }
 
     /**
@@ -223,7 +234,7 @@ public class GUIcompanyRegister extends javax.swing.JFrame {
         label13.setForeground(new java.awt.Color(19, 45, 70));
         label13.setText("Contraseña*");
 
-        jSector.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tecnologia", "Salud", "Educacion", "Servicios", "Otros" }));
+        jSector.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4" }));
         jSector.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jSectorActionPerformed(evt);
@@ -398,7 +409,7 @@ public class GUIcompanyRegister extends javax.swing.JFrame {
     private void JContactLastNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JContactLastNameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_JContactLastNameActionPerformed
- SaveDateCompany saveCompany = new SaveDateCompany(); 
+ CompanyService saveCompany = new CompanyService(); 
  
     private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
         // TODO add your handling code here:
@@ -443,13 +454,13 @@ public class GUIcompanyRegister extends javax.swing.JFrame {
                     JContactNumber.getText().trim(),
                     JContactPosition.getText().trim()
                 );
-                SaveDateCompany saveCompany = new SaveDateCompany();
+                CompanyService saveCompany = new CompanyService();
                 boolean save = saveCompany.saveCompany(company);
 
                 if (save){
                     User user=new User(nit,JCompanyEmail.getText().trim(),
                         password.getText().trim(), "Empresa");
-                SaveDateUser saveUser = new SaveDateUser();
+                UserServices saveUser = new UserServices();
                 saveUser.saveUser(user);
                 }else{
                     return;
@@ -494,7 +505,7 @@ public class GUIcompanyRegister extends javax.swing.JFrame {
 
     private void jSectorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jSectorActionPerformed
         // TODO add your handling code here:
-        String sector = jSector.getSelectedItem().toString();
+        //String sector = jSector.getSelectedItem().toString();
     }//GEN-LAST:event_jSectorActionPerformed
 
 
