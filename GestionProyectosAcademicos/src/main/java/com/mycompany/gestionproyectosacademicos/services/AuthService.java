@@ -35,16 +35,16 @@ public class AuthService {
 
     private JFrame getGUIForRole(User user) {
         switch (user.getRole()) {
-            /*case "ADMIN":
-                return new GUIAdmin();
+            case "ADMIN":
+              //  return new GUIAdmin();
             case "STUDENT":
-                return new GUIStudent();
-            */
-            /*case "COMPANY":
-                return new GUICompany();*/
+            //    return new GUIStudent();
+            
+            case "COMPANY":
+            //    return new GUICompany();*/
                    
             case "COORDINATOR":
-                ICoordinatorRepository coordRepo = Factory.getInstance().getRepository(ICoordinatorRepository.class, "ARRAYS");
+                ICoordinatorRepository coordRepo = Factory.getInstance().getRepository(ICoordinatorRepository.class, "POSTGRE");
                 /*if(coordRepo != null) {
                     Messages.showMessageDialog("Repositorio traido con la fábrica", "Atención");
                 }else{
