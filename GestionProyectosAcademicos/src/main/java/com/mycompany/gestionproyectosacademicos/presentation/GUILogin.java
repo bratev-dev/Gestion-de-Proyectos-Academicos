@@ -4,15 +4,20 @@
  */
 package com.mycompany.gestionproyectosacademicos.presentation;
 
+import com.mycompany.gestionproyectosacademicos.access.CompanyPostgreSQLRepository;
+import com.mycompany.gestionproyectosacademicos.access.ICompanyRepository;
 import com.mycompany.gestionproyectosacademicos.access.UserArrayRepository;
 import com.mycompany.gestionproyectosacademicos.infra.Messages;
 import com.mycompany.gestionproyectosacademicos.entities.User;
 import com.mycompany.gestionproyectosacademicos.services.AuthService;
+import com.mycompany.gestionproyectosacademicos.services.CompanyService;
 import com.mycompany.gestionproyectosacademicos.services.UserServices;
 import java.awt.Color;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -318,9 +323,18 @@ public class GUILogin extends javax.swing.JFrame {
   
     private void jButtonRegistrarActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-        GUIcompanyRegister newFrame = new GUIcompanyRegister();
-         newFrame.setVisible(true);
-         this.dispose();
+        //GUIcompanyRegister newFrame = new GUIcompanyRegister();
+        // newFrame.setVisible(true);
+        
+        try (Connection conexion = CompanyPostgreSQLRepository.conectar()) {
+            ICompanyRepository companyRepo = new CompanyPostgreSQLRepository(conexion);
+            CompanyService companyService = new CompanyService(companyRepo);
+            GUIcompanyRegister gui = new GUIcompanyRegister( companyService);
+            gui.setVisible(true);
+            this.dispose();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 

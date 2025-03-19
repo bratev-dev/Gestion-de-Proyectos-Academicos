@@ -4,6 +4,7 @@
  */
 
 package com.mycompany.gestionproyectosacademicos.presentation;
+import com.mycompany.gestionproyectosacademicos.access.ICompanyRepository;
 import com.mycompany.gestionproyectosacademicos.entities.Company;
 
 import com.mycompany.gestionproyectosacademicos.entities.Sector;
@@ -31,7 +32,9 @@ public class GUIcompanyRegister extends javax.swing.JFrame {
     /**
      * Creates new form GUIcompanyRegister
      */
-    public GUIcompanyRegister() {
+    private CompanyService companyService;
+    public GUIcompanyRegister(CompanyService companyService) {
+        this.companyService = companyService;
         initComponents();
         this.setLocationRelativeTo(null);
         SwingUtilities.invokeLater(() -> fillSectors()); 
@@ -409,11 +412,11 @@ public class GUIcompanyRegister extends javax.swing.JFrame {
     private void JContactLastNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JContactLastNameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_JContactLastNameActionPerformed
- CompanyService saveCompany = new CompanyService(); 
+ 
  
     private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
         // TODO add your handling code here:
-        
+       // CompanyService saveCompany = new CompanyService(); 
         if(JCompanyNIT.getText().isEmpty()
                 ||JCompanyEmail.getText().isEmpty()
                 ||JCompanyName.getText().isEmpty()
@@ -426,7 +429,23 @@ public class GUIcompanyRegister extends javax.swing.JFrame {
                             + "Estan marcados con: * "
                     , "¡ERROR!",JOptionPane.WARNING_MESSAGE);
         }else{
-            try {
+            boolean guardado = companyService.registrarEmpresa(
+            JCompanyNIT.getText(), 
+            JCompanyName.getText(),
+            JCompanyEmail.getText(),
+            jSector.getSelectedItem().toString(),
+            JContactName.getText(),
+            JContactLastName.getText(),
+            JContactNumber.getText(),
+            JContactPosition.getText()
+        );
+
+        if (guardado) {
+            JOptionPane.showMessageDialog(this, "Empresa registrada con éxito");
+        } else {
+            JOptionPane.showMessageDialog(this, "Error al registrar empresa");
+        }
+           /* try {
                 // Validar NIT
                 String nitTexto = JCompanyNIT.getText().trim();
                 if (!nitTexto.matches("\\d+")) {
@@ -475,7 +494,7 @@ public class GUIcompanyRegister extends javax.swing.JFrame {
                    GUILogin login = new GUILogin(authService); // Pasar la instancia al constructor
                    login.setVisible(true); // Mostrar la ventana
                    
-                   this.dispose();
+                   this.dispose();*/
         }
     }//GEN-LAST:event_button1ActionPerformed
 
@@ -512,39 +531,7 @@ public class GUIcompanyRegister extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GUIcompanyRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GUIcompanyRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GUIcompanyRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GUIcompanyRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new GUIcompanyRegister().setVisible(true);
-            }
-        });
-    }
-
-  
+ 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.awt.TextField JCompanyEmail;
     private java.awt.TextField JCompanyNIT;
