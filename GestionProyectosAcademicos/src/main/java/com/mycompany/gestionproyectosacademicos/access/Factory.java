@@ -1,6 +1,5 @@
-
 package com.mycompany.gestionproyectosacademicos.access;
-import com.mycompany.gestionproyectosacademicos.infra.Messages;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,31 +9,29 @@ import java.util.Map;
 public class Factory {
 
     private static Factory instance;
-    
-    // Mapas para almacenar repositorios según su tipo y nombre (ARRAYS, SQLITE, etc.)
-    private Map<Class<?>, Object> repositoryMap;
+
+    // Mapas para almacenar repositorios según su tipo y nombre (ARRAYS, POSTGRE, etc.)
     private Map<String, Map<Class<?>, Object>> repositoriesByType;
 
     private Factory() {
-        repositoryMap = new HashMap<>();
         repositoriesByType = new HashMap<>();
 
         // Definir diferentes implementaciones según el tipo
         Map<Class<?>, Object> arraysRepositories = new HashMap<>();
-        //arraysRepositories.put(ICompanyRepository.class, new CompanyArraysRepository());
         arraysRepositories.put(IUserRepository.class, new UserArrayRepository());
-        //arraysRepositories.put(IStudentRepository.class, new StudentArrayRepository());
-        arraysRepositories.put(IProjectRepository.class, new ProjectArrayRepository());
         arraysRepositories.put(ICoordinatorRepository.class, new CoordinatorArrayRepository());
-        //Map<Class<?>, Object> sqliteRepositories = new HashMap<>();
-        //sqliteRepositories.put(ICompanyRepository.class, new CompanySqliteRepository());
-        //sqliteRepositories.put(IUserRepository.class, new UserSqliteRepository());
-        //sqliteRepositories.put(IStudentRepository.class, new StudentSqliteRepository());
-        //sqliteRepositories.put(IProjectRepository.class, new ProjectSqliteRepository());
-        
+        arraysRepositories.put(IProjectRepository.class, new ProjectArrayRepository());
+
+        // Repositorios de PostgreSQL
+        Map<Class<?>, Object> postgreRepositories = new HashMap<>();
+        postgreRepositories.put(IUserRepository.class, new UserPostgreRepository());
+        postgreRepositories.put(ICoordinatorRepository.class, new CoordinatorPostgreRepository());
+        // Aquí puedes agregar más repositorios de PostgreSQL si los tienes, por ejemplo:
+        // postgreRepositories.put(IProjectRepository.class, new ProjectPostgreRepository());
+
         // Agregar tipos de almacenamiento a la fábrica
         repositoriesByType.put("ARRAYS", arraysRepositories);
-       // repositoriesByType.put("SQLITE", sqliteRepositories);
+        repositoriesByType.put("POSTGRE", postgreRepositories);
     }
 
     /**
@@ -51,7 +48,7 @@ public class Factory {
      * Obtiene una instancia concreta de un repositorio según el tipo de almacenamiento seleccionado.
      * 
      * @param repositoryClass Clase de la interfaz del repositorio
-     * @param storageType Tipo de almacenamiento ("ARRAYS", "SQLITE", etc.)
+     * @param storageType Tipo de almacenamiento ("ARRAYS", "POSTGRE", etc.)
      * @return Instancia del repositorio
      */
     @SuppressWarnings("unchecked")
