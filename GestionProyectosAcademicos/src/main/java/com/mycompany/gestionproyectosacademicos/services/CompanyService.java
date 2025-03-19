@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.gestionproyectosacademicos.entities;
+package com.mycompany.gestionproyectosacademicos.services;
 
 /**
  *
@@ -10,19 +10,21 @@ package com.mycompany.gestionproyectosacademicos.entities;
  */
 
 
-import com.mycompany.gestionproyectosacademicos.entities.ConexionPostgreSQL;
+import com.mycompany.gestionproyectosacademicos.access.CompanyPostgreSQLRepository;
+import com.mycompany.gestionproyectosacademicos.entities.Company;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
-public class SaveDateCompany {
+public class CompanyService {
 
     public boolean existsCompany(String nit, String email) {
         String sql = "SELECT COUNT(*) FROM company WHERE companynit = ? OR companyemail = ?";
         
-        try (Connection conexion = ConexionPostgreSQL.conectar();
+        try (Connection conexion = CompanyPostgreSQLRepository.conectar();
              PreparedStatement pstmt = conexion.prepareStatement(sql)) {
 
             pstmt.setString(1, nit);
@@ -47,7 +49,7 @@ public class SaveDateCompany {
                      "contactName, contactLastName, contactNumber, contactPosition) " +
                      "VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
 
-        try (Connection conexion = ConexionPostgreSQL.conectar();
+        try (Connection conexion = CompanyPostgreSQLRepository.conectar();
              PreparedStatement pstmt = conexion.prepareStatement(sql)) {
 
             pstmt.setString(1, company.getNit());

@@ -13,7 +13,7 @@ public class CoordinatorArrayRepository implements ICoordinatorRepository{
         if (coordinators == null) {
             coordinators = new ArrayList<>();
             
-            coordinators.add(new Coordinator(2, "Coordinador 1"));
+            coordinators.add(new Coordinator(2, "Coordinador 1", 2));
         }
     }
 

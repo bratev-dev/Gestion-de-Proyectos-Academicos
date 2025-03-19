@@ -18,6 +18,7 @@ public class Company {
     private String contactPhoneNumber;
     private String contactPosition;
     
+    
     public Company(String name, String nit, String email, String sector, String contactNames,
             String contactLastNames, String contactPhoneNumber, String contactPosition){
     
