@@ -108,6 +108,11 @@ public class GUICoordinator extends javax.swing.JFrame implements IObserver{
         lblCompanyContactLastNames = new javax.swing.JLabel();
         lblCompanyContactPosition = new javax.swing.JLabel();
         lblCompanyEmail = new javax.swing.JLabel();
+        GUIComments = new javax.swing.JFrame();
+        jLabel6 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txtAreaComments = new javax.swing.JTextArea();
+        jLabel7 = new javax.swing.JLabel();
         jpLeft = new javax.swing.JPanel();
         btnPerfil = new javax.swing.JButton();
         btnRequests = new javax.swing.JButton();
@@ -117,8 +122,6 @@ public class GUICoordinator extends javax.swing.JFrame implements IObserver{
         sepUserCoord = new javax.swing.JSeparator();
         lblCoordinator = new javax.swing.JLabel();
         pnlRight = new javax.swing.JPanel();
-        pnlPerfil = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
         pnlRequests = new javax.swing.JPanel();
         lblSolicitudes = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
@@ -132,10 +135,13 @@ public class GUICoordinator extends javax.swing.JFrame implements IObserver{
         jLabel4 = new javax.swing.JLabel();
         pnlConnections = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
+        pnlPerfil = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
 
+        GUISeeDetails.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         GUISeeDetails.setPreferredSize(new java.awt.Dimension(1000, 500));
         GUISeeDetails.setResizable(false);
-        GUISeeDetails.getContentPane().setLayout(new java.awt.GridLayout());
+        GUISeeDetails.getContentPane().setLayout(new java.awt.GridLayout(1, 0));
 
         pnlProjectData.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         pnlProjectData.setPreferredSize(new java.awt.Dimension(350, 500));
@@ -236,7 +242,7 @@ public class GUICoordinator extends javax.swing.JFrame implements IObserver{
                                         .addComponent(lblGoals, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlLayout.createSequentialGroup()
                                         .addComponent(lblGUISummary, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 24, Short.MAX_VALUE)
+                                        .addGap(18, 18, Short.MAX_VALUE)
                                         .addComponent(lblSummary, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(pnlLayout.createSequentialGroup()
                                 .addGroup(pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -287,7 +293,7 @@ public class GUICoordinator extends javax.swing.JFrame implements IObserver{
                     .addComponent(lblGUIDescription)
                     .addComponent(lblDescription))
                 .addGap(18, 18, 18)
-                .addGroup(pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblGUIMaxTimeInMonths)
                     .addComponent(lblMaxTimeInMonths))
                 .addGap(18, 18, 18)
@@ -302,7 +308,7 @@ public class GUICoordinator extends javax.swing.JFrame implements IObserver{
                 .addGroup(pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblGUIState)
                     .addComponent(lblState))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
                 .addComponent(btnChangeState)
                 .addGap(62, 62, 62))
         );
@@ -418,7 +424,7 @@ public class GUICoordinator extends javax.swing.JFrame implements IObserver{
                     .addGroup(pnlComLayout.createSequentialGroup()
                         .addGap(219, 219, 219)
                         .addComponent(lblCompany, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(678, Short.MAX_VALUE))
+                .addContainerGap(76, Short.MAX_VALUE))
         );
         pnlComLayout.setVerticalGroup(
             pnlComLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -467,6 +473,45 @@ public class GUICoordinator extends javax.swing.JFrame implements IObserver{
         GUISeeDetails.setSize(800, 600); // Tamaño inicial de la ventana
         GUISeeDetails.pack();
         GUISeeDetails.setLocationRelativeTo(null); // Centrar la ventana en la pantalla
+
+        GUIComments.setResizable(false);
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel6.setText("Comentarios");
+
+        txtAreaComments.setColumns(20);
+        txtAreaComments.setRows(5);
+        jScrollPane2.setViewportView(txtAreaComments);
+
+        jLabel7.setText("max. 144 caracteres");
+
+        javax.swing.GroupLayout GUICommentsLayout = new javax.swing.GroupLayout(GUIComments.getContentPane());
+        GUIComments.getContentPane().setLayout(GUICommentsLayout);
+        GUICommentsLayout.setHorizontalGroup(
+            GUICommentsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(GUICommentsLayout.createSequentialGroup()
+                .addGroup(GUICommentsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(GUICommentsLayout.createSequentialGroup()
+                        .addGap(37, 37, 37)
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(GUICommentsLayout.createSequentialGroup()
+                        .addGap(109, 109, 109)
+                        .addGroup(GUICommentsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 763, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(128, Short.MAX_VALUE))
+        );
+        GUICommentsLayout.setVerticalGroup(
+            GUICommentsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(GUICommentsLayout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addComponent(jLabel6)
+                .addGap(53, 53, 53)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel7)
+                .addContainerGap(91, Short.MAX_VALUE))
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(960, 540));
@@ -556,12 +601,6 @@ public class GUICoordinator extends javax.swing.JFrame implements IObserver{
         pnlRight.setBackground(new java.awt.Color(255, 255, 255));
         pnlRight.setLayout(new java.awt.CardLayout());
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
-        jLabel2.setText("Perfil");
-        pnlPerfil.add(jLabel2);
-
-        pnlRight.add(pnlPerfil, "card3");
-
         pnlRequests.setLayout(new java.awt.BorderLayout());
 
         lblSolicitudes.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
@@ -641,6 +680,12 @@ public class GUICoordinator extends javax.swing.JFrame implements IObserver{
         pnlConnections.add(jLabel5);
 
         pnlRight.add(pnlConnections, "card7");
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
+        jLabel2.setText("Perfil");
+        pnlPerfil.add(jLabel2);
+
+        pnlRight.add(pnlPerfil, "card3");
 
         getContentPane().add(pnlRight, java.awt.BorderLayout.CENTER);
 
@@ -735,6 +780,32 @@ public class GUICoordinator extends javax.swing.JFrame implements IObserver{
         GUISeeDetails.setVisible(true);
     }
 
+    void comment(int row) {
+        // Obtener el proyecto correspondiente a la fila seleccionada
+        List<Project> projects = projectService.getProjects();
+        
+        // Verificar si la lista está vacía
+        if (projects == null || projects.isEmpty()) {
+            System.out.println("No hay proyectos disponibles.");
+            return; // Salir del método si no hay proyectos
+        }
+        
+        // Verificar si el índice (row) es válido
+        if (row < 0 || row >= projects.size()) {
+            System.out.println("Índice fuera de los límites de la lista de proyectos.");
+            return; // Salir del método si el índice no es válido
+        }
+        
+        // Obtener el proyecto correspondiente a la fila seleccionada
+        Project project = projects.get(row);
+        
+        GUIComments.pack();
+        // Mostrar la ventana GUIComments
+        GUIComments.setVisible(true);
+        
+        project.setComments(txtAreaComments.getText());
+    }
+    
     @Override
         public void update(Object o) {
             // Verificar si el objeto notificado es una lista de proyectos
@@ -754,8 +825,8 @@ public class GUICoordinator extends javax.swing.JFrame implements IObserver{
 
                 // Asignar el modelo a la tabla
                 tblRequests.setModel(model);
-                tblRequests.getColumn("Opciones").setCellRenderer(new ButtonRenderer());
-                tblRequests.getColumn("Opciones").setCellEditor(new ButtonEditor(new JCheckBox(), this));
+                tblRequests.getColumn("Opciones").setCellRenderer(new GUICoordinatorButtonRenderer());
+                tblRequests.getColumn("Opciones").setCellEditor(new GUICoordinatorButtonEditor(new JCheckBox(), this));
                 
                 // Centrar el contenido de las celdas en las columnas
                 centerContentCells(tblRequests);
@@ -763,6 +834,7 @@ public class GUICoordinator extends javax.swing.JFrame implements IObserver{
         }    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JFrame GUIComments;
     private javax.swing.JFrame GUISeeDetails;
     private javax.swing.JButton btnChangeState;
     private javax.swing.JButton btnCloseSession;
@@ -773,9 +845,12 @@ public class GUICoordinator extends javax.swing.JFrame implements IObserver{
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPanel jpLeft;
     private javax.swing.JLabel lblBudget;
     private javax.swing.JLabel lblCompany;
@@ -825,6 +900,9 @@ public class GUICoordinator extends javax.swing.JFrame implements IObserver{
     private javax.swing.JPanel pnlRight;
     private javax.swing.JSeparator sepUserCoord;
     private javax.swing.JTable tblRequests;
+    private javax.swing.JTextArea txtAreaComments;
     // End of variables declaration//GEN-END:variables
+
+    
 
 }
