@@ -13,21 +13,22 @@ public class Company {
     private String nit;
     private String email;
     private String sector;
-    private String contactName;
-    private String contactLastName;
-    private String contactNumber;
+    private String contactNames;
+    private String contactLastNames;
+    private String contactPhoneNumber;
     private String contactPosition;
     
-    public Company(String name, String nit, String email, String sector, String contactName,
-            String contactLastName, String contactNumber, String contactPosition){
+    
+    public Company(String name, String nit, String email, String sector, String contactNames,
+            String contactLastNames, String contactPhoneNumber, String contactPosition){
     
         this.name = name;
         this.nit = nit;
         this.email = email;
         this.sector = sector;
-        this.contactName = contactName;
-        this.contactLastName = contactLastName;
-        this.contactNumber = contactNumber;
+        this.contactNames = contactNames;
+        this.contactLastNames = contactLastNames;
+        this.contactPhoneNumber = contactPhoneNumber;
         this.contactPosition = contactPosition;
     }
 
@@ -83,45 +84,45 @@ public class Company {
     }
 
     /**
-     * @return the contactName
+     * @return the contactNames
      */
-    public String getContactName() {
-        return contactName;
+    public String getContactNames() {
+        return contactNames;
     }
 
     /**
-     * @param contactName the contactName to set
+     * @param contactNames the contactNames to set
      */
-    public void setContactName(String contactName) {
-        this.contactName = contactName;
+    public void setContactNames(String contactNames) {
+        this.contactNames = contactNames;
     }
 
     /**
-     * @return the contactLastName
+     * @return the contactLastNames
      */
-    public String getContactLastName() {
-        return contactLastName;
+    public String getContactLastNames() {
+        return contactLastNames;
     }
 
     /**
-     * @param contactLastName the contactLastName to set
+     * @param contactLastNames the contactLastNames to set
      */
-    public void setContactLastName(String contactLastName) {
-        this.contactLastName = contactLastName;
+    public void setContactLastNames(String contactLastNames) {
+        this.contactLastNames = contactLastNames;
     }
 
     /**
-     * @return the contactNumber
+     * @return the contactPhoneNumber
      */
-    public String getContactNumber() {
-        return contactNumber;
+    public String getContactPhoneNumber() {
+        return contactPhoneNumber;
     }
 
     /**
-     * @param contactNumber the contactNumber to set
+     * @param contactPhoneNumber the contactPhoneNumber to set
      */
-    public void setContactNumber(String contactNumber) {
-        this.contactNumber = contactNumber;
+    public void setContactPhoneNumber(String contactPhoneNumber) {
+        this.contactPhoneNumber = contactPhoneNumber;
     }
 
     /**
