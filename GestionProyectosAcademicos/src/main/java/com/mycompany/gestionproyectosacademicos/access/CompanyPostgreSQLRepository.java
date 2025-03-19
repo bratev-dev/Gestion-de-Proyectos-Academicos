@@ -2,24 +2,25 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.gestionproyectosacademicos.entities;
+package com.mycompany.gestionproyectosacademicos.access;
 
-/**
- *
- * @author rubei
- */
+import com.mycompany.gestionproyectosacademicos.entities.Company;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
-public class ConexionPostgreSQL {
-    
+/**
+ *
+ * @author rubei
+ */
+public class CompanyPostgreSQLRepository implements ICompanyRepository {
+
     private static final String URL = "jdbc:postgresql://localhost:5432/projectmanagement";
     private static final String USUARIO = "postgres";
     private static final String PASSWORD = "1234";
-
-    public static Connection conectar() {
+    
+     public static Connection conectar() {
         Connection conexion = null;
         try {
             Class.forName("org.postgresql.Driver"); // Cargar el driver
@@ -43,7 +44,10 @@ public class ConexionPostgreSQL {
         return conexion;
     }
 
-    public static void main(String[] args) {
-        conectar(); // Probar la conexión
+    @Override
+    public boolean save(Company newCompany) {
+        conectar();
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+    
 }
