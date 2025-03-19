@@ -1,11 +1,14 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.gestionproyectosacademicos.main;
 
+import com.mycompany.gestionproyectosacademicos.entities.Project;
+import com.mycompany.gestionproyectosacademicos.entities.Student;
 import com.mycompany.gestionproyectosacademicos.presentation.GUICoordinator;
 import com.mycompany.gestionproyectosacademicos.presentation.GUILogin;
+import com.mycompany.gestionproyectosacademicos.presentation.GUIStudentProjectList;
+import com.mycompany.gestionproyectosacademicos.services.ProjectControler;
+import com.mycompany.gestionproyectosacademicos.state.Accepted;
+import com.mycompany.gestionproyectosacademicos.state.ProjectState;
+import com.mycompany.gestionproyectosacademicos.state.Received;
 
 /*
 import com.mycompany.gestionproyectosacademicos.access.Factory;
@@ -33,16 +36,11 @@ public class Main {
         instance.setVisible(true);
         */
       
-        GUICoordinator instance = new GUICoordinator();
+        GUIStudentProjectList instance = new GUIStudentProjectList();
         instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
         instance.setVisible(true);
         
-      
-        /*IUserRepository userRepo = new UserArrayRepository(); // Usando datos en memoria
-        AuthService authService = new AuthService(userRepo);
-
-        GUILogin loginGUI = new GUILogin(authService);
-        loginGUI.setVisible(true);*/
-       
+        
+        
     }
 }

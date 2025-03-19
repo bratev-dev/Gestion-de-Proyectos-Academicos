@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.gestionproyectosacademicos.entities;
 
 /**
@@ -17,7 +13,7 @@ public class ConexionPostgreSQL {
     
     private static final String URL = "jdbc:postgresql://localhost:5432/projectmanagement";
     private static final String USUARIO = "postgres";
-    private static final String PASSWORD = "1234";
+    private static final String PASSWORD = "postgres"; //Cambiar por password local de su maquina
 
     public static Connection conectar() {
         Connection conexion = null;
@@ -42,8 +38,20 @@ public class ConexionPostgreSQL {
         }
         return conexion;
     }
+    
+    public static void closeResources(AutoCloseable... resources) {
+        for (AutoCloseable resource : resources) {
+            try {
+                if (resource != null) {
+                    resource.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     public static void main(String[] args) {
-        conectar(); // Probar la conexión
+        //conectar(); // Probar la conexión
     }
 }
