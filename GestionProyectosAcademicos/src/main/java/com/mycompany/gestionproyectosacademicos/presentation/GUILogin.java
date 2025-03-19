@@ -79,7 +79,7 @@ public class GUILogin extends javax.swing.JFrame {
         btnLogin = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         txtPassword = new javax.swing.JTextField();
-        jButtonRegistrar = new javax.swing.JButton();
+        btnRegister = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocation(new java.awt.Point(0, 0));
@@ -166,13 +166,25 @@ public class GUILogin extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Dirección de correo electronico*");
 
+        txtEmail.setBackground(new java.awt.Color(227, 227, 227));
         txtEmail.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtEmail.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         txtEmail.setDoubleBuffered(true);
 
-        btnLogin.setBackground(new java.awt.Color(19, 45, 70));
+        btnLogin.setBackground(new java.awt.Color(42, 74, 104));
         btnLogin.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnLogin.setForeground(new java.awt.Color(255, 255, 255));
         btnLogin.setText("Iniciar Sesión");
+        btnLogin.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btnLogin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnLogin.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnLoginMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnLoginMouseExited(evt);
+            }
+        });
         btnLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLoginActionPerformed(evt);
@@ -185,7 +197,9 @@ public class GUILogin extends javax.swing.JFrame {
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Contraseña*");
 
+        txtPassword.setBackground(new java.awt.Color(227, 227, 227));
         txtPassword.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtPassword.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         txtPassword.setDoubleBuffered(true);
         txtPassword.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -193,14 +207,24 @@ public class GUILogin extends javax.swing.JFrame {
             }
         });
 
-        jButtonRegistrar.setBackground(new java.awt.Color(102, 0, 0));
-        jButtonRegistrar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButtonRegistrar.setForeground(new java.awt.Color(255, 255, 255));
-        jButtonRegistrar.setText("Registrar Empresa");
-        jButtonRegistrar.setFocusPainted(false);
-        jButtonRegistrar.addActionListener(new java.awt.event.ActionListener() {
+        btnRegister.setBackground(new java.awt.Color(102, 0, 0));
+        btnRegister.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnRegister.setForeground(new java.awt.Color(255, 255, 255));
+        btnRegister.setText("Registrar Empresa");
+        btnRegister.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btnRegister.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnRegister.setFocusPainted(false);
+        btnRegister.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnRegisterMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnRegisterMouseExited(evt);
+            }
+        });
+        btnRegister.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonRegistrarActionPerformed(evt);
+                btnRegisterActionPerformed(evt);
             }
         });
 
@@ -218,17 +242,17 @@ public class GUILogin extends javax.swing.JFrame {
                                 .addGap(25, 25, 25)
                                 .addComponent(jLabel1))
                             .addGroup(jPanel7Layout.createSequentialGroup()
-                                .addGap(65, 65, 65)
-                                .addComponent(btnLogin))
-                            .addGroup(jPanel7Layout.createSequentialGroup()
                                 .addGap(9, 9, 9)
                                 .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel7Layout.createSequentialGroup()
                                 .addGap(86, 86, 86)
                                 .addComponent(jLabel4))))
                     .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGap(116, 116, 116)
-                        .addComponent(jButtonRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(118, 118, 118)
+                        .addComponent(btnRegister, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addGap(138, 138, 138)
+                        .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(81, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
@@ -245,7 +269,7 @@ public class GUILogin extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButtonRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(btnRegister, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jPanel1.add(jPanel7, java.awt.BorderLayout.CENTER);
@@ -309,6 +333,24 @@ public class GUILogin extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnLoginActionPerformed
 
+    private void btnLoginMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLoginMouseEntered
+        btnLogin.setBackground(Color.gray);        // TODO add your handling code here:
+    }//GEN-LAST:event_btnLoginMouseEntered
+
+    private void btnLoginMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLoginMouseExited
+        Color colorNormal = new Color(42, 74, 104);
+        btnLogin.setBackground(colorNormal);// TODO add your handling code here:
+    }//GEN-LAST:event_btnLoginMouseExited
+
+    private void btnRegisterMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegisterMouseEntered
+        btnRegister.setBackground(Color.gray);// TODO add your handling code here:
+    }//GEN-LAST:event_btnRegisterMouseEntered
+
+    private void btnRegisterMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegisterMouseExited
+       Color colorNormal = new Color(102,0,0);
+       btnRegister.setBackground(colorNormal);// // TODO add your handling code here:
+    }//GEN-LAST:event_btnRegisterMouseExited
+
   
     private void txtPasswordKeyPressed(java.awt.event.KeyEvent evt) {
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -316,7 +358,7 @@ public class GUILogin extends javax.swing.JFrame {
         }
     }
   
-    private void jButtonRegistrarActionPerformed(java.awt.event.ActionEvent evt) {
+    private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
         GUIcompanyRegister newFrame = new GUIcompanyRegister();
          newFrame.setVisible(true);
@@ -327,7 +369,7 @@ public class GUILogin extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLogin;
-    private javax.swing.JButton jButtonRegistrar;
+    private javax.swing.JButton btnRegister;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
