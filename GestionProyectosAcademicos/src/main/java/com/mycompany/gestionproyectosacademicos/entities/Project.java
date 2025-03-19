@@ -1,9 +1,9 @@
 package com.mycompany.gestionproyectosacademicos.entities;
 
-import com.mycompany.gestionproyectosacademicos.observer.Observer;
 import com.mycompany.gestionproyectosacademicos.state.ProjectState;
 import java.util.ArrayList;
 import java.util.List;
+import com.mycompany.gestionproyectosacademicos.observer.IObserver;
 /**
  *
  * @author bryan
@@ -18,7 +18,7 @@ public class Project {
     private Request request;
     private Company company;
     private Student[] students;
-    private List<Observer> observers = new ArrayList<>();
+    private List<IObserver> observers = new ArrayList<>();
     
     public Project(){
         
@@ -72,12 +72,12 @@ public class Project {
         this.company = company;
     }
     
-    public void addObserver(Observer observer){
+    public void addObserver(IObserver observer){
         observers.add(observer);
     }
     
     public void notifyObservers(){
-        for(Observer observer : observers){
+        for(IObserver observer : observers){
             observer.update(this);
         }
     }

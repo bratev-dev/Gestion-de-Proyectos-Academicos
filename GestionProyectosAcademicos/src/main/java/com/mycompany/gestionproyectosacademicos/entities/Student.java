@@ -1,13 +1,13 @@
 package com.mycompany.gestionproyectosacademicos.entities;
 
-import com.mycompany.gestionproyectosacademicos.observer.Observer;
 import com.mycompany.gestionproyectosacademicos.state.Accepted;
+import com.mycompany.gestionproyectosacademicos.observer.IObserver;
 
 /**
  *
  * @author Jhonatan
  */
-public class Student implements Observer{
+public class Student implements IObserver{
    
     private int id;
     private String name;

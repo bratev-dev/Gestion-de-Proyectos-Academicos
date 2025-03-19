@@ -1,17 +1,17 @@
 package com.mycompany.gestionproyectosacademicos.services;
 
 import com.mycompany.gestionproyectosacademicos.entities.Project;
-import com.mycompany.gestionproyectosacademicos.observer.Observer;
 import java.util.ArrayList;
 import java.util.List;
+import com.mycompany.gestionproyectosacademicos.observer.IObserver;
 
 /**
  *
  * @author Jhonatan LA NOTIFICACION SE ELIMINO DE ESTA CLASE, AHORA SE MANEJA DESDE LA CLASE PROJECT
  */
-public class ProjectControler {
+public class ProjectService {
     private List<Project> projects = new ArrayList<>();
-    private List<Observer> students = new ArrayList<>();
+    private List<IObserver> students = new ArrayList<>();
     
     public void addProjects(Project project) {
         projects.add(project);
@@ -23,13 +23,13 @@ public class ProjectControler {
         return projects;
     }
     
-    public void addStudent(Observer student) {
+    public void addStudent(IObserver student) {
         students.add(student);
     }
     
     // Método para notificar a todos los observadores
     private void notifyObservers(Object obj) {
-        for (Observer observer : students) {
+        for (IObserver observer : students) {
             observer.update(obj);
         }
     }
@@ -53,7 +53,7 @@ public class ProjectControler {
         projects.addAll(newProjects);
         
         // Notificar a los observadores sobre la actualización completa
-        for (Observer observer : students) {
+        for (IObserver observer : students) {
             if (observer instanceof com.mycompany.gestionproyectosacademicos.presentation.GUIStudentProjectList) {
                 ((com.mycompany.gestionproyectosacademicos.presentation.GUIStudentProjectList) observer).updateProjectList(projects);
             }
