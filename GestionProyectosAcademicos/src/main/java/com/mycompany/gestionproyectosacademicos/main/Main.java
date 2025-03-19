@@ -5,7 +5,7 @@ import com.mycompany.gestionproyectosacademicos.entities.Student;
 import com.mycompany.gestionproyectosacademicos.presentation.GUICoordinator;
 import com.mycompany.gestionproyectosacademicos.presentation.GUILogin;
 import com.mycompany.gestionproyectosacademicos.presentation.GUIStudentProjectList;
-import com.mycompany.gestionproyectosacademicos.services.ProjectService;
+import com.mycompany.gestionproyectosacademicos.services.ProjectControler;
 import com.mycompany.gestionproyectosacademicos.state.Accepted;
 import com.mycompany.gestionproyectosacademicos.state.ProjectState;
 import com.mycompany.gestionproyectosacademicos.state.Received;

@@ -1,9 +1,10 @@
 package com.mycompany.gestionproyectosacademicos.presentation;
 
 import com.mycompany.gestionproyectosacademicos.entities.Project;
+import com.mycompany.gestionproyectosacademicos.observer.Observer;
 import com.mycompany.gestionproyectosacademicos.access.ProjectRepository;
 import com.mycompany.gestionproyectosacademicos.services.AuthService;
-import com.mycompany.gestionproyectosacademicos.services.ProjectService;
+import com.mycompany.gestionproyectosacademicos.services.ProjectControler;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.util.List;
@@ -32,18 +33,17 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import com.mycompany.gestionproyectosacademicos.observer.IObserver;
 
 /**
  *
  * @author Jhonatan
  */
-public class GUIStudentProjectList extends javax.swing.JFrame implements IObserver{
+public class GUIStudentProjectList extends javax.swing.JFrame implements Observer{
 
     private JTable projectTable;
     private DefaultTableModel tableModel;
     private ProjectRepository projectRepository;
-    private ProjectService projectController;
+    private ProjectControler projectController;
     private List<Project> allProjects;
     private int currentPage = 1;
     private final int PROJECTS_PER_PAGE = 10;
@@ -194,7 +194,7 @@ public class GUIStudentProjectList extends javax.swing.JFrame implements IObserv
         
         // Inicializar repositorio y controlador
         projectRepository = new ProjectRepository();
-        projectController = new ProjectService();
+        projectController = new ProjectControler();
         projectController.addStudent(this);
         
         // Inicializar tabla

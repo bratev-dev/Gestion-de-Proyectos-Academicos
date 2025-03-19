@@ -3,7 +3,7 @@ package com.mycompany.gestionproyectosacademicos.observer;
  *
  * @author Jhonatan
  */
-public interface IObserver {
+public interface Observer {
     
     void update(Object obj);
 }
