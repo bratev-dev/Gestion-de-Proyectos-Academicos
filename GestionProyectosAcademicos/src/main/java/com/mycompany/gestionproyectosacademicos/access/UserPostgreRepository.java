@@ -45,4 +45,34 @@ public class UserPostgreRepository implements IUserRepository {
         }
         return null; // Retorna null si no encuentra el usuario
     }
+
+    @Override
+    public boolean saveUser(String email, String password, String role) {
+        String sql = "INSERT INTO public.user (email, password, role) VALUES (?, ?, ?)";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, email);
+            stmt.setString(2, password);
+            stmt.setString(3, role);
+            stmt.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public int getUserIdByEmail(String email) {
+        String sql = "SELECT id FROM public.user WHERE email = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, email);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("id");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return -1; // Retorna -1 si no se encuentra el usuario
+    }
 }

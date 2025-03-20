@@ -11,5 +11,6 @@ import com.mycompany.gestionproyectosacademicos.entities.Company;
  * @author rubei
  */
 public interface ICompanyRepository {
-    boolean save(Company newCompany);
+    boolean save(Company newCompany, String password);
+    boolean existsCompany(String nit, String email);
 }

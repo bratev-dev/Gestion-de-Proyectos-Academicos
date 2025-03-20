@@ -1,78 +1,51 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.gestionproyectosacademicos.services;
 
-/**
- *
- * @author rubei
- */
-
-
 import com.mycompany.gestionproyectosacademicos.access.CompanyPostgreSQLRepository;
+import com.mycompany.gestionproyectosacademicos.access.UserPostgreRepository;
 import com.mycompany.gestionproyectosacademicos.entities.Company;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import javax.swing.JOptionPane;
 
 public class CompanyService {
 
-    public boolean existsCompany(String nit, String email) {
-        String sql = "SELECT COUNT(*) FROM company WHERE companynit = ? OR companyemail = ?";
-        
-        try (Connection conexion = CompanyPostgreSQLRepository.conectar();
-             PreparedStatement pstmt = conexion.prepareStatement(sql)) {
+    private CompanyPostgreSQLRepository companyRepository;
+    private UserPostgreRepository userRepository;
 
-            pstmt.setString(1, nit);
-            pstmt.setString(2, email);
-            ResultSet rs = pstmt.executeQuery();
-            
-            if (rs.next()) {
-                return rs.getInt(1) > 0; // Si COUNT(*) > 0, ya existe una empresa con ese NIT o email
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-    public boolean saveCompany(Company company) {
-        if (existsCompany(company.getNit(), company.getEmail())) {
-            JOptionPane.showMessageDialog(null, "Error: Empresa ya registrada con este NIT o email.","Error",JOptionPane.INFORMATION_MESSAGE);
-            return false; 
-        }
-        
-        String sql = "INSERT INTO company (companyNIT, companyName, companyEmail, companySector, " +
-                     "contactName, contactLastName, contactNumber, contactPosition) " +
-                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
-
-        try (Connection conexion = CompanyPostgreSQLRepository.conectar();
-             PreparedStatement pstmt = conexion.prepareStatement(sql)) {
-
-            pstmt.setString(1, company.getNit());
-            pstmt.setString(2, company.getName());
-            pstmt.setString(3, company.getEmail());
-            pstmt.setString(4, company.getSector());
-            pstmt.setString(5, company.getContactNames());
-            pstmt.setString(6, company.getContactLastNames());
-            pstmt.setString(7, company.getContactPhoneNumber());
-            pstmt.setString(8, company.getContactPosition());
-
-            pstmt.executeUpdate();
-            JOptionPane.showMessageDialog(null, "✅ Empresa "
-                    + "registrada con éxito", "Éxito",
-                    JOptionPane.INFORMATION_MESSAGE);
-            return true;
-
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "❌ Error al guardar "
-                    + "la empresa: " + e.getMessage(), "Error",
-                    JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
+    public CompanyService() {
+        this.companyRepository = new CompanyPostgreSQLRepository();
+        this.userRepository = new UserPostgreRepository();
     }
 
+    public boolean registerCompany(Company company, String password) {
+        // Validar si ya existe una empresa con el mismo NIT o correo electrónico
+        if (companyRepository.existsCompany(company.getNit(), company.getEmail())) {
+            System.out.println("Ya existe una empresa con el mismo NIT o correo electrónico.");
+            return false; // No continuar si ya existe
+        }
+
+        // Paso 1: Guardar el usuario
+        boolean userSaved = userRepository.saveUser(company.getEmail(), password, "COMPANY");
+        if (!userSaved) {
+            System.out.println("No se pudo guardar el usuario.");
+            return false; // Si no se pudo guardar el usuario, no continuar
+        }
+
+        // Paso 2: Obtener el ID del usuario recién creado
+        int userId = userRepository.getUserIdByEmail(company.getEmail());
+        if (userId == -1) {
+            System.out.println("No se pudo obtener el ID del usuario.");
+            return false; // Si no se pudo obtener el ID del usuario, no continuar
+        }
+
+        // Paso 3: Asignar el ID del usuario a la empresa
+        company.setUserId(userId);
+
+        // Paso 4: Guardar la empresa
+        boolean companySaved = companyRepository.save(company, password);
+        if (!companySaved) {
+            System.out.println("No se pudo guardar la empresa.");
+            return false; // Si no se pudo guardar la empresa, no continuar
+        }
+
+        System.out.println("Empresa registrada exitosamente.");
+        return true;
+    }
 }

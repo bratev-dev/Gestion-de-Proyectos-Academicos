@@ -17,6 +17,7 @@ public class Company {
     private String contactLastNames;
     private String contactPhoneNumber;
     private String contactPosition;
+    private int userId;
     
     
     public Company(String name, String nit, String email, String sector, String contactNames,
@@ -30,6 +31,7 @@ public class Company {
         this.contactLastNames = contactLastNames;
         this.contactPhoneNumber = contactPhoneNumber;
         this.contactPosition = contactPosition;
+        this.userId = userId;
     }
 
     public Company() {
@@ -138,6 +140,12 @@ public class Company {
     public void setContactPosition(String contactPosition) {
         this.contactPosition = contactPosition;
     }
-    
+       public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
     
 }
