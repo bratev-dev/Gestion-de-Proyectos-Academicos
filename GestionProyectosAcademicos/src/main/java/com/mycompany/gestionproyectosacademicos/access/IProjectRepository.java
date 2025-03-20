@@ -46,4 +46,9 @@ public interface IProjectRepository {
      */
     
     void deleteProject(int projectId);
+    
+    
+    public boolean existsProjec(String nit, String email);
+    public int getNextProjectId();
+    public boolean existsCompany(String nit, String email);
 }

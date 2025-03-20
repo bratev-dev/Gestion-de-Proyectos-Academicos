@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import com.mycompany.gestionproyectosacademicos.observer.IObserver;
+import java.math.BigDecimal;
 
 public class Project {
     
@@ -19,6 +20,9 @@ public class Project {
     private String state;
     private Company company;
     private String comments;
+    private int calificacion;
+    private String request;
+    private Student[] students;
     private List<IObserver> observers = new ArrayList<>();
 
     public Project(int id, String name, String summary, String goals, String description, String maxTimeInMonths, String budget, String date, String state, Company company) {
@@ -32,6 +36,35 @@ public class Project {
         this.date = date;
         this.state = state;
         this.company = company;
+    }
+    
+
+    public Project(int id, String name, String description, String state, String date, int calificacion, String request, Company company, Student[] students, String summary, String goals, String maxTimeInMonths) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.state = state;
+        this.date = date;
+        this.calificacion = calificacion;
+        this.request = request;
+        this.company = company;
+        this.students = students;
+        this.summary = summary;
+        this.goals = goals;
+        this.maxTimeInMonths = maxTimeInMonths;
+    }
+    
+    
+    public int getId(){
+        return id;
+    }
+    
+    public String getDescription(){
+        return description;
+    }
+   
+    public String getName(){
+        return name;
     }
 
     public String getState() {
@@ -58,18 +91,8 @@ public class Project {
         this.comments = comments;
     }
 
-    
-
-    public int getId() {
-        return id;
-    }
-
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public void setName(String name) {
@@ -90,10 +113,6 @@ public class Project {
 
     public void setGoals(String goals) {
         this.goals = goals;
-    }
-
-    public String getDescription() {
-        return description;
     }
 
     public void setDescription(String description) {
@@ -144,9 +163,14 @@ public class Project {
         }
     }
     
+    
     public void changeState(ProjectState state){
         state.ManageState(this);
         notifyObservers();
+    }
+
+    public String getObjectives() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
 }
