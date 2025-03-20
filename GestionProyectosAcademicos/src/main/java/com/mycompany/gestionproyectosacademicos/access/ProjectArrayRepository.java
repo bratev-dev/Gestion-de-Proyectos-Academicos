@@ -33,13 +33,13 @@ public class ProjectArrayRepository implements IProjectRepository{
             "Plataforma para cursos en línea", 
             "Facilitar el aprendizaje remoto", 
             "Ofrecer cursos interactivos y seguimiento del progreso", 
-            "12", "5000000", "2024-06-01", "En revisión", company));
+            "12", "5000000", "2024-08-01", "En revisión", company));
 
         projects.add(new Project(3, "Aplicación de Reservas de Restaurantes", 
             "Sistema para reservar mesas en restaurantes", 
             "Automatizar reservas", 
             "Permitir a los usuarios reservar mesas en línea", 
-            "4", "2000000", "2024-07-15", "Recibido", company));
+            "4", "2000000", "2024-12-15", "Recibido", company));
 
         projects.add(new Project(4, "Sistema de Gestión de Recursos Humanos", 
             "Gestión de empleados y nóminas", 
@@ -144,11 +144,21 @@ public class ProjectArrayRepository implements IProjectRepository{
             "9", "4000000", "2025-12-10", "En revisión", company));
         }
     }
-
+    
+    @Override
+    public List<Project> getAllProjects() {
+        return projects;
+    }
+    
     @Override
     public List<Project> getProjectsByAcademicPeriod(String academicPeriod) {
-        // TO IMPLEMENT
-        return projects;
+        List<Project> filteredProjects = new ArrayList<>();
+        for (Project project : projects) {
+            if (project.getAcademicPeriod().equals(academicPeriod)) {
+                filteredProjects.add(project);
+            }
+        }
+        return filteredProjects;
     }
 
     @Override
@@ -175,4 +185,6 @@ public class ProjectArrayRepository implements IProjectRepository{
     public void deleteProject(int projectId) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+
+    
 }

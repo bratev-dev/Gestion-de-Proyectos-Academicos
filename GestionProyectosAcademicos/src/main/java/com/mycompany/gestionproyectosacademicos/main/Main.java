@@ -5,11 +5,15 @@
 package com.mycompany.gestionproyectosacademicos.main;
 
 import com.mycompany.gestionproyectosacademicos.access.Factory;
+import com.mycompany.gestionproyectosacademicos.access.ICoordinatorRepository;
 import com.mycompany.gestionproyectosacademicos.access.IUserRepository;
 import com.mycompany.gestionproyectosacademicos.access.UserArrayRepository;
+import com.mycompany.gestionproyectosacademicos.filter.AcademicPeriodFilter;
+import com.mycompany.gestionproyectosacademicos.filter.IFilter;
 import com.mycompany.gestionproyectosacademicos.presentation.GUICoordinator;
 import com.mycompany.gestionproyectosacademicos.presentation.GUILogin;
 import com.mycompany.gestionproyectosacademicos.services.AuthService;
+import com.mycompany.gestionproyectosacademicos.services.CoordinatorService;
 import com.mycompany.gestionproyectosacademicos.services.UserServices;
 
 import javax.swing.JFrame;
@@ -22,5 +26,10 @@ public class Main {
         
         GUILogin loginGUI = new GUILogin(authService);
         loginGUI.setVisible(true);
+        
+        IFilter filter = new AcademicPeriodFilter();
+        ICoordinatorRepository coordRepo = Factory.getInstance().getRepository(ICoordinatorRepository.class, "ARRAYS");
+        CoordinatorService coordSer = new CoordinatorService(coordRepo);
+        GUICoordinator coord = new GUICoordinator(coordSer, 2, filter);
     }
 }

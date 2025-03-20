@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import com.mycompany.gestionproyectosacademicos.observer.IObserver;
+import java.time.format.DateTimeFormatter;
 
 public class Project {
     
@@ -33,7 +34,20 @@ public class Project {
         this.state = state;
         this.company = company;
     }
+    
+    // Método para calcular el período académico
+    public String getAcademicPeriod() {
+        LocalDate postulationDate = LocalDate.parse(this.date, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        int year = postulationDate.getYear();
+        int month = postulationDate.getMonthValue();
 
+        if (month >= 1 && month <= 6) {
+            return year + "-1"; // Primer semestre
+        } else {
+            return year + "-2"; // Segundo semestre
+        }
+    }
+    
     public String getState() {
         return state;
     }
