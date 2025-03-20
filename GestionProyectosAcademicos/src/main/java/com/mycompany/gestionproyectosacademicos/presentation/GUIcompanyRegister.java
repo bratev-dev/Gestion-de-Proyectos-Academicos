@@ -4,7 +4,8 @@
  */
 
 package com.mycompany.gestionproyectosacademicos.presentation;
-import com.mycompany.gestionproyectosacademicos.access.ICompanyRepository;
+import com.mycompany.gestionproyectosacademicos.access.Factory;
+import com.mycompany.gestionproyectosacademicos.access.IUserRepository;
 import com.mycompany.gestionproyectosacademicos.entities.Company;
 
 import com.mycompany.gestionproyectosacademicos.entities.Sector;
@@ -394,87 +395,98 @@ public class GUIcompanyRegister extends javax.swing.JFrame {
  
  
     private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
-        // TODO add your handling code here:
-       // CompanyService saveCompany = new CompanyService(); 
-        if(JCompanyNIT.getText().isEmpty()
-                ||JCompanyEmail.getText().isEmpty()
-                ||JCompanyName.getText().isEmpty()
-                ||JContactName.getText().isEmpty()
-                ||JContactNumber.getText().isEmpty()
-                ||JContactLastName.getText().isEmpty()
-                || JContactPosition.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null
-                    ,"Por favor dijite los campos obligatorios. "
-                            + "Estan marcados con: * "
-                    , "¡ERROR!",JOptionPane.WARNING_MESSAGE);
-        }else{
-            boolean guardado = companyService.registrarEmpresa(
-            JCompanyNIT.getText(), 
-            JCompanyName.getText(),
-            JCompanyEmail.getText(),
-            jSector.getSelectedItem().toString(),
-            JContactName.getText(),
-            JContactLastName.getText(),
-            JContactNumber.getText(),
-            JContactPosition.getText()
+             // TODO add your handling code here:
+        
+       if (JCompanyNIT.getText().isEmpty()
+            || JCompanyEmail.getText().isEmpty()
+            || JCompanyName.getText().isEmpty()
+            || JContactName.getText().isEmpty()
+            || JContactNumber.getText().isEmpty()
+            || JContactLastName.getText().isEmpty()
+            || JContactPosition.getText().isEmpty()) {
+        JOptionPane.showMessageDialog(null,
+                "Por favor, diligencie los campos obligatorios. "
+                        + "Están marcados con: *",
+                "¡ERROR!", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    try {
+        // Validar NIT
+        String nitTexto = JCompanyNIT.getText().trim();
+        if (!nitTexto.matches("\\d+")) {
+            JOptionPane.showMessageDialog(null, "Error: El NIT solo debe contener números.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        int nit = Integer.parseInt(nitTexto);
+
+        // Validar Número de Contacto
+        String telefonoTexto = JContactNumber.getText().trim();
+        if (!telefonoTexto.matches("\\d+")) {
+            JOptionPane.showMessageDialog(null, "Error: El número de contacto debe contener solo números.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        int telefono = Integer.parseInt(telefonoTexto);
+
+        // Crear la empresa
+        Company company = new Company(
+                JCompanyName.getText().trim(),
+                JCompanyNIT.getText().trim(),
+                JCompanyEmail.getText().trim(),
+                jSector.getSelectedItem().toString().trim(),
+                JContactName.getText().trim(),
+                JContactLastName.getText().trim(),
+                JContactNumber.getText().trim(),
+                JContactPosition.getText().trim()
         );
 
-        if (guardado) {
-            JOptionPane.showMessageDialog(this, "Empresa registrada con éxito");
-        } else {
-            JOptionPane.showMessageDialog(this, "Error al registrar empresa");
+        // Obtener el repositorio de usuarios desde la fábrica
+        IUserRepository userRepo = Factory.getInstance().getRepository(IUserRepository.class, "POSTGRE");
+
+        // Crear el servicio de usuarios inyectando el repositorio
+        UserServices userService = new UserServices(userRepo);
+
+        // Crear el servicio de empresas inyectando el repositorio
+        CompanyService companyService = new CompanyService();
+
+        // Guardar la empresa
+        boolean companySaved = companyService.registerCompany(company, password.getText());
+        if (!companySaved) {
+            JOptionPane.showMessageDialog(null, "Error al guardar la empresa.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
         }
-           /* try {
-                // Validar NIT
-                String nitTexto = JCompanyNIT.getText().trim();
-                if (!nitTexto.matches("\\d+")) {
-                    JOptionPane.showMessageDialog(null, "Error: El NIT solo debe contener números.", "Error", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-                int nit = Integer.parseInt(nitTexto);
 
-                // Validar Número de Contacto
-                String telefonoTexto = JContactNumber.getText().trim();
-                if (!telefonoTexto.matches("\\d+")) {
-                    JOptionPane.showMessageDialog(null, "Error: El número de contacto debe contener solo números.", "Error", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-                int telefono = Integer.parseInt(telefonoTexto);
+        // Crear el usuario asociado a la empresa
+        User user = new User(
+                nit,
+                JCompanyEmail.getText().trim(),
+                password.getText().trim(),
+                "COMPANY" // Rol fijo para empresas
+        );
 
-                // Crear la empresa
-                Company company = new Company(
-                    JCompanyName.getText().trim(),
-                    JCompanyNIT.getText().trim(),
-                    JCompanyEmail.getText().trim(),
-                    jSector.getSelectedItem().toString().trim(),
-                    JContactName.getText().trim(),
-                    JContactLastName.getText().trim(),
-                    JContactNumber.getText().trim(),
-                    JContactPosition.getText().trim()
-                );
-                CompanyService saveCompany = new CompanyService();
-                boolean save = saveCompany.saveCompany(company);
-
-                if (save){
-                    User user=new User(nit,JCompanyEmail.getText().trim(),
-                        password.getText().trim(), "Empresa");
-                UserServices saveUser = new UserServices();
-                saveUser.saveUser(user);
-                }else{
-                    return;
-                }
-                
-
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "Error: Ingrese solo números en el NIT y el número de contacto.", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-
-                   AuthService authService = new AuthService(null); // Crear la instancia del servicio de autenticación
-                   GUILogin login = new GUILogin(authService); // Pasar la instancia al constructor
-                   login.setVisible(true); // Mostrar la ventana
-                   
-                   this.dispose();*/
+        // Guardar el usuario
+        boolean userSaved = userService.saveUser(user);
+        if (!userSaved) {
+            JOptionPane.showMessageDialog(null, "Error al guardar el usuario.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
         }
+
+        // Mostrar mensaje de éxito
+        JOptionPane.showMessageDialog(null, "✅ Empresa y usuario registrados con éxito.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+
+        // Crear el servicio de autenticación
+        AuthService authService = new AuthService(userRepo);
+
+        // Abrir la ventana de login
+        GUILogin login = new GUILogin(authService);
+        login.setVisible(true);
+
+        // Cerrar la ventana actual
+        this.dispose();
+
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(null, "Error: Ingrese solo números en el NIT y el número de contacto.", "Error", JOptionPane.ERROR_MESSAGE);
+    }
     }//GEN-LAST:event_button1ActionPerformed
 
     private void JCompanyNITActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JCompanyNITActionPerformed

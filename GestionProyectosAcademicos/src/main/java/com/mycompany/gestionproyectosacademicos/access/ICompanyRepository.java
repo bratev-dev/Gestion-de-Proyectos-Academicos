@@ -16,7 +16,6 @@ import java.util.List;
  * @author rubei
  */
 public interface ICompanyRepository {
-    
-    boolean save(Company newCompany);
-    List<Company> listAll();
+    boolean save(Company newCompany, String password);
+    boolean existsCompany(String nit, String email);
 }

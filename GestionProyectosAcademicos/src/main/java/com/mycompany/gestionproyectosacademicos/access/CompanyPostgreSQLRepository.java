@@ -1,10 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.gestionproyectosacademicos.access;
 
 import com.mycompany.gestionproyectosacademicos.entities.Company;
+import com.mycompany.gestionproyectosacademicos.entities.Sector;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -13,139 +10,108 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JOptionPane;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
- *
- * @author rubei
+ * Implementación del repositorio con PostgreSQL
  */
 public class CompanyPostgreSQLRepository implements ICompanyRepository {
 
-    private static final String URL = "jdbc:postgresql://localhost:5432/projectmanagement";
-    private static final String USUARIO = "postgres";
-    private static final String PASSWORD = "1234";
-    private Connection conexion;
+    private Connection conn;
 
-    public CompanyPostgreSQLRepository(Connection conexion) {
-        this.conexion = conexion;
-    }
-     public static Connection conectar() {
-        Connection conexion = null;
+    public void connect() {
+        // PostgreSQL connection string
+        String url = "jdbc:postgresql://localhost:5432/gestion_proyectos";
+        String user = "postgres";
+        String password = "software";
+
         try {
-            Class.forName("org.postgresql.Driver"); // Cargar el driver
-            conexion = DriverManager.getConnection(URL, USUARIO, PASSWORD);
-           /* JOptionPane.showMessageDialog(null
-                    ,"✅ Conexión exitosa a PostgreSQL"
-                    , "AVISO",JOptionPane.WARNING_MESSAGE);
-            */
-        } catch (ClassNotFoundException e) {
-            JOptionPane.showMessageDialog(null
-                    ,"❌ Error: No se encontró el Driver de PostgreSQL"
-                    , "AVISO",JOptionPane.WARNING_MESSAGE);
-            
-            e.printStackTrace();
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null
-                    ,"❌ Error de conexión: "
-                    , "AVISO",JOptionPane.WARNING_MESSAGE);
-            
+            conn = DriverManager.getConnection(url, user, password);
+        } catch (SQLException ex) {
+            Logger.getLogger(CompanyPostgreSQLRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return conexion;
     }
 
-     
-    public boolean existsCompany(String nit, String email) {
-        String sql = "SELECT COUNT(*) FROM company WHERE companynit = ? OR companyemail = ?";
-
-        try (Connection conexion = CompanyPostgreSQLRepository.conectar();
-             PreparedStatement pstmt = conexion.prepareStatement(sql)) {
-
-            System.out.println("🔍 Verificando NIT: " + nit + " | Email: " + email); // 👈 Depuración
-
-            pstmt.setString(1, nit);
-            pstmt.setString(2, email);
-            ResultSet rs = pstmt.executeQuery();
-
-            if (rs.next()) {
-                int count = rs.getInt(1);
-                System.out.println("✅ Empresas encontradas: " + count); // 👈 Depuración
-                return count > 0;
+    public void disconnect() {
+        try {
+            if (conn != null) {
+                conn.close();
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
         }
-        return false;
     }
 
     @Override
-    public boolean save(Company company) {
-        conectar();
-        
-        if (existsCompany(company.getNit(), company.getEmail())) {
-            JOptionPane.showMessageDialog(null, "Error: Empresa ya registrada con este NIT o email.","Error",JOptionPane.INFORMATION_MESSAGE);
-            return false; 
-        }
-        
-        String sql = "INSERT INTO company (companyNIT, companyName, companyEmail, companySector, " +
-                     "contactName, contactLastName, contactNumber, contactPosition) " +
-                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
-
-        try (Connection conexion = CompanyPostgreSQLRepository.conectar();
-                PreparedStatement pstmt = conexion.prepareStatement(sql)
-                ) {
-
-            pstmt.setString(1, company.getNit());
-            pstmt.setString(2, company.getName());
-            pstmt.setString(3, company.getEmail());
-            pstmt.setString(4, company.getSector());
-            pstmt.setString(5, company.getContactName());
-            pstmt.setString(6, company.getContactLastName());
-            pstmt.setString(7, company.getContactNumber());
-            pstmt.setString(8, company.getContactPosition());
-
-            pstmt.executeUpdate();
-            JOptionPane.showMessageDialog(null, "✅ Empresa "
-                    + "registrada con éxito", "Éxito",
-                    JOptionPane.INFORMATION_MESSAGE);
-            return true;
-
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "❌ Error al guardar "
-                    + "la empresa: " + e.getMessage(), "Error",
-                    JOptionPane.ERROR_MESSAGE);
+    public boolean save(Company newCompany, String password) {
+    try {
+        // Validar la empresa
+        if (newCompany == null || newCompany.getNit().isBlank() || newCompany.getName().isBlank() 
+            || newCompany.getEmail().isBlank() || password.isBlank()) {
             return false;
         }
-    
-        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 
-    @Override
-    public List<Company> listAll() {
-        
-         List<Company> companies = new ArrayList<>();
-        String sql = "SELECT * FROM company";
+        this.connect();
 
-        try (Statement stmt = conexion.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
-            
-            while (rs.next()) {
-                Company company = new Company(
-                    rs.getString("companyNIT"),
-                    rs.getString("companyName"),
-                    rs.getString("companyEmail"),
-                    rs.getString("companySector"),
-                    rs.getString("contactName"),
-                    rs.getString("contactLastName"),
-                    rs.getString("contactNumber"),
-                    rs.getString("contactPosition")
-                );
-                companies.add(company);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        // Paso 1: Guardar el usuario en la tabla user
+        String userSql = "INSERT INTO public.user (email, password, role) VALUES (?, ?, ?)";
+        PreparedStatement userStmt = conn.prepareStatement(userSql, Statement.RETURN_GENERATED_KEYS);
+        userStmt.setString(1, newCompany.getEmail());
+        userStmt.setString(2, password); // Contraseña proporcionada
+        userStmt.setString(3, "COMPANY"); // Rol fijo para empresas
+        userStmt.executeUpdate();
+
+        // Obtener el ID del usuario recién creado
+        ResultSet generatedKeys = userStmt.getGeneratedKeys();
+        int userId = -1;
+        if (generatedKeys.next()) {
+            userId = generatedKeys.getInt(1);
+        } else {
+            throw new SQLException("No se pudo obtener el ID del usuario.");
         }
-        return companies;
-       // throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+
+        // Paso 2: Guardar la empresa en la tabla company
+        String companySql = "INSERT INTO public.company (name, nit, email, sector, contact_names, contact_last_names, contact_phone_number, contact_position, user_id) "
+                          + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        PreparedStatement companyStmt = conn.prepareStatement(companySql);
+        companyStmt.setString(1, newCompany.getName());
+        companyStmt.setString(2, newCompany.getNit());
+        companyStmt.setString(3, newCompany.getEmail());
+        companyStmt.setString(4, newCompany.getSector());
+        companyStmt.setString(5, newCompany.getContactNames());
+        companyStmt.setString(6, newCompany.getContactLastNames());
+        companyStmt.setString(7, newCompany.getContactPhoneNumber());
+        companyStmt.setString(8, newCompany.getContactPosition());
+        companyStmt.setInt(9, userId); // user_id obtenido del registro en la tabla user
+
+        companyStmt.executeUpdate();
+        this.disconnect();
+        return true;
+    } catch (SQLException ex) {
+        Logger.getLogger(CompanyPostgreSQLRepository.class.getName()).log(Level.SEVERE, null, ex);
+    } finally {
+        this.disconnect(); // Asegurarse de cerrar la conexión
     }
-    
+    return false;
+}
+    @Override
+    public boolean existsCompany(String nit, String email) {
+        this.connect();
+        String sql = "SELECT COUNT(*) FROM public.company WHERE nit = ? OR email = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) { // Cambia connection por conn
+            pstmt.setString(1, nit);
+            pstmt.setString(2, email);
+
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0; // Si COUNT(*) > 0, ya existe una empresa con ese NIT o email
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CompanyPostgreSQLRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }finally {
+        this.disconnect(); // Cerrar la conexión a la base de datos
+    }
+        return false;
+    }
 }
