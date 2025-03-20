@@ -9,25 +9,17 @@ import java.sql.SQLException;
 
 public class UserPostgreRepository implements IUserRepository {
 
-    private Connection connection;
+    private Connection conn;
 
-    public UserPostgreRepository() {
-        // Configura la conexión a la base de datos PostgreSQL
-        String url = "jdbc:postgresql://localhost:5432/gestion_proyectos";
-        String user = "postgres";
-        String password = "software";
-
-        try {
-            connection = DriverManager.getConnection(url, user, password);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public UserPostgreRepository(Connection conn) {
+        this.conn = conn;
     }
+       
 
     @Override
     public User validarUsuario(String email, String password) {
         String sql = "SELECT id, email, password, role FROM public.user WHERE email = ? AND password = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, email);
             stmt.setString(2, password);
 
@@ -49,7 +41,7 @@ public class UserPostgreRepository implements IUserRepository {
     @Override
     public boolean saveUser(String email, String password, String role) {
         String sql = "INSERT INTO public.user (email, password, role) VALUES (?, ?, ?)";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, email);
             stmt.setString(2, password);
             stmt.setString(3, role);
@@ -64,7 +56,7 @@ public class UserPostgreRepository implements IUserRepository {
     @Override
     public int getUserIdByEmail(String email) {
         String sql = "SELECT id FROM public.user WHERE email = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, email);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {

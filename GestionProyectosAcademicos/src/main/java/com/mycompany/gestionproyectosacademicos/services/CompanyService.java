@@ -1,19 +1,32 @@
 package com.mycompany.gestionproyectosacademicos.services;
 
-import com.mycompany.gestionproyectosacademicos.access.CompanyPostgreSQLRepository;
-import com.mycompany.gestionproyectosacademicos.access.UserPostgreRepository;
+import com.mycompany.gestionproyectosacademicos.access.ICompanyRepository;
+import com.mycompany.gestionproyectosacademicos.access.IUserRepository;
 import com.mycompany.gestionproyectosacademicos.entities.Company;
 
 public class CompanyService {
 
-    private CompanyPostgreSQLRepository companyRepository;
-    private UserPostgreRepository userRepository;
+    private final ICompanyRepository companyRepository;
+    private final IUserRepository userRepository;
 
-    public CompanyService() {
-        this.companyRepository = new CompanyPostgreSQLRepository();
-        this.userRepository = new UserPostgreRepository();
+    /**
+     * Constructor que recibe los repositorios como dependencias.
+     *
+     * @param companyRepository Repositorio de empresas.
+     * @param userRepository    Repositorio de usuarios.
+     */
+    public CompanyService(ICompanyRepository companyRepository, IUserRepository userRepository) {
+        this.companyRepository = companyRepository;
+        this.userRepository = userRepository;
     }
 
+    /**
+     * Registra una nueva empresa y su usuario asociado.
+     *
+     * @param company  La empresa a registrar.
+     * @param password La contraseña del usuario asociado.
+     * @return true si el registro fue exitoso, false en caso contrario.
+     */
     public boolean registerCompany(Company company, String password) {
         // Validar si ya existe una empresa con el mismo NIT o correo electrónico
         if (companyRepository.existsCompany(company.getNit(), company.getEmail())) {

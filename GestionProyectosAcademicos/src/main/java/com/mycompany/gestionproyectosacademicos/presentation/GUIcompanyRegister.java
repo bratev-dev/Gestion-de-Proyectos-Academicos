@@ -5,6 +5,7 @@
 
 package com.mycompany.gestionproyectosacademicos.presentation;
 import com.mycompany.gestionproyectosacademicos.access.Factory;
+import com.mycompany.gestionproyectosacademicos.access.ICompanyRepository;
 import com.mycompany.gestionproyectosacademicos.access.IUserRepository;
 import com.mycompany.gestionproyectosacademicos.entities.Company;
 
@@ -447,7 +448,10 @@ public class GUIcompanyRegister extends javax.swing.JFrame {
         UserServices userService = new UserServices(userRepo);
 
         // Crear el servicio de empresas inyectando el repositorio
-        CompanyService companyService = new CompanyService();
+        
+        
+        ICompanyRepository compRepo = Factory.getInstance().getRepository(ICompanyRepository.class, "POSTGRE");
+        CompanyService companyService = new CompanyService(compRepo, userRepo);
 
         // Guardar la empresa
         boolean companySaved = companyService.registerCompany(company, password.getText());
@@ -475,11 +479,10 @@ public class GUIcompanyRegister extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "✅ Empresa y usuario registrados con éxito.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 
         // Crear el servicio de autenticación
-        AuthService authService = new AuthService(userRepo);
-
-        // Abrir la ventana de login
-        GUILogin login = new GUILogin(authService);
-        login.setVisible(true);
+        AuthService authService = new AuthService(null); // Crear la instancia del servicio de autenticación
+        GUILogin login = new GUILogin(authService, userService, companyService); // Pasar la instancia al constructor
+        login.setVisible(true); // Mostrar la ventana
+        this.dispose();
 
         // Cerrar la ventana actual
         this.dispose();

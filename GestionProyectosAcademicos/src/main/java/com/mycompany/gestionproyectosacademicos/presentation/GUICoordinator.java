@@ -1,7 +1,9 @@
 package com.mycompany.gestionproyectosacademicos.presentation;
 
 import com.mycompany.gestionproyectosacademicos.access.Factory;
+import com.mycompany.gestionproyectosacademicos.access.ICompanyRepository;
 import com.mycompany.gestionproyectosacademicos.access.IProjectRepository;
+import com.mycompany.gestionproyectosacademicos.access.IUserRepository;
 import com.mycompany.gestionproyectosacademicos.entities.Company;
 import com.mycompany.gestionproyectosacademicos.entities.Coordinator;
 import com.mycompany.gestionproyectosacademicos.entities.Project;
@@ -10,6 +12,8 @@ import com.mycompany.gestionproyectosacademicos.observer.IObserver;
 import com.mycompany.gestionproyectosacademicos.services.CoordinatorService;
 import com.mycompany.gestionproyectosacademicos.services.ProjectService;
 import com.mycompany.gestionproyectosacademicos.services.AuthService;
+import com.mycompany.gestionproyectosacademicos.services.CompanyService;
+import com.mycompany.gestionproyectosacademicos.services.UserServices;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -693,9 +697,12 @@ public class GUICoordinator extends javax.swing.JFrame implements IObserver{
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCloseSessionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseSessionActionPerformed
-        
+        IUserRepository userRepo = Factory.getInstance().getRepository(IUserRepository.class, "POSTGRE");
+        ICompanyRepository compRepo = Factory.getInstance().getRepository(ICompanyRepository.class, "POSTGRE");
+        UserServices userService = new UserServices(userRepo);
+        CompanyService companyService = new CompanyService(compRepo, userRepo);
         AuthService authService = new AuthService(null); // Crear la instancia del servicio de autenticación
-        GUILogin login = new GUILogin(authService); // Pasar la instancia al constructor
+        GUILogin login = new GUILogin(authService, userService, companyService); // Pasar la instancia al constructor
         login.setVisible(true); // Mostrar la ventana
         this.dispose();
     }//GEN-LAST:event_btnCloseSessionActionPerformed

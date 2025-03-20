@@ -7,6 +7,9 @@ package com.mycompany.gestionproyectosacademicos.presentation;
 import com.mycompany.gestionproyectosacademicos.access.CompanyPostgreSQLRepository;
 import com.mycompany.gestionproyectosacademicos.access.ICompanyRepository;
 import com.mycompany.gestionproyectosacademicos.access.UserArrayRepository;
+import com.mycompany.gestionproyectosacademicos.access.ConexionPostgreSQL;
+import com.mycompany.gestionproyectosacademicos.access.IUserRepository;
+import com.mycompany.gestionproyectosacademicos.access.UserPostgreRepository;
 import com.mycompany.gestionproyectosacademicos.infra.Messages;
 import com.mycompany.gestionproyectosacademicos.entities.User;
 import com.mycompany.gestionproyectosacademicos.services.AuthService;
@@ -28,16 +31,19 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class GUILogin extends javax.swing.JFrame {
-    private final AuthService authService;
+    private AuthService authService;
+    private UserServices userService;
+    private CompanyService companyService;
     
-    public GUILogin(AuthService authService) {
+    public GUILogin(AuthService authService, UserServices userService, CompanyService companyService) {
         initComponents(); // Llamada al código autogenerado
         setLocationRelativeTo(null); // Para centrar la ventana
-        this.authService = new AuthService(new UserArrayRepository());
-        //Agregar placeholders después de que se inicialicen los componentes
+        this.authService = authService;
+        this.userService = userService;
+        this.companyService = companyService;
+        // Agregar placeholders después de que se inicialicen los componentes
         agregarPlaceholder(txtEmail, "Ingrese su correo!");
         agregarPlaceholder(txtPassword, "Ingrese su contraseña!");
-        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
     
     
@@ -45,9 +51,6 @@ public class GUILogin extends javax.swing.JFrame {
         textField.setText(placeholder);
         textField.setForeground(Color.GRAY);
 
-        textField.setPreferredSize(new Dimension(200, 30)); // Tamaño fijo
-        textField.setColumns(15); // Evita cambios de tamaño
-    
         textField.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
@@ -66,6 +69,8 @@ public class GUILogin extends javax.swing.JFrame {
             }
         });
     }
+    
+    
 
   
 
@@ -77,7 +82,6 @@ public class GUILogin extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
 
         jPanel4 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
@@ -87,9 +91,9 @@ public class GUILogin extends javax.swing.JFrame {
         btnLogin = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         txtPassword = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
         btnRegister = new javax.swing.JButton();
-        jSeparator1 = new javax.swing.JSeparator();
+        lblUser = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
 
         jPanel4.setBackground(new java.awt.Color(19, 45, 70));
         jPanel4.setPreferredSize(new java.awt.Dimension(600, 70));
@@ -110,7 +114,8 @@ public class GUILogin extends javax.swing.JFrame {
         setBackground(new java.awt.Color(19, 45, 70));
         setLocation(new java.awt.Point(0, 0));
         setMaximumSize(new java.awt.Dimension(400, 400));
-        setMinimumSize(new java.awt.Dimension(960, 540));
+        setMinimumSize(new java.awt.Dimension(400, 400));
+        setResizable(false);
         setSize(new java.awt.Dimension(400, 400));
 
         jPanel1.setBackground(new java.awt.Color(19, 45, 70));
@@ -121,20 +126,14 @@ public class GUILogin extends javax.swing.JFrame {
         jPanel1.setLayout(new java.awt.BorderLayout());
 
         jPanel7.setBackground(new java.awt.Color(19, 45, 70));
-        jPanel7.setLayout(new java.awt.GridBagLayout());
+        jPanel7.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
+        jPanel7.setDoubleBuffered(false);
 
         jLabel1.setDisplayedMnemonic('f');
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Dirección de correo electronico*");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.RELATIVE;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(6, 107, 0, 0);
-        jPanel7.add(jLabel1, gridBagConstraints);
 
         txtEmail.setBackground(new java.awt.Color(227, 227, 227));
         txtEmail.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -147,15 +146,6 @@ public class GUILogin extends javax.swing.JFrame {
                 txtEmailActionPerformed(evt);
             }
         });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 7;
-        gridBagConstraints.ipadx = 236;
-        gridBagConstraints.ipady = 10;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(12, 55, 0, 45);
-        jPanel7.add(txtEmail, gridBagConstraints);
 
         btnLogin.setBackground(new java.awt.Color(42, 74, 104));
         btnLogin.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -176,27 +166,12 @@ public class GUILogin extends javax.swing.JFrame {
                 btnLoginActionPerformed(evt);
             }
         });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 6;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.ipadx = 29;
-        gridBagConstraints.ipady = 15;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(26, 146, 0, 0);
-        jPanel7.add(btnLogin, gridBagConstraints);
 
         jLabel4.setDisplayedMnemonic('f');
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Contraseña*");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(14, 166, 0, 0);
-        jPanel7.add(jLabel4, gridBagConstraints);
 
         txtPassword.setBackground(new java.awt.Color(227, 227, 227));
         txtPassword.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -208,28 +183,6 @@ public class GUILogin extends javax.swing.JFrame {
                 txtPasswordKeyPressed(evt);
             }
         });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridwidth = 7;
-        gridBagConstraints.ipadx = 186;
-        gridBagConstraints.ipady = 10;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(8, 80, 0, 0);
-        jPanel7.add(txtPassword, gridBagConstraints);
-
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText(" Inicio de Sesión");
-        jLabel3.setToolTipText("");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.RELATIVE;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(58, 106, 0, 0);
-        jPanel7.add(jLabel3, gridBagConstraints);
 
         btnRegister.setBackground(new java.awt.Color(102, 0, 0));
         btnRegister.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -251,81 +204,134 @@ public class GUILogin extends javax.swing.JFrame {
                 btnRegisterActionPerformed(evt);
             }
         });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 7;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.ipadx = 38;
-        gridBagConstraints.ipady = 13;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(18, 126, 71, 0);
-        jPanel7.add(btnRegister, gridBagConstraints);
 
-        jSeparator1.setBackground(new java.awt.Color(19, 45, 70));
-        jSeparator1.setForeground(new java.awt.Color(153, 51, 0));
-        jSeparator1.setAlignmentX(0.0F);
-        jSeparator1.setMaximumSize(new java.awt.Dimension(32767, 10));
-        jSeparator1.setName(""); // NOI18N
-        jSeparator1.setPreferredSize(new java.awt.Dimension(1, 1));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 5;
-        gridBagConstraints.ipadx = 246;
-        gridBagConstraints.ipady = 3;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 66, 0, 0);
-        jPanel7.add(jSeparator1, gridBagConstraints);
+        lblUser.setFont(new java.awt.Font("Tahoma", 0, 30)); // NOI18N
+        lblUser.setForeground(new java.awt.Color(255, 255, 255));
+        lblUser.setText("Iniciar Sesión");
+
+        jPanel2.setBackground(new java.awt.Color(102, 0, 0));
+        jPanel2.setForeground(new java.awt.Color(102, 0, 0));
+        jPanel2.setPreferredSize(new java.awt.Dimension(217, 5));
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 226, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 5, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addGap(134, 134, 134)
+                        .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addGap(99, 99, 99)
+                        .addComponent(lblUser))
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addGap(76, 76, 76)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                .addGap(0, 44, Short.MAX_VALUE)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel7Layout.createSequentialGroup()
+                                .addGap(111, 111, 111)
+                                .addComponent(jLabel4))
+                            .addGroup(jPanel7Layout.createSequentialGroup()
+                                .addGap(25, 25, 25)
+                                .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel7Layout.createSequentialGroup()
+                                .addGap(41, 41, 41)
+                                .addComponent(jLabel1)))
+                        .addGap(42, 42, 42))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                        .addComponent(btnRegister, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(115, 115, 115))))
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(lblUser)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
+                .addComponent(jLabel1)
+                .addGap(12, 12, 12)
+                .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(14, 14, 14)
+                .addComponent(jLabel4)
+                .addGap(8, 8, 8)
+                .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(41, 41, 41)
+                .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnRegister, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(47, Short.MAX_VALUE))
+        );
 
         jPanel1.add(jPanel7, java.awt.BorderLayout.CENTER);
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
-        pack();
+        setBounds(0, 0, 400, 400);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-    String email = txtEmail.getText().trim();
-    String password = txtPassword.getText().trim(); // Para evitar espacios en blanco
+        String email = txtEmail.getText().trim();
+        String password = txtPassword.getText().trim();
 
-    // Expresión regular para validar el correo
-    String regExEmail = "^[A-Za-z0-9+_.-]+@(.+)\\.com$";
-    Pattern patternEmail = Pattern.compile(regExEmail);
-    Matcher matcherEmail = patternEmail.matcher(email);
-    
-    // Si el email no es válido, mostrar mensaje y detener el proceso
-    if (!matcherEmail.matches()) {
-        Messages.showMessageDialog("El email ingresado no es válido.", "Atención");
-        txtEmail.requestFocus();
-        return;
+        if (!validarEntrada(email, password)) {
+            return;
+        }
+
+        JFrame nextGUI = autenticarUsuario(email, password);
+        if (nextGUI != null) {
+            Messages.showMessageDialog("Inicio de sesión exitoso", "Éxito");
+            nextGUI.setVisible(true);
+            this.dispose();
+        } else {
+            Messages.showMessageDialog("Credenciales incorrectas", "Error");
+        }
     }
 
-    // Si el email está vacío
-    if (email.isEmpty()) {
-        Messages.showMessageDialog("Debe agregar el Email", "Atención");
-        txtEmail.requestFocus();
-        return;
+    private boolean validarEntrada(String email, String password) {
+        if (email.isEmpty()) {
+            Messages.showMessageDialog("Debe agregar el Email", "Atención");
+            txtEmail.requestFocus();
+            return false;
+        }
+
+        String regExEmail = "^[A-Za-z0-9+_.-]+@(.+)\\.com$";
+        if (!Pattern.matches(regExEmail, email)) {
+            Messages.showMessageDialog("El email ingresado no es válido.", "Atención");
+            txtEmail.requestFocus();
+            return false;
+        }
+
+        if (password.isEmpty()) {
+            Messages.showMessageDialog("Debe ingresar la contraseña", "Atención");
+            txtPassword.requestFocus();
+            return false;
+        }
+
+        return true;
     }
 
-    // Si la contraseña está vacía
-    if (password.isEmpty()) {
-        Messages.showMessageDialog("Debe ingresar la contraseña", "Atención");
-        txtPassword.requestFocus();
-        return;
-    }
-
-    // Llamar a AuthService para autenticar al usuario
-    JFrame nextGUI = authService.login(email, password);
-
-    if (nextGUI != null) {
-        Messages.showMessageDialog("Inicio de sesión exitoso", "Éxito");
-        nextGUI.setVisible(true); // Mostrar la GUI correspondiente
-        this.dispose(); // Cerrar la ventana de login
-    } else {
-        Messages.showMessageDialog("Credenciales incorrectas", "Error");
-    }
-
-
+    private JFrame autenticarUsuario(String email, String password) {
+        return authService.login(email, password);
         
     }//GEN-LAST:event_btnLoginActionPerformed
 
@@ -358,21 +364,10 @@ public class GUILogin extends javax.swing.JFrame {
         }
     }
   
-    private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-        //GUIcompanyRegister newFrame = new GUIcompanyRegister();
-        // newFrame.setVisible(true);
-        
-        try (Connection conexion = CompanyPostgreSQLRepository.conectar()) {
-            ICompanyRepository companyRepo = new CompanyPostgreSQLRepository(conexion);
-            CompanyService companyService = new CompanyService(companyRepo);
-            GUIcompanyRegister gui = new GUIcompanyRegister( companyService);
-            gui.setVisible(true);
-            this.dispose();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {
+   GUIcompanyRegister register = new GUIcompanyRegister(companyService);
+   register.setVisible(true);
+}
 
 
 
@@ -380,12 +375,12 @@ public class GUILogin extends javax.swing.JFrame {
     private javax.swing.JButton btnLogin;
     private javax.swing.JButton btnRegister;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel7;
-    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel lblUser;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtPassword;
     // End of variables declaration//GEN-END:variables
