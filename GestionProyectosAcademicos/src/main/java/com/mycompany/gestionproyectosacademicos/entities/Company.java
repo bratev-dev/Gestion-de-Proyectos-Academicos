@@ -1,13 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.gestionproyectosacademicos.entities;
 
-/**
- *
- * @author bryan
- */
 public class Company {
     private String name;
     private String nit;
@@ -17,12 +9,9 @@ public class Company {
     private String contactLastNames;
     private String contactPhoneNumber;
     private String contactPosition;
-    private int userId;
-    
     
     public Company(String name, String nit, String email, String sector, String contactNames,
-            String contactLastNames, String contactPhoneNumber, String contactPosition){
-    
+        String contactLastNames, String contactPhoneNumber, String contactPosition){
         this.name = name;
         this.nit = nit;
         this.email = email;
@@ -31,19 +20,24 @@ public class Company {
         this.contactLastNames = contactLastNames;
         this.contactPhoneNumber = contactPhoneNumber;
         this.contactPosition = contactPosition;
-        this.userId = userId;
     }
 
     public Company() {
     }
     
+    
+    
     //Getters
     public String getName(){
         return name;
     }
-    
-    public String getNit(){
+
+    public String getNit() {
         return nit;
+    }
+
+    public void setNit(String nit) {
+        this.nit = nit;
     }
     
     public String getSector(){
@@ -55,13 +49,6 @@ public class Company {
      */
     public void setName(String name) {
         this.name = name;
-    }
-
-    /**
-     * @param nit the nit to set
-     */
-    public void setNit(String nit) {
-        this.nit = nit;
     }
 
     /**
@@ -140,12 +127,4 @@ public class Company {
     public void setContactPosition(String contactPosition) {
         this.contactPosition = contactPosition;
     }
-       public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-    
 }

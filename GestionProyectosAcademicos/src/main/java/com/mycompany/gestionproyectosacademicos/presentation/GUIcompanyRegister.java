@@ -1,12 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
-
 package com.mycompany.gestionproyectosacademicos.presentation;
+
 import com.mycompany.gestionproyectosacademicos.access.Factory;
 import com.mycompany.gestionproyectosacademicos.access.ICompanyRepository;
 import com.mycompany.gestionproyectosacademicos.access.IUserRepository;
+import com.mycompany.gestionproyectosacademicos.access.CompanyPostgreSQLRepository;
 import com.mycompany.gestionproyectosacademicos.entities.Company;
 
 import com.mycompany.gestionproyectosacademicos.entities.Sector;
@@ -19,6 +16,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import com.mycompany.gestionproyectosacademicos.services.CompanyService;
 
 //import com.mycompany.gestionproyectosacademicos.presentacion.PanelRound;
 import javax.swing.JOptionPane;
@@ -33,11 +31,6 @@ import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableCellRenderer;
 
-/**
- *
- * @author Rubeiro Romero 
- */
-//interface Company
 public class GUIcompanyRegister extends javax.swing.JFrame {
 
     /**
@@ -53,9 +46,10 @@ public class GUIcompanyRegister extends javax.swing.JFrame {
     }
     
     private void fillSectors(){
-        jSector.removeAllItems();
+        
+        cmbSector.removeAllItems();
         for(Sector sector: Sector.values()){
-            jSector.addItem(sector.toString());
+            cmbSector.addItem(sector.toString());
         }
     }
 
@@ -94,7 +88,7 @@ public class GUIcompanyRegister extends javax.swing.JFrame {
         jSeparator2 = new javax.swing.JSeparator();
         password = new java.awt.TextField();
         label13 = new java.awt.Label();
-        jSector = new javax.swing.JComboBox<>();
+        cmbSector = new javax.swing.JComboBox<>();
         jSeparator1 = new javax.swing.JSeparator();
 
         textField1.setText("textField1");
@@ -255,10 +249,10 @@ public class GUIcompanyRegister extends javax.swing.JFrame {
         label13.setForeground(new java.awt.Color(19, 45, 70));
         label13.setText("Contraseña*");
 
-        jSector.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4" }));
-        jSector.addActionListener(new java.awt.event.ActionListener() {
+        cmbSector.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4" }));
+        cmbSector.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jSectorActionPerformed(evt);
+                cmbSectorActionPerformed(evt);
             }
         });
 
@@ -281,7 +275,7 @@ public class GUIcompanyRegister extends javax.swing.JFrame {
                             .addComponent(label11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(JCompanyEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(label10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jSector, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cmbSector, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(label13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel4Layout.createSequentialGroup()
@@ -328,7 +322,7 @@ public class GUIcompanyRegister extends javax.swing.JFrame {
                         .addGap(0, 0, 0)
                         .addComponent(label10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, 0)
-                        .addComponent(jSector, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cmbSector, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, 0)
                         .addComponent(label13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, 0)
@@ -412,12 +406,48 @@ public class GUIcompanyRegister extends javax.swing.JFrame {
         return;
     }
 
-    try {
-        // Validar NIT
-        String nitTexto = JCompanyNIT.getText().trim();
-        if (!nitTexto.matches("\\d+")) {
-            JOptionPane.showMessageDialog(null, "Error: El NIT solo debe contener números.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
+                // Validar Número de Contacto
+                String telefonoTexto = JContactNumber.getText().trim();
+                if (!telefonoTexto.matches("\\d+")) {
+                    JOptionPane.showMessageDialog(null, "Error: El número de contacto debe contener solo números.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                int telefono = Integer.parseInt(telefonoTexto);
+
+                // Crear la empresa
+                Company company = new Company(
+                    JCompanyName.getText().trim(),
+                        
+                    JCompanyName.getText().trim(),
+                    JCompanyEmail.getText().trim(),
+                    jSector.getSelectedItem().toString().trim(),
+                    JContactName.getText().trim(),
+                    JContactLastName.getText().trim(),
+                    JContactNumber.getText().trim(),
+                    JContactPosition.getText().trim()
+                );
+                 CompanyService companyService = new CompanyService(new CompanyPostgreSQLRepository());
+                boolean result = companyService.registerCompany(company);
+                
+                if (result){
+                    User user=new User(nit,JCompanyEmail.getText().trim(),
+                        password.getText().trim(), "Empresa");
+                SaveDateUser saveUser = new SaveDateUser();
+                saveUser.saveUser(user);
+                }else{
+                    return;
+                }
+                
+
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Error: Ingrese solo números en el NIT y el número de contacto.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+                   AuthService authService = new AuthService(null); // Crear la instancia del servicio de autenticación
+                   GUILogin login = new GUILogin(authService); // Pasar la instancia al constructor
+                   login.setVisible(true); // Mostrar la ventana
+                   
+                   this.dispose();
         }
         int nit = Integer.parseInt(nitTexto);
 
@@ -516,10 +546,10 @@ public class GUIcompanyRegister extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_passwordActionPerformed
 
-    private void jSectorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jSectorActionPerformed
+    private void cmbSectorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbSectorActionPerformed
         // TODO add your handling code here:
         //String sector = jSector.getSelectedItem().toString();
-    }//GEN-LAST:event_jSectorActionPerformed
+    }//GEN-LAST:event_cmbSectorActionPerformed
 
 
     /**
@@ -535,10 +565,10 @@ public class GUIcompanyRegister extends javax.swing.JFrame {
     private java.awt.TextField JContactNumber;
     private java.awt.TextField JContactPosition;
     private java.awt.Button button1;
+    private javax.swing.JComboBox<String> cmbSector;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JComboBox<String> jSector;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private java.awt.Label label10;
