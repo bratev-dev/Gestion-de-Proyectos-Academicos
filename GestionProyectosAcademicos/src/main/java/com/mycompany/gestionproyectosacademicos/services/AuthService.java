@@ -65,7 +65,7 @@ public class AuthService {
                 guiCompany.setExtendedState(JFrame.MAXIMIZED_BOTH);
                 return guiCompany;
                    
-            case "COORDINATOR":
+            case "COORDINADOR":
                 ICoordinatorRepository coordRepo = Factory.getInstance().getRepository(ICoordinatorRepository.class, "POSTGRE");
                 /*if(coordRepo != null) {
                     Messages.showMessageDialog("Repositorio traido con la fábrica", "Atención");

@@ -43,7 +43,7 @@ public class UserServices {
         }
 
         // Guardar el usuario en la base de datos
-        boolean saved = userRepository.saveUser(user.getEmail(), user.getPassword(), user.getRole());
+        boolean saved = userRepository.saveUser( user.getId(), user.getEmail(), user.getPassword(), user.getRole());
         if (saved) {
             JOptionPane.showMessageDialog(null, "✅ Usuario registrado con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
             return true;
