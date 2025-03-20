@@ -4,12 +4,14 @@
  */
 
 package com.mycompany.gestionproyectosacademicos.presentation;
+import com.mycompany.gestionproyectosacademicos.access.CompanyPostgreSQLRepository;
 import com.mycompany.gestionproyectosacademicos.entities.Company;
 import com.mycompany.gestionproyectosacademicos.entities.ConexionPostgreSQL;
 import com.mycompany.gestionproyectosacademicos.entities.SaveDateCompany;
 import com.mycompany.gestionproyectosacademicos.entities.SaveDateUser;
 import com.mycompany.gestionproyectosacademicos.entities.User;
 import com.mycompany.gestionproyectosacademicos.services.AuthService;
+import com.mycompany.gestionproyectosacademicos.services.CompanyService;
 
 //import com.mycompany.gestionproyectosacademicos.presentacion.PanelRound;
 import javax.swing.JOptionPane;
@@ -28,6 +30,8 @@ public class GUIcompanyRegister extends javax.swing.JFrame {
     /**
      * Creates new form GUIcompanyRegister
      */
+    //private CompanyService companyService = new CompanyService(new CompanyPostgreSQLRepository());
+    
     public GUIcompanyRegister() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -435,7 +439,8 @@ public class GUIcompanyRegister extends javax.swing.JFrame {
                 // Crear la empresa
                 Company company = new Company(
                     JCompanyName.getText().trim(),
-                    nit,
+                        
+                    JCompanyName.getText().trim(),
                     JCompanyEmail.getText().trim(),
                     jSector.getSelectedItem().toString().trim(),
                     JContactName.getText().trim(),
@@ -443,10 +448,10 @@ public class GUIcompanyRegister extends javax.swing.JFrame {
                     JContactNumber.getText().trim(),
                     JContactPosition.getText().trim()
                 );
-                SaveDateCompany saveCompany = new SaveDateCompany();
-                boolean save = saveCompany.saveCompany(company);
-
-                if (save){
+                 CompanyService companyService = new CompanyService(new CompanyPostgreSQLRepository());
+                boolean result = companyService.registerCompany(company);
+                
+                if (result){
                     User user=new User(nit,JCompanyEmail.getText().trim(),
                         password.getText().trim(), "Empresa");
                 SaveDateUser saveUser = new SaveDateUser();

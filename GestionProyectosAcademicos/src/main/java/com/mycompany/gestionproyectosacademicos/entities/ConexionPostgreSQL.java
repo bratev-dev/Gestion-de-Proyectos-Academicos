@@ -17,7 +17,7 @@ public class ConexionPostgreSQL {
     
     private static final String URL = "jdbc:postgresql://localhost:5432/projectmanagement";
     private static final String USUARIO = "postgres";
-    private static final String PASSWORD = "1234";
+    private static final String PASSWORD = "alexis";
 
     public static Connection conectar() {
         Connection conexion = null;

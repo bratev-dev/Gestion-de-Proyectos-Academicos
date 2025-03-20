@@ -32,8 +32,13 @@ public class Factory {
         //sqliteRepositories.put(IStudentRepository.class, new StudentSqliteRepository());
         //sqliteRepositories.put(IProjectRepository.class, new ProjectSqliteRepository());
         
-        // Agregar tipos de almacenamiento a la fábrica
+        // 🔹 Almacenamiento en PostgreSQL
+        Map<Class<?>, Object> postgresRepositories = new HashMap<>();
+        postgresRepositories.put(ICompanyRepository.class, new CompanyPostgreSQLRepository());
+
+        // Registrar tipos de almacenamiento en la fábrica
         repositoriesByType.put("ARRAYS", arraysRepositories);
+        repositoriesByType.put("POSTGRESQL", postgresRepositories);
        // repositoriesByType.put("SQLITE", sqliteRepositories);
     }
 
