@@ -11,6 +11,12 @@ import com.mycompany.gestionproyectosacademicos.services.CoordinatorService;
 import com.mycompany.gestionproyectosacademicos.services.ProjectService;
 import com.mycompany.gestionproyectosacademicos.services.AuthService;
 import com.mycompany.gestionproyectosacademicos.filter.IFilter;
+import com.mycompany.gestionproyectosacademicos.state.Accepted;
+import com.mycompany.gestionproyectosacademicos.state.Closed;
+import com.mycompany.gestionproyectosacademicos.state.InProgress;
+import com.mycompany.gestionproyectosacademicos.state.ProjectState;
+import com.mycompany.gestionproyectosacademicos.state.Received;
+import com.mycompany.gestionproyectosacademicos.state.Rejected;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -28,9 +34,8 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 
-public class GUICoordinator extends javax.swing.JFrame implements IObserver, CommentListener{
+public class GUICoordinator extends javax.swing.JFrame implements IObserver{
     private final AcademicPeriodGeneratorService periodGenerator;
-    private final IFilter filter;
     private final Coordinator coordinator;
     private final ProjectService projectService;
     // Colores personalizados
@@ -41,12 +46,11 @@ public class GUICoordinator extends javax.swing.JFrame implements IObserver, Com
     /**
      * Creates new form GUIMenu
      */
-    public GUICoordinator(CoordinatorService coordinatorService, int idCoordinator, IFilter filter) {
+    public GUICoordinator(CoordinatorService coordinatorService, int idCoordinator) {
         IProjectRepository projectRepository = Factory.getInstance().getRepository(IProjectRepository.class, "ARRAYS");
         //ICompanyRepository companyRepository = Factory.getInstance().getRepository(ICompanyRepository.class, "ARRAYS");
         
         this.periodGenerator = new AcademicPeriodGeneratorService();
-        this.filter = filter;
         this.projectService = new ProjectService(projectRepository);
         this.coordinator = coordinatorService.getCoordinator(idCoordinator);
         
@@ -125,6 +129,15 @@ public class GUICoordinator extends javax.swing.JFrame implements IObserver, Com
         txtAreaComments = new javax.swing.JTextArea();
         jLabel7 = new javax.swing.JLabel();
         btnComment = new javax.swing.JButton();
+        GUIChangeState = new javax.swing.JFrame();
+        lblChangeState = new javax.swing.JLabel();
+        rBtnReceived = new javax.swing.JRadioButton();
+        rBtnAccepted = new javax.swing.JRadioButton();
+        rBtnRejected = new javax.swing.JRadioButton();
+        rBtnInProgress = new javax.swing.JRadioButton();
+        rBtnClosed = new javax.swing.JRadioButton();
+        btnSaveState = new javax.swing.JToggleButton();
+        bgStateOptions = new javax.swing.ButtonGroup();
         jpLeft = new javax.swing.JPanel();
         btnPerfil = new javax.swing.JButton();
         btnRequests = new javax.swing.JButton();
@@ -154,7 +167,6 @@ public class GUICoordinator extends javax.swing.JFrame implements IObserver, Com
         jLabel2 = new javax.swing.JLabel();
 
         GUISeeDetails.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        GUISeeDetails.setPreferredSize(new java.awt.Dimension(1000, 500));
         GUISeeDetails.setResizable(false);
         GUISeeDetails.getContentPane().setLayout(new java.awt.GridLayout(1, 0));
 
@@ -197,6 +209,11 @@ public class GUICoordinator extends javax.swing.JFrame implements IObserver, Com
 
         btnChangeState.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnChangeState.setText("Cambiar estado");
+        btnChangeState.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnChangeStateActionPerformed(evt);
+            }
+        });
 
         lblGUIState.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lblGUIState.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -323,7 +340,7 @@ public class GUICoordinator extends javax.swing.JFrame implements IObserver, Com
                 .addGroup(pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblGUIState)
                     .addComponent(lblState))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnChangeState)
                 .addGap(62, 62, 62))
         );
@@ -543,6 +560,78 @@ public class GUICoordinator extends javax.swing.JFrame implements IObserver, Com
                 .addGap(18, 18, 18)
                 .addComponent(btnComment)
                 .addContainerGap(49, Short.MAX_VALUE))
+        );
+
+        lblChangeState.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblChangeState.setText("Cambiar estado");
+
+        bgStateOptions.add(rBtnReceived);
+        rBtnReceived.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        rBtnReceived.setText("Recibido");
+
+        bgStateOptions.add(rBtnAccepted);
+        rBtnAccepted.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        rBtnAccepted.setText("Aceptado");
+
+        bgStateOptions.add(rBtnRejected);
+        rBtnRejected.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        rBtnRejected.setText("Rechazado");
+
+        bgStateOptions.add(rBtnInProgress);
+        rBtnInProgress.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        rBtnInProgress.setText("En ejecución");
+
+        bgStateOptions.add(rBtnClosed);
+        rBtnClosed.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        rBtnClosed.setText("Cerrado");
+
+        btnSaveState.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        btnSaveState.setText("Guardar");
+        btnSaveState.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveStateActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout GUIChangeStateLayout = new javax.swing.GroupLayout(GUIChangeState.getContentPane());
+        GUIChangeState.getContentPane().setLayout(GUIChangeStateLayout);
+        GUIChangeStateLayout.setHorizontalGroup(
+            GUIChangeStateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(GUIChangeStateLayout.createSequentialGroup()
+                .addGroup(GUIChangeStateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(GUIChangeStateLayout.createSequentialGroup()
+                        .addGap(51, 51, 51)
+                        .addComponent(lblChangeState, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(GUIChangeStateLayout.createSequentialGroup()
+                        .addGap(86, 86, 86)
+                        .addGroup(GUIChangeStateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(rBtnInProgress)
+                            .addGroup(GUIChangeStateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(rBtnRejected, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(rBtnAccepted, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(rBtnReceived, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(rBtnClosed, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnSaveState, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(70, Short.MAX_VALUE))
+        );
+        GUIChangeStateLayout.setVerticalGroup(
+            GUIChangeStateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(GUIChangeStateLayout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addComponent(lblChangeState)
+                .addGap(32, 32, 32)
+                .addComponent(rBtnReceived)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(rBtnAccepted)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(rBtnRejected)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(rBtnInProgress)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(rBtnClosed)
+                .addGap(38, 38, 38)
+                .addComponent(btnSaveState)
+                .addContainerGap(46, Short.MAX_VALUE))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -788,8 +877,11 @@ public class GUICoordinator extends javax.swing.JFrame implements IObserver, Com
         System.out.println("Total de proyectos: " + projects.size());
         String selectedPeriod = (String) cmbAcademicPeriod.getSelectedItem();
         System.out.println("Periodo seleccionado: " + selectedPeriod);
-        List<Project> filteredProjects = filter.filter(projects, selectedPeriod);
+        // Filtrar los proyectos por el período académico seleccionado
+        List<Project> filteredProjects = projectService.getProjectsByAcademicPeriod(selectedPeriod);
         System.out.println("Proyectos filtrados: " + filteredProjects.size());
+
+        // Actualizar la tabla con los proyectos filtrados
         update(filteredProjects); // Notificar a los observadores con los proyectos filtrados
     }//GEN-LAST:event_cmbAcademicPeriodActionPerformed
 
@@ -800,6 +892,71 @@ public class GUICoordinator extends javax.swing.JFrame implements IObserver, Com
     private void btnCommentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCommentActionPerformed
         
     }//GEN-LAST:event_btnCommentActionPerformed
+
+    private void btnChangeStateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChangeStateActionPerformed
+        // Obtener el proyecto seleccionado
+        int selectedRow = tblRequests.getSelectedRow();
+        if (selectedRow >= 0) {
+            Project project = projectService.getProjects().get(selectedRow);
+
+            // Configurar los radio buttons en GUIChangeState según el estado actual del proyecto
+            switch (project.getState()) {
+                case "Recibido":
+                    rBtnReceived.setSelected(true);
+                    break;
+                case "Aceptado":
+                    rBtnAccepted.setSelected(true);
+                    break;
+                case "Rechazado":
+                    rBtnRejected.setSelected(true);
+                    break;
+                case "En ejecución":
+                    rBtnInProgress.setSelected(true);
+                    break;
+                case "Cerrado":
+                    rBtnClosed.setSelected(true);
+                    break;
+            }
+
+            // Mostrar la ventana GUIChangeState
+            GUIChangeState.pack();
+            GUIChangeState.setLocationRelativeTo(null); // Centrar la ventana
+            GUIChangeState.setVisible(true);
+        }
+    }//GEN-LAST:event_btnChangeStateActionPerformed
+
+    private void btnSaveStateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveStateActionPerformed
+        // Obtener el proyecto seleccionado
+        int selectedRow = tblRequests.getSelectedRow();
+        if (selectedRow >= 0) {
+            Project project = projectService.getProjects().get(selectedRow);
+
+            // Determinar el nuevo estado basado en el radio button seleccionado
+            ProjectState newState = null;
+            if (rBtnReceived.isSelected()) {
+                newState = new Received();
+            } else if (rBtnAccepted.isSelected()) {
+                newState = new Accepted();
+            } else if (rBtnRejected.isSelected()) {
+                newState = new Rejected();
+            } else if (rBtnInProgress.isSelected()) {
+                newState = new InProgress();
+            } else if (rBtnClosed.isSelected()) {
+                newState = new Closed();
+            }
+
+            if (newState != null) {
+                // Cambiar el estado del proyecto
+                project.changeState(newState);
+
+                // Actualizar la interfaz de usuario en GUISeeDetails
+                lblState.setText(project.getState());
+
+                // Cerrar la ventana de cambio de estado
+                GUIChangeState.dispose();
+            }
+        }
+    }//GEN-LAST:event_btnSaveStateActionPerformed
     
     private void changeColorBtn(JButton botonSeleccionado) {
         // Restaurar el estilo de todos los botones
@@ -913,13 +1070,16 @@ public class GUICoordinator extends javax.swing.JFrame implements IObserver, Com
         }    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JFrame GUIChangeState;
     private javax.swing.JFrame GUIComments;
     private javax.swing.JFrame GUISeeDetails;
+    private javax.swing.ButtonGroup bgStateOptions;
     private javax.swing.JButton btnChangeState;
     private javax.swing.JButton btnCloseSession;
     private javax.swing.JButton btnComment;
     private javax.swing.JButton btnPerfil;
     private javax.swing.JButton btnRequests;
+    private javax.swing.JToggleButton btnSaveState;
     private javax.swing.JComboBox<String> cmbAcademicPeriod;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -936,6 +1096,7 @@ public class GUICoordinator extends javax.swing.JFrame implements IObserver, Com
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPanel jpLeft;
     private javax.swing.JLabel lblBudget;
+    private javax.swing.JLabel lblChangeState;
     private javax.swing.JLabel lblCompany;
     private javax.swing.JLabel lblCompanyContactLastNames;
     private javax.swing.JLabel lblCompanyContactNames;
@@ -981,6 +1142,11 @@ public class GUICoordinator extends javax.swing.JFrame implements IObserver, Com
     private javax.swing.JPanel pnlReports;
     private javax.swing.JPanel pnlRequests;
     private javax.swing.JPanel pnlRight;
+    private javax.swing.JRadioButton rBtnAccepted;
+    private javax.swing.JRadioButton rBtnClosed;
+    private javax.swing.JRadioButton rBtnInProgress;
+    private javax.swing.JRadioButton rBtnReceived;
+    private javax.swing.JRadioButton rBtnRejected;
     private javax.swing.JSeparator sepUserCoord;
     private javax.swing.JTable tblRequests;
     private javax.swing.JTextArea txtAreaComments;

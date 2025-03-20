@@ -5,13 +5,13 @@ import com.mycompany.gestionproyectosacademicos.entities.Project;
 public class Closed implements ProjectState{
 
     @Override
-    public void ManageState(Project project) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void manageState(Project project) {
+        project.setState(getStateName());
     }
 
     @Override
     public String getStateName() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "Cerrado";
     }
     
 }

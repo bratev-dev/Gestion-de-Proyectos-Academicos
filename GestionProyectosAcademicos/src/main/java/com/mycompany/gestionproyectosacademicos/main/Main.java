@@ -26,10 +26,5 @@ public class Main {
         
         GUILogin loginGUI = new GUILogin(authService);
         loginGUI.setVisible(true);
-        
-        IFilter filter = new AcademicPeriodFilter();
-        ICoordinatorRepository coordRepo = Factory.getInstance().getRepository(ICoordinatorRepository.class, "ARRAYS");
-        CoordinatorService coordSer = new CoordinatorService(coordRepo);
-        GUICoordinator coord = new GUICoordinator(coordSer, 2, filter);
     }
 }

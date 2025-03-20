@@ -159,7 +159,7 @@ public class Project {
     }
     
     public void changeState(ProjectState state){
-        state.ManageState(this);
+        state.manageState(this);
         notifyObservers();
     }
     

@@ -8,7 +8,7 @@ public interface ProjectState {
      * 
      * @param project Proyecto al cual se le cambiará el estado.
      */
-    void ManageState(Project project);
+    void manageState(Project project);
     
     /**
      * @brief Devuelve el nombre del estado.
