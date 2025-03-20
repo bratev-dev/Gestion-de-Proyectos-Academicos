@@ -25,11 +25,13 @@ public class AuthService {
         this.userRepository = userRepository;
     }
 
-    public JFrame login(String email, String password) {
+     public JFrame login(String email, String password) {
         User user = userRepository.validarUsuario(email, password);
+        
         if (user == null) {
-            return null; // Manejar esto en la interfaz gráfica
+            return null;
         }
+
         return getGUIForRole(user);
     }
 
