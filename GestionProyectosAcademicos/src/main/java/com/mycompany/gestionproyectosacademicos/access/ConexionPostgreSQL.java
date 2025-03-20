@@ -11,9 +11,9 @@ import javax.swing.JOptionPane;
 
 public class ConexionPostgreSQL {
     
-    private static final String URL = "jdbc:postgresql://localhost:5432/projectmanagement";
+    private static final String URL = "jdbc:postgresql://localhost:5432/gestion_proyectos";
     private static final String USUARIO = "postgres";
-    private static final String PASSWORD = "postgres"; //Cambiar por password local de su maquina
+    private static final String PASSWORD = "1234"; //Cambiar por password local de su maquina
 
     public static Connection conectar() {
         Connection conexion = null;

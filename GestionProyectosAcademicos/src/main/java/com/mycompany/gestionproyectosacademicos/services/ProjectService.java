@@ -59,5 +59,9 @@ public class ProjectService implements IObservable{
         }
     }
     
+    public int getNextProjectId(){
+        return repository.getNextProjectId();
+    }
+    
     
 }
