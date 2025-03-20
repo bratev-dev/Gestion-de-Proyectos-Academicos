@@ -44,10 +44,16 @@ public class UserArrayRepository implements IUserRepository {
      * Método para guardar un nuevo usuario en la lista en memoria
      */
     @Override
-    public boolean saveUser(String email, String password, String role) {
+    public boolean saveUser(int id, String email, String password, String role) {
         // Validar que el email no esté duplicado
         for (User user : users) {
             if (user.getEmail().equals(email)) {
+                return false; // El email ya está registrado
+            }
+        }
+        
+        for (User user : users) {
+            if ( String.valueOf(user.getId()).equals(id)) {
                 return false; // El email ya está registrado
             }
         }

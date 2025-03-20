@@ -454,7 +454,7 @@ public class GUIcompanyRegister extends javax.swing.JFrame {
         CompanyService companyService = new CompanyService(compRepo, userRepo);
 
         // Guardar la empresa
-        boolean companySaved = companyService.registerCompany(company, password.getText());
+        boolean companySaved = companyService.registerCompany(company);
         if (!companySaved) {
             JOptionPane.showMessageDialog(null, "Error al guardar la empresa.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
