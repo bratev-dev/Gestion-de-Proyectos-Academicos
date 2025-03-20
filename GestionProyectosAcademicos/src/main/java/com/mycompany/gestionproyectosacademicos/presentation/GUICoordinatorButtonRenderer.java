@@ -4,11 +4,11 @@ import javax.swing.*;
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 
-public class ButtonRenderer extends JPanel implements TableCellRenderer {
+public class GUICoordinatorButtonRenderer extends JPanel implements TableCellRenderer {
     private JButton btnSeeDetails;
     private JButton btnComment;
 
-    public ButtonRenderer() {
+    public GUICoordinatorButtonRenderer() {
         setLayout(new FlowLayout(FlowLayout.CENTER, 5, 0));
         setOpaque(true);
         setBackground(new Color(232, 232, 232));

@@ -18,6 +18,7 @@ public class Project {
     private String date;
     private String state;
     private Company company;
+    private String comments;
     private List<IObserver> observers = new ArrayList<>();
 
     public Project(int id, String name, String summary, String goals, String description, String maxTimeInMonths, String budget, String date, String state, Company company) {
@@ -47,6 +48,14 @@ public class Project {
 
     public void setCompany(Company company) {
         this.company = company;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
     }
 
     
