@@ -5,18 +5,22 @@ import com.mycompany.gestionproyectosacademicos.entities.Project;
 import com.mycompany.gestionproyectosacademicos.entities.Request;
 import com.mycompany.gestionproyectosacademicos.entities.Student;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Repositorio en memoria con una lista de proyectos predefinidos
  */
+
+
 public class ProjectArrayRepository implements IProjectRepository{
     private static List<Project> projects;
-    
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
     /**
      * @brief Constructor que inicializa la lista de proyectos.
      */
+    
     public ProjectArrayRepository() {
         if (projects == null) {
             projects = new ArrayList<>();
@@ -168,11 +172,29 @@ public class ProjectArrayRepository implements IProjectRepository{
 
     @Override
     public void saveProject(Project project) {
+        if (projects == null) {
+            projects = new ArrayList<>();
+        }
         projects.add(project); // Agrega a la lista
     }
 
     @Override
     public void deleteProject(int projectId) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public boolean existsProjec(String nit, String email) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public int getNextProjectId() {
+        throw new UnsupportedOperationException("Not supported yet ."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public boolean existsCompany(String nit, String email) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

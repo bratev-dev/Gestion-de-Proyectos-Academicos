@@ -46,6 +46,15 @@ public class GUILogin extends javax.swing.JFrame {
         agregarPlaceholder(txtPassword, "Ingrese su contraseña!");
     }
     
+    public GUILogin(AuthService authService) {
+        initComponents(); // Llamada al código autogenerado
+        setLocationRelativeTo(null); // Para centrar la ventana
+        this.authService = authService;
+        // Agregar placeholders después de que se inicialicen los componentes
+        agregarPlaceholder(txtEmail, "Ingrese su correo!");
+        agregarPlaceholder(txtPassword, "Ingrese su contraseña!");
+    }
+    
     
     private void agregarPlaceholder(JTextField textField, String placeholder) {
         textField.setText(placeholder);

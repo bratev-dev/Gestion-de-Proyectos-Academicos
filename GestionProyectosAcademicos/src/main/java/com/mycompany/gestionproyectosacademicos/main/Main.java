@@ -1,13 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.gestionproyectosacademicos.main;
 
 import com.mycompany.gestionproyectosacademicos.access.Factory;
 import com.mycompany.gestionproyectosacademicos.access.ICompanyRepository;
 import com.mycompany.gestionproyectosacademicos.access.IUserRepository;
 import com.mycompany.gestionproyectosacademicos.access.UserArrayRepository;
+import com.mycompany.gestionproyectosacademicos.presentation.GUICompany;
 import com.mycompany.gestionproyectosacademicos.presentation.GUICoordinator;
 import com.mycompany.gestionproyectosacademicos.presentation.GUILogin;
 import com.mycompany.gestionproyectosacademicos.services.AuthService;
