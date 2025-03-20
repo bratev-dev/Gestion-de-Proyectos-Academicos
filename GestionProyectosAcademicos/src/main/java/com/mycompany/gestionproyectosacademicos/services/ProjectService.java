@@ -32,7 +32,13 @@ public class ProjectService implements IObservable{
     }
     
     public List<Project> getProjects(){
+        List<Project> projects = repository.getAllProjects();
         return projects;
+    }
+    
+    // Método para obtener proyectos por período académico
+    public List<Project> getProjectsByAcademicPeriod(String academicPeriod) {
+        return repository.getProjectsByAcademicPeriod(academicPeriod);
     }
 
     // Métodos de Observer

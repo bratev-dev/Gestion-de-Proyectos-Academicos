@@ -1,6 +1,7 @@
 
 package com.mycompany.gestionproyectosacademicos.services;
 
+import com.mycompany.gestionproyectosacademicos.filter.IFilter;
 import com.mycompany.gestionproyectosacademicos.access.Factory;
 import com.mycompany.gestionproyectosacademicos.access.ICompanyRepository;
 import com.mycompany.gestionproyectosacademicos.access.ICoordinatorRepository;
@@ -8,6 +9,7 @@ import com.mycompany.gestionproyectosacademicos.access.IProjectRepository;
 import com.mycompany.gestionproyectosacademicos.entities.User;
 import com.mycompany.gestionproyectosacademicos.access.IUserRepository;
 import com.mycompany.gestionproyectosacademicos.access.ProjectArrayRepository;
+import com.mycompany.gestionproyectosacademicos.filter.AcademicPeriodFilter;
 import com.mycompany.gestionproyectosacademicos.infra.Messages;
 import com.mycompany.gestionproyectosacademicos.presentation.GUICompany;
 //import com.mycompany.gestionproyectosacademicos.presentacion.GUIAdmin;
@@ -67,17 +69,11 @@ public class AuthService {
                    
             case "COORDINADOR":
                 ICoordinatorRepository coordRepo = Factory.getInstance().getRepository(ICoordinatorRepository.class, "POSTGRE");
-                /*if(coordRepo != null) {
-                    Messages.showMessageDialog("Repositorio traido con la fábrica", "Atención");
-                }else{
-                    Messages.showMessageDialog("Repositorio no encontrado en AuthService", "Atención");
-                }*/
                 CoordinatorService coordService = new CoordinatorService(coordRepo);
-                /*if(coordService != null) {
-                    Messages.showMessageDialog("Servicio creado con el repositorio", "Atención");
-                }*/
                 
-                GUICoordinator instance = new GUICoordinator(coordService, user.getId());
+                IFilter filter = new AcademicPeriodFilter();
+                
+                GUICoordinator instance = new GUICoordinator(coordService, user.getId(), filter);
                 instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
                 return instance;
             default:
