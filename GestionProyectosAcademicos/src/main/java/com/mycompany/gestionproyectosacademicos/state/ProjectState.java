@@ -1,10 +1,10 @@
 package com.mycompany.gestionproyectosacademicos.state;
 
 import com.mycompany.gestionproyectosacademicos.entities.Project;
-/**
- *
- * @author Jhonatan
- */
+
 public interface ProjectState {
-    void manageState(Project project);
+    
+    void ManageState(Project project);
+    
+    String getStateName();
 }

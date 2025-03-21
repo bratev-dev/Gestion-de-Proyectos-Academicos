@@ -1,23 +1,22 @@
 package com.mycompany.gestionproyectosacademicos.entities;
 
-/**
- *
- * @author bratev
- */
 public class Coordinator {
-    private String id;
+    private int id;
     private String name;
+    private int userId; // Nuevo atributo para la relación con la tabla "user"
 
-    public Coordinator(String nit, String name) {
+    public Coordinator(int id, String name, int userId) {
         this.id = id;
         this.name = name;
+        this.userId = userId;
     }
 
-    public String getId() {
+    // Getters y Setters
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -28,18 +27,12 @@ public class Coordinator {
     public void setName(String name) {
         this.name = name;
     }
-    
-    
-    /*public void reviewRequest(Request req){
-        
-    }*/
-    
-    /*public void assingProject(Project pro, Student stu){
-        
-    }*/
-    
-    /*public void projectTrack(Project pro){
-        
-    }*/
-    
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
 }

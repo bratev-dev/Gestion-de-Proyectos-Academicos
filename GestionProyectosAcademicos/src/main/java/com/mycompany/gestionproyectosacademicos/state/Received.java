@@ -5,9 +5,12 @@ import com.mycompany.gestionproyectosacademicos.entities.Project;
  *
  * @author Jhonatan
  */
-public class Received implements ProjectState{
-    @Override
+public class Received {
     public void manageState(Project project) {
-        System.out.println("Proyecto recibido: " + project.getName());
+        project.setState(getStateName());
+    }
+    
+    public String getStateName() {
+        return "Recibido";
     }
 }

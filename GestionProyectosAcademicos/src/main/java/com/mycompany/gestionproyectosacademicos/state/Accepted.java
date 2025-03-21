@@ -5,9 +5,13 @@ import com.mycompany.gestionproyectosacademicos.entities.Project;
  *
  * @author Jhonatan
  */
-public class Accepted implements ProjectState{
-    @Override
+public class Accepted{
+    
     public void manageState(Project project) {
-        System.out.println("Proyecto aceptado: " + project.getName());
+        project.setState(getStateName());
+    }
+    
+    public String getStateName() {
+        return "Aceptado";
     }
 }

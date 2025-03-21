@@ -1,10 +1,12 @@
 package com.mycompany.gestionproyectosacademicos.presentation;
 
+import com.mycompany.gestionproyectosacademicos.access.ConexionPostgreSQL;
+import com.mycompany.gestionproyectosacademicos.access.ProjectPostgreSQLRepository;
+import com.mycompany.gestionproyectosacademicos.entities.Company;
 import com.mycompany.gestionproyectosacademicos.entities.Project;
-import com.mycompany.gestionproyectosacademicos.observer.Observer;
-import com.mycompany.gestionproyectosacademicos.access.ProjectRepository;
+import com.mycompany.gestionproyectosacademicos.observer.IObserver;
 import com.mycompany.gestionproyectosacademicos.services.AuthService;
-import com.mycompany.gestionproyectosacademicos.services.ProjectControler;
+import com.mycompany.gestionproyectosacademicos.services.ProjectService;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.util.List;
@@ -16,8 +18,6 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.DefaultCellEditor;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
@@ -34,16 +34,22 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+
 /**
  *
  * @author Jhonatan
  */
-public class GUIStudentProjectList extends javax.swing.JFrame implements Observer{
+public class GUIStudentProjectList extends javax.swing.JFrame implements IObserver{
 
     private JTable projectTable;
     private DefaultTableModel tableModel;
-    private ProjectRepository projectRepository;
-    private ProjectControler projectController;
+    private ProjectPostgreSQLRepository projectRepository;
+    private ProjectService projectService;
     private List<Project> allProjects;
     private int currentPage = 1;
     private final int PROJECTS_PER_PAGE = 10;
@@ -107,34 +113,42 @@ public class GUIStudentProjectList extends javax.swing.JFrame implements Observe
 
         @Override
         public Component getTableCellEditorComponent(JTable table, Object value,
-                                                boolean isSelected, int row, int column) {
+                                        boolean isSelected, int row, int column) {
             label = "›";
             button.setText(label);
             projectId = Integer.parseInt(table.getValueAt(row, 0).toString());
             isPushed = true;
-            
-            // Obtener la ventana principal que contiene la tabla
+
+            // Get the main window that contains the table
             JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(table);
-            
-            // Crear y mostrar la ventana de detalles
+
+            // Create and show the details window
             SwingUtilities.invokeLater(() -> {
                 try {
-                    // Cerrar la ventana anterior si existe
+                    // Close previous details window if it exists
                     if (currentDetailsFrame != null) {
                         currentDetailsFrame.dispose();
                     }
-                    
-                    if (parentFrame != null) {
-                    parentFrame.setVisible(false);
-                    }   
 
                     Project project = projectRepository.getProjectById(projectId);
                     if (project != null) {
                         currentDetailsFrame = new GUIProjectDetails(project);
                         currentDetailsFrame.setVisible(true);
+
+                        // Only hide the parent window after confirming we have a valid project
+                        if (parentFrame != null) {
+                            parentFrame.setVisible(false);
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(parentFrame, 
+                            "No se encontró el proyecto con ID: " + projectId,
+                            "Error", JOptionPane.ERROR_MESSAGE);
                     }
                 } catch (SQLException ex) {
                     Logger.getLogger(GUIStudentProjectList.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(parentFrame, 
+                        "Error al cargar los detalles del proyecto: " + ex.getMessage(),
+                        "Error", JOptionPane.ERROR_MESSAGE);
                 }
             });
             return button;
@@ -142,10 +156,7 @@ public class GUIStudentProjectList extends javax.swing.JFrame implements Observe
 
         @Override
         public Object getCellEditorValue() {
-            if (isPushed) {
-            // Solo llamar una vez al método showProjectDetails
-            showProjectDetails(projectId);
-            }
+            // Remove the call to showProjectDetails
             isPushed = false;
             return label;
         }
@@ -193,9 +204,9 @@ public class GUIStudentProjectList extends javax.swing.JFrame implements Observe
         initComponents();
         
         // Inicializar repositorio y controlador
-        projectRepository = new ProjectRepository();
-        projectController = new ProjectControler();
-        projectController.addStudent(this);
+        projectRepository = new ProjectPostgreSQLRepository();
+        projectService = new ProjectService(projectRepository);
+        projectService.addObserver(this);
         
         // Inicializar tabla
         initTable();
@@ -257,6 +268,11 @@ public class GUIStudentProjectList extends javax.swing.JFrame implements Observe
         btnProfileStudent.setMaximumSize(new java.awt.Dimension(28, 17));
         btnProfileStudent.setMinimumSize(new java.awt.Dimension(28, 17));
         btnProfileStudent.setPreferredSize(new java.awt.Dimension(28, 17));
+        btnProfileStudent.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProfileStudentActionPerformed(evt);
+            }
+        });
 
         btnProjectList.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnProjectList.setForeground(new java.awt.Color(19, 45, 70));
@@ -293,15 +309,10 @@ public class GUIStudentProjectList extends javax.swing.JFrame implements Observe
             .addGroup(jPanelDashboardLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelDashboardLayout.createSequentialGroup()
-                        .addComponent(btnProfileStudent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(jPanelDashboardLayout.createSequentialGroup()
-                        .addComponent(btnProjectList, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(jPanelDashboardLayout.createSequentialGroup()
-                        .addComponent(btnMyProjects, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())))
+                    .addComponent(btnProfileStudent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnProjectList, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnMyProjects, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
             .addGroup(jPanelDashboardLayout.createSequentialGroup()
                 .addGap(107, 107, 107)
                 .addComponent(lblEstudiante)
@@ -443,7 +454,7 @@ public class GUIStudentProjectList extends javax.swing.JFrame implements Observe
         scrollPane.setBackground(Color.WHITE);
         
         // Añadir datos de prueba
-        addSampleData();
+        //addSampleData();
         
         // Añadir botones de navegación
         JPanel navigationPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 5));
@@ -511,22 +522,54 @@ public class GUIStudentProjectList extends javax.swing.JFrame implements Observe
     }
     
     private void loadProjectsFromDatabase() {
-        try {
-            allProjects = projectRepository.getAllProjects();
-            
-            // Actualizar el controlador con todos los proyectos
-            for (Project project : allProjects) {
-                projectController.addProjects(project);
+        allProjects = new ArrayList<>();  // Inicializa la lista antes de llenarla
+        String sql = """
+            SELECT p.*, 
+                   c.companyname AS companyname, 
+                   c.companynit AS companynit, 
+                   c.companysector AS companysector, 
+                   c.contactname AS contactname, 
+                   c.contactlastname AS contactlastname, 
+                   c.contactnumber AS contactnumber, 
+                   c.contactposition AS contactposition 
+            FROM projects p
+            LEFT JOIN company c ON p.company_nit = c.companynit;
+        """;
+
+        try (Connection conn = ConexionPostgreSQL.conectar();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                Company company = new Company();
+                company.setName(rs.getString("companyname"));
+                company.setNit(rs.getString("companynit")); // Si necesitas este valor
+                // Y otras propiedades de la empresa si son necesarias
+
+                Project project = new Project(
+                    rs.getInt("id"),
+                    rs.getString("name"),
+                    rs.getString("description"),
+                    rs.getString("state"),
+                    company // Asegúrate de pasar el objeto company al constructor de Project
+                );
+                allProjects.add(project);
             }
-            
-            // Mostrar la primera página
-            displayCurrentPage();
-            
+
+            System.out.println("Proyectos cargados: " + allProjects.size());
+            if (allProjects.isEmpty()) {
+                System.out.println("No se encontraron proyectos en la base de datos.");
+            }
         } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        if (!allProjects.isEmpty()) {
+            displayCurrentPage();
+        } else {
             JOptionPane.showMessageDialog(this, 
-                "Error al cargar proyectos: " + e.getMessage(), 
-                "Error de Base de Datos", 
-                JOptionPane.ERROR_MESSAGE);
+                "No se encontraron proyectos en la base de datos.",
+                "Información", JOptionPane.INFORMATION_MESSAGE);
         }
     }
     
@@ -573,6 +616,10 @@ public class GUIStudentProjectList extends javax.swing.JFrame implements Observe
         this.dispose();
     }//GEN-LAST:event_btnCloseSessionStudentActionPerformed
 
+    private void btnProfileStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProfileStudentActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnProfileStudentActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -615,30 +662,9 @@ public class GUIStudentProjectList extends javax.swing.JFrame implements Observe
    
     @Override
     public void update(Object obj) {
-        if(obj instanceof Project) {
-            Project project = (Project) obj;
-            
-            // Verificar si el proyecto ya existe en la lista
-            boolean exists = false;
-            for (Project p : allProjects) {
-                if (p.getId() == project.getId()) {
-                    exists = true;
-                    // Actualizar el proyecto existente
-                    p.setName(project.getName());
-                    p.setDescription(project.getDescription());
-                    p.setState(project.getState());
-                    p.setCompany(project.getCompany());
-                    break;
-                }
-            }
-            
-            // Si no existe, añadirlo a la lista
-            if (!exists) {
-                allProjects.add(project);
-            }
-            
-            // Actualizar la vista
-            displayCurrentPage();
+        if (obj instanceof List<?>) {
+            allProjects = (List<Project>) obj; // Actualiza la lista completa de proyectos
+            displayCurrentPage(); // Refresca la tabla con los nuevos proyectos
         }
     }
     

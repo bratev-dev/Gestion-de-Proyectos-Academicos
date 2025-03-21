@@ -5,9 +5,12 @@ import com.mycompany.gestionproyectosacademicos.entities.Project;
  *
  * @author Jhonatan
  */
-public class Rejected implements ProjectState{
-    @Override
+public class Rejected {
     public void manageState(Project project) {
-        System.out.println("Proyecto rechazado: " + project.getName());
+        project.setState(getStateName());
+    }
+    
+    public String getStateName() {
+        return "Rechazado";
     }
 }

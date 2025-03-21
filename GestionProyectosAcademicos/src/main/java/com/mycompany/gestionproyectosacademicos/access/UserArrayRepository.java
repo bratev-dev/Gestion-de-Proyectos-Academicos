@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.gestionproyectosacademicos.access;
 
 import com.mycompany.gestionproyectosacademicos.entities.User;
@@ -11,7 +7,7 @@ import java.util.List;
 /**
  * Repositorio en memoria con una lista de usuarios predefinidos
  */
-public class UserArrayRepository implements IUserRepository{
+public class UserArrayRepository implements IUserRepository {
     private static List<User> users;
 
     public UserArrayRepository() {
@@ -27,19 +23,52 @@ public class UserArrayRepository implements IUserRepository{
     /**
      * Método para validar si un usuario existe con el correo y contraseña dados
      */
-   public User validarUsuario(String email, String password) {
-    for (User user : users) {
-        if (user.getEmail().equals(email) && user.getPassword().equals(password)) {
-            return user;
+    @Override
+    public User validarUsuario(String email, String password) {
+        for (User user : users) {
+            if (user.getEmail().equals(email) && user.getPassword().equals(password)) {
+                return user;
+            }
         }
+        return null;
     }
-    return null;
-}
 
     /**
      * Método para obtener todos los usuarios (solo para pruebas)
      */
     public List<User> listarUsuarios() {
         return users;
+    }
+
+    /**
+     * Método para guardar un nuevo usuario en la lista en memoria
+     */
+    @Override
+    public boolean saveUser(String email, String password, String role) {
+        // Validar que el email no esté duplicado
+        for (User user : users) {
+            if (user.getEmail().equals(email)) {
+                return false; // El email ya está registrado
+            }
+        }
+
+        // Crear un nuevo usuario
+        int newId = users.size() + 1; // Generar un nuevo ID
+        User newUser = new User(newId, email, password, role);
+        users.add(newUser);
+        return true;
+    }
+
+    /**
+     * Método para obtener el ID de un usuario por su email
+     */
+    @Override
+    public int getUserIdByEmail(String email) {
+        for (User user : users) {
+            if (user.getEmail().equals(email)) {
+                return user.getId(); // Retornar el ID del usuario
+            }
+        }
+        return -1; // Retornar -1 si no se encuentra el usuario
     }
 }

@@ -1,4 +1,4 @@
-package com.mycompany.gestionproyectosacademicos.entities;
+package com.mycompany.gestionproyectosacademicos.access;
 
 /**
  *
@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
 
 public class ConexionPostgreSQL {
     
-    private static final String URL = "jdbc:postgresql://localhost:5432/projectmanagement";
+    private static final String URL = "jdbc:postgresql://localhost:5432/gestion_proyectos";
     private static final String USUARIO = "postgres";
     private static final String PASSWORD = "postgres"; //Cambiar por password local de su maquina
 

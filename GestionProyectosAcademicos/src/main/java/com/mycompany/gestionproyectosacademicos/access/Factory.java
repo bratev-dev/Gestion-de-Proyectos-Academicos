@@ -1,44 +1,18 @@
-
 package com.mycompany.gestionproyectosacademicos.access;
+
+import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Fábrica que se encarga de instanciar repositorios dinámicamente.
- */
 public class Factory {
-
     private static Factory instance;
-    
-    // Mapas para almacenar repositorios según su tipo y nombre (ARRAYS, SQLITE, etc.)
-    private Map<Class<?>, Object> repositoryMap;
-    private Map<String, Map<Class<?>, Object>> repositoriesByType;
+    private final Connection connection;
+    private final Map<Class<?>, Object> repositoryCache = new HashMap<>();
 
     private Factory() {
-        repositoryMap = new HashMap<>();
-        repositoriesByType = new HashMap<>();
-
-        // Definir diferentes implementaciones según el tipo
-        Map<Class<?>, Object> arraysRepositories = new HashMap<>();
-       // arraysRepositories.put(ICompanyRepository.class, new CompanyArraysRepository());
-        arraysRepositories.put(IUserRepository.class, new UserArrayRepository());
-        //arraysRepositories.put(IStudentRepository.class, new StudentArrayRepository());
-        //arraysRepositories.put(IProjectRepository.class, new ProjectArrayRepository());
-
-        //Map<Class<?>, Object> sqliteRepositories = new HashMap<>();
-        //sqliteRepositories.put(ICompanyRepository.class, new CompanySqliteRepository());
-        //sqliteRepositories.put(IUserRepository.class, new UserSqliteRepository());
-        //sqliteRepositories.put(IStudentRepository.class, new StudentSqliteRepository());
-        //sqliteRepositories.put(IProjectRepository.class, new ProjectSqliteRepository());
-
-        // Agregar tipos de almacenamiento a la fábrica
-        repositoriesByType.put("ARRAYS", arraysRepositories);
-       // repositoriesByType.put("SQLITE", sqliteRepositories);
+        this.connection = ConexionPostgreSQL.conectar(); // Establece una única conexión
     }
 
-    /**
-     * Implementación Singleton
-     */
     public static Factory getInstance() {
         if (instance == null) {
             instance = new Factory();
@@ -46,25 +20,42 @@ public class Factory {
         return instance;
     }
 
-    /**
-     * Obtiene una instancia concreta de un repositorio según el tipo de almacenamiento seleccionado.
-     * 
-     * @param repositoryClass Clase de la interfaz del repositorio
-     * @param storageType Tipo de almacenamiento ("ARRAYS", "SQLITE", etc.)
-     * @return Instancia del repositorio
-     */
-    @SuppressWarnings("unchecked")
-    public <T> T getRepository(Class<T> repositoryClass, String storageType) {
-        if (repositoriesByType.containsKey(storageType)) {
-            return (T) repositoriesByType.get(storageType).get(repositoryClass);
+    public <T> T getRepository(Class<T> repoClass, String type) {
+        if (repositoryCache.containsKey(repoClass)) {
+            return repoClass.cast(repositoryCache.get(repoClass));
         }
-        return null; // Retorna null si el tipo de almacenamiento no está definido
+
+        Object repository = createRepository(repoClass, type);
+        if (repository != null) {
+            repositoryCache.put(repoClass, repository);
+        }
+        return repoClass.cast(repository);
     }
 
-    /**
-     * Método para registrar dinámicamente nuevos repositorios en la fábrica.
-     */
-    public <T> void registerRepository(Class<T> repositoryClass, T repositoryInstance, String storageType) {
-        repositoriesByType.computeIfAbsent(storageType, k -> new HashMap<>()).put(repositoryClass, repositoryInstance);
+    private Object createRepository(Class<?> repoClass, String type) {
+        if (repoClass == ICoordinatorRepository.class) {
+         if ("POSTGRE".equalsIgnoreCase(type)) {
+             return new CoordinatorPostgreRepository(connection);
+         }
+     } else if (repoClass == IUserRepository.class) {
+         if ("POSTGRE".equalsIgnoreCase(type)) {
+             return new UserPostgreRepository(connection);
+         } else if ("ARRAYS".equalsIgnoreCase(type)) {
+             return new UserArrayRepository(); // Para pruebas sin BD
+         }
+     }
+        else if (repoClass == IProjectRepository.class) {
+         if ("POSTGRE".equalsIgnoreCase(type)) {
+            //return new ProjectPostgreRepository(connection);
+         } else if ("ARRAYS".equalsIgnoreCase(type)) {
+             return new ProjectArrayRepository(); // Para pruebas sin BD
+         }
+     }
+        
+        return null; // Agregar más casos según sea necesario
+    }
+
+    public void closeConnection() {
+        ConexionPostgreSQL.closeResources(connection);
     }
 }

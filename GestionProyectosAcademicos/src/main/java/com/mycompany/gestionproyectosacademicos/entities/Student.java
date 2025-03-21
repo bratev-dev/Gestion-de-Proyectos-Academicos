@@ -1,13 +1,13 @@
 package com.mycompany.gestionproyectosacademicos.entities;
 
-import com.mycompany.gestionproyectosacademicos.observer.Observer;
+import com.mycompany.gestionproyectosacademicos.observer.IObserver;
 import com.mycompany.gestionproyectosacademicos.state.Accepted;
 
 /**
  *
  * @author Jhonatan
  */
-public class Student implements Observer{
+public class Student implements IObserver{
    
     private int id;
     private String name;
@@ -52,10 +52,10 @@ public class Student implements Observer{
 
     @Override
     public void update(Object obj) {
-        if(obj instanceof  Project){
+        if (obj instanceof Project) {
             Project project = (Project) obj;
-            if(project.getState() instanceof Accepted){
-            System.out.println("Estudiante " + name + " notificado sobre el proyecto: " + project.getName());
+            if ("aceptado".equals(project.getState())) { // Comparación con el String del estado
+                System.out.println("Estudiante " + name + " notificado sobre el proyecto: " + project.getName());
             }
         }
     }
