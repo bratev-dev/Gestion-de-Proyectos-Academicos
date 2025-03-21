@@ -10,10 +10,6 @@ public class Company {
     private String contactPhoneNumber;
     private String contactPosition;
     
-    public Company(){
-        //Contructor por defecto
-    }
-    
     public Company(String name, String nit, String email, String sector, String contactNames,
         String contactLastNames, String contactPhoneNumber, String contactPosition){
         this.name = name;
@@ -26,6 +22,11 @@ public class Company {
         this.contactPosition = contactPosition;
     }
 
+    public Company() {
+    }
+    
+    
+    
     //Getters
     public String getName(){
         return name;
@@ -126,6 +127,4 @@ public class Company {
     public void setContactPosition(String contactPosition) {
         this.contactPosition = contactPosition;
     }
-    
-    
 }

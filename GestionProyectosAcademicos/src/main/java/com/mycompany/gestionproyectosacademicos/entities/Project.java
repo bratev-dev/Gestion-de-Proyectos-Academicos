@@ -83,8 +83,8 @@ public class Project {
     public int getId(){
         return id;
     }
-    
-    public void setId(int id){
+
+    public void setId(int id) {
         this.id = id;
     }
     
@@ -191,8 +191,8 @@ public class Project {
     }
     
     
-    public void changeState(String state){
-        this.state = state;
+    public void changeState(ProjectState state){
+        state.manageState(this);
         notifyObservers();
     }
 

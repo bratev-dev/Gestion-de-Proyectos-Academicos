@@ -62,13 +62,11 @@ public class AuthService {
                 guiCompany.setExtendedState(JFrame.MAXIMIZED_BOTH);
                 return guiCompany;
                    
-            case "COORDINADOR":
+            case "COORDINATOR":
                 ICoordinatorRepository coordRepo = Factory.getInstance().getRepository(ICoordinatorRepository.class, "POSTGRE");
                 CoordinatorService coordService = new CoordinatorService(coordRepo);
                 
-                IFilter filter = new AcademicPeriodFilter();
-                
-                GUICoordinator instance = new GUICoordinator(coordService, user.getId(), filter);
+                GUICoordinator instance = new GUICoordinator(coordService, user.getId());
                 instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
                 return instance;
             default:

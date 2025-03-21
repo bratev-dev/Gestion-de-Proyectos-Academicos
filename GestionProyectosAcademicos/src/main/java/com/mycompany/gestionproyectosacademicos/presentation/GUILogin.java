@@ -13,7 +13,7 @@ import com.mycompany.gestionproyectosacademicos.access.UserPostgreRepository;
 import com.mycompany.gestionproyectosacademicos.infra.Messages;
 import com.mycompany.gestionproyectosacademicos.entities.User;
 import com.mycompany.gestionproyectosacademicos.services.AuthService;
-//import com.mycompany.gestionproyectosacademicos.services.CompanyService;
+import com.mycompany.gestionproyectosacademicos.services.CompanyService;
 import com.mycompany.gestionproyectosacademicos.services.UserServices;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -33,14 +33,14 @@ import javax.swing.JTextField;
 public class GUILogin extends javax.swing.JFrame {
     private AuthService authService;
     private UserServices userService;
-    //private CompanyService companyService;
+    private CompanyService companyService;
     
-    public GUILogin(AuthService authService, UserServices userService/*, CompanyService companyService*/) {
+    public GUILogin(AuthService authService, UserServices userService, CompanyService companyService) {
         initComponents(); // Llamada al código autogenerado
         setLocationRelativeTo(null); // Para centrar la ventana
         this.authService = authService;
         this.userService = userService;
-        //this.companyService = companyService;
+        this.companyService = companyService;
         // Agregar placeholders después de que se inicialicen los componentes
         agregarPlaceholder(txtEmail, "Ingrese su correo!");
         agregarPlaceholder(txtPassword, "Ingrese su contraseña!");
@@ -374,8 +374,8 @@ public class GUILogin extends javax.swing.JFrame {
     }
   
 private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {
-   //GUIcompanyRegister register = new GUIcompanyRegister(companyService);
-   //register.setVisible(true);
+   GUIcompanyRegister register = new GUIcompanyRegister(companyService);    // GUICompany Register
+   register.setVisible(true);
 }
 
 

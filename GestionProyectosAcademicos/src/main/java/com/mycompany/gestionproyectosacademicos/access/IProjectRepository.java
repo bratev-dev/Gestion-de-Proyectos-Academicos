@@ -15,7 +15,7 @@ public interface IProjectRepository {
      * @param academicPeriod Cadena que representa el período académico (por ejemplo, "2024-I").
      * @return Lista de objetos Project que pertenecen al período académico especificado.
      */
-    //List<Project> getProjectsByAcademicPeriod(String academicPeriod);
+    List<Project> getProjectsByAcademicPeriod(String academicPeriod);
 
     /**
      * @throws java.sql.SQLException

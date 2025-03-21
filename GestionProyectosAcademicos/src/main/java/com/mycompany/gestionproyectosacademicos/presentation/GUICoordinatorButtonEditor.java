@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import com.mycompany.gestionproyectosacademicos.entities.Project;
+import java.util.List; // Importación necesaria para usar List<Project>
 
 public class GUICoordinatorButtonEditor extends DefaultCellEditor {
     private JPanel panel;
@@ -12,7 +14,7 @@ public class GUICoordinatorButtonEditor extends DefaultCellEditor {
     private int currentRow;
     private GUICoordinator guiCoordinator;
 
-    public GUICoordinatorButtonEditor(JCheckBox checkBox, CommentListener commentListener) {
+    public GUICoordinatorButtonEditor(JCheckBox checkBox, GUICoordinator guiCoordinator) {
         super(checkBox);
         this.guiCoordinator = guiCoordinator;
         panel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 0));
@@ -37,12 +39,14 @@ public class GUICoordinatorButtonEditor extends DefaultCellEditor {
 
         btnComment.addActionListener(e -> {
             // Obtener el proyecto de la fila seleccionada
-            int row = tblRequests.convertRowIndexToModel(tblRequests.getEditingRow());
-            List<Project> projects = guiCoordinator.getProjects(); // Método para obtener la lista de proyectos
-            if (row >= 0 && row < projects.size()) {
-                project = projects.get(row);
-                guiCoordinator.comment(project); // Pasar el proyecto seleccionado
+            if (guiCoordinator != null) {
+                List<Project> projects = guiCoordinator.getProjects(); // Obtener la lista de proyectos
+                if (currentRow >= 0 && currentRow < projects.size()) {
+                    Project project = projects.get(currentRow); // Obtener el proyecto correspondiente
+                    guiCoordinator.comment(project); // Llamar al método comment en GUICoordinator
+                }
             }
+            fireEditingStopped();
         });
 
         panel.add(btnSeeDetails);
@@ -62,7 +66,6 @@ public class GUICoordinatorButtonEditor extends DefaultCellEditor {
         currentRow = row;
         panel.setBackground(table.getSelectionBackground());
         return panel;
-
     }
 
     @Override

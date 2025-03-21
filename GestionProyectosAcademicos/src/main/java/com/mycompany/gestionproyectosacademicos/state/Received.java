@@ -5,7 +5,7 @@ import com.mycompany.gestionproyectosacademicos.entities.Project;
  *
  * @author Jhonatan
  */
-public class Received {
+public class Received implements ProjectState{
     public void manageState(Project project) {
         project.setState(getStateName());
     }

@@ -9,16 +9,17 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-/* Repositorio en memoria con una lista de proyectos predefinidos*/
- 
+/**
+ * Repositorio en memoria con una lista de proyectos predefinidos
+ */
 
 
 public class ProjectArrayRepository implements IProjectRepository{
     private static List<Project> projects;
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-    
-    /*@brief Constructor que inicializa la lista de proyectos.*/
-     
+    /**
+     * @brief Constructor que inicializa la lista de proyectos.
+     */
     
     public ProjectArrayRepository() {
         if (projects == null) {

@@ -24,6 +24,6 @@ public class Main {
         CompanyService companyService = new CompanyService(compRepo, userRepo);
         AuthService authService = new AuthService(userRepo); // Crear la instancia del servicio de autenticación
         GUILogin login = new GUILogin(authService, userService, companyService); // Pasar la instancia al constructor
-        login.setVisible(true); 
+        login.setVisible(true);
     }
 }

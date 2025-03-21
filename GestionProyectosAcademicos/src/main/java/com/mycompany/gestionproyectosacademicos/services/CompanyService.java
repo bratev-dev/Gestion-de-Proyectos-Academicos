@@ -8,12 +8,12 @@ import com.mycompany.gestionproyectosacademicos.entities.User;
 
 public class CompanyService {
     private final ICompanyRepository companyRepository;
-    //private final IUserRepository userRepository;
+    private IUserRepository userRepository;
 
     // Constructor que recibe el repositorio para manejar la base de datos
     public CompanyService(ICompanyRepository companyRepository, IUserRepository userRepository) {
         this.companyRepository = companyRepository;
-        //this.userRepository = userRepository;
+        this.userRepository = userRepository;
     }
     
     public CompanyService(ICompanyRepository companyRepository) {
