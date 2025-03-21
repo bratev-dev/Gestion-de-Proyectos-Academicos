@@ -522,22 +522,25 @@ public class GUIcompanyRegister extends javax.swing.JFrame {
         if (!companySaved) {
             JOptionPane.showMessageDialog(null, "Error al guardar la empresa.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
+        }else{
+            // Crear el usuario asociado a la empresa
+            int id =Integer.parseInt(JCompanyNIT.getText());
+            User user = new User(
+                     id,
+                    JCompanyEmail.getText().trim(),
+                    password.getText().trim(),
+                    "COMPANY" // Rol fijo para empresas
+            );
+
+            // Guardar el usuario
+            boolean userSaved = userService.saveUser(user);
+            if (!userSaved) {
+                JOptionPane.showMessageDialog(null, "Error al guardar el usuario.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
         }
 
-        // Crear el usuario asociado a la empresa
-        User user = new User(
-                Integer.parseInt(JCompanyNIT.getText()) ,
-                JCompanyEmail.getText().trim(),
-                password.getText().trim(),
-                "COMPANY" // Rol fijo para empresas
-        );
-
-        // Guardar el usuario
-        boolean userSaved = userService.saveUser(user);
-        if (!userSaved) {
-            JOptionPane.showMessageDialog(null, "Error al guardar el usuario.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+        
 
         // Mostrar mensaje de éxito
         JOptionPane.showMessageDialog(null, "✅ Empresa y usuario registrados con éxito.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
