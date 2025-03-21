@@ -27,15 +27,6 @@ public interface IProjectRepository {
     Project getProjectById(int projectId) throws SQLException;
 
     /**
-     * @brief Actualiza el estado y comentario de un proyecto.
-     * 
-     * @param projectId Identificador único del proyecto a actualizar.
-     * @param newState Nuevo estado que se asignará al proyecto.
-     * @param comment Comentario del coordinador asociado al cambio de estado.
-     */
-    void updateProjectState(int projectId, String newState, String comment);
-
-    /**
      * @brief Guarda un nuevo proyecto en el sistema.
      * 
      * @param project Objeto Project que contiene toda la información a registrar.
@@ -51,7 +42,7 @@ public interface IProjectRepository {
     void deleteProject(int projectId);
     
     
-    public boolean existsProjec(String nit, String email);
+    public boolean existsProject(String nit, String email);
     public int getNextProjectId();
     public boolean existsCompany(String nit, String email);
 }

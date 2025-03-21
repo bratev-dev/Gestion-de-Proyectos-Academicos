@@ -46,7 +46,6 @@ public class AuthService {
             case "STUDENT":
                 //return new GUIStudent();
             case "COMPANY":
-                //ICompanyRepository companyRepo = Factory.getInstance().getRepository(ICompanyRepository.class, "POSTGRESQL");
                 ICompanyRepository companyRepo = Factory.getInstance().getRepository(ICompanyRepository.class, "POSTGRE");
 
                 if (companyRepo == null) {

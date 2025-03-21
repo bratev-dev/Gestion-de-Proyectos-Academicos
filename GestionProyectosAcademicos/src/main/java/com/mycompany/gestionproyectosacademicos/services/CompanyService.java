@@ -43,19 +43,6 @@ public class CompanyService {
             System.out.println("Empresa registrada exitosamente.");
         }
 
-        
-        
-        // Paso 1: Guardar el usuario
-       /* if(companySaved ){
-            boolean userSaved = userRepository.saveUser(company.getNit() , company.getEmail(), password, "COMPANY");
-            if (!userSaved) {
-                System.out.println("No se pudo guardar el usuario.");
-                return false; // Si no se pudo guardar el usuario, no continuar
-            }
-        }*/
-  
-        // Paso 4: Guardar la empresa
-        
         return true;
     }
     
@@ -73,11 +60,7 @@ public class CompanyService {
 
         return true; // Si todo está correcto, devuelve true
     }
-/*
-    public Coordinator getCoordinator(int idCoordinator) {
-        return repository.getCoordinator(idCoordinator);
-    }
-    */ 
+
     
     public Company getCompany(String idCompany) {
         
