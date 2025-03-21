@@ -10,10 +10,5 @@ public interface ProjectState {
      */
     void manageState(Project project);
     
-    /**
-     * @brief Devuelve el nombre del estado.
-     * 
-     * @return Nombre del estado.
-     */
     String getStateName();
 }

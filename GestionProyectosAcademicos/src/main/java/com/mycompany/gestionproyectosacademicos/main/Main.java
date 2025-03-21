@@ -1,5 +1,6 @@
 package com.mycompany.gestionproyectosacademicos.main;
 
+import com.mycompany.gestionproyectosacademicos.presentation.GUIStudentProjectList;
 import com.mycompany.gestionproyectosacademicos.access.Factory;
 
 import com.mycompany.gestionproyectosacademicos.access.ICompanyRepository;
