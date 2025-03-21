@@ -11,7 +11,10 @@
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
     <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-      <Dimension value="[960, 540]"/>
+      <Dimension value="[700, 500]"/>
+    </Property>
+    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+      <Dimension value="[700, 500]"/>
     </Property>
   </Properties>
   <SyntheticProperties>
@@ -28,7 +31,7 @@
     <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
     <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
-    <AuxValue name="designerSize" type="java.awt.Dimension" value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,1,-12,0,0,3,32"/>
+    <AuxValue name="designerSize" type="java.awt.Dimension" value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,2,88,0,0,2,-68"/>
   </AuxValues>
 
   <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
@@ -47,10 +50,11 @@
           <Color blue="33" green="0" red="0" type="rgb"/>
         </Property>
         <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="[800, 500]"/>
+          <Dimension value="[700, 600]"/>
         </Property>
+        <Property name="name" type="java.lang.String" value="" noResource="true"/>
         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="[400, 300]"/>
+          <Dimension value="[900, 400]"/>
         </Property>
         <Property name="verifyInputWhenFocusTarget" type="boolean" value="false"/>
       </Properties>
@@ -96,52 +100,58 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="350" max="-2" attributes="0"/>
-                      <Component id="label5" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="269" pref="269" max="-2" attributes="0"/>
-                      <Component id="button1" min="-2" pref="106" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="label4" min="-2" pref="71" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="label11" min="-2" max="-2" attributes="0"/>
-                                  <Component id="JCompanyEmail" min="-2" pref="195" max="-2" attributes="0"/>
-                                  <Component id="label10" min="-2" max="-2" attributes="0"/>
-                                  <Component id="cmbSector" min="-2" pref="195" max="-2" attributes="0"/>
-                                  <Component id="label13" min="-2" max="-2" attributes="0"/>
-                                  <Component id="password" min="-2" pref="195" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="350" max="-2" attributes="0"/>
+                              <Component id="label5" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Component id="label4" min="-2" pref="71" max="-2" attributes="0"/>
                                   <Group type="102" attributes="0">
-                                      <EmptySpace min="2" pref="2" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="label9" min="-2" max="-2" attributes="0"/>
-                                          <Component id="JCompanyNIT" min="-2" pref="191" max="-2" attributes="0"/>
-                                          <Component id="JCompanyName" min="-2" pref="191" max="-2" attributes="0"/>
-                                          <Component id="label12" min="-2" max="-2" attributes="0"/>
-                                          <Component id="label3" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="label11" min="-2" max="-2" attributes="0"/>
+                                          <Component id="JCompanyEmail" min="-2" pref="195" max="-2" attributes="0"/>
+                                          <Component id="label10" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jSector" min="-2" pref="195" max="-2" attributes="0"/>
+                                          <Component id="label13" min="-2" max="-2" attributes="0"/>
+                                          <Component id="password" min="-2" pref="195" max="-2" attributes="0"/>
+                                          <Group type="102" attributes="0">
+                                              <EmptySpace min="2" pref="2" max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Component id="label9" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="JCompanyNIT" min="-2" pref="191" max="-2" attributes="0"/>
+                                                  <Component id="JCompanyName" min="-2" pref="191" max="-2" attributes="0"/>
+                                                  <Component id="label12" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="label3" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              </Group>
+                                          </Group>
+                                          <Component id="Cancelar" alignment="1" min="-2" pref="106" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace min="16" pref="16" max="-2" attributes="0"/>
+                                      <Component id="jSeparator2" min="-2" pref="56" max="-2" attributes="0"/>
+                                      <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="1" attributes="0">
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="JContactName" min="-2" pref="158" max="-2" attributes="0"/>
+                                              <Component id="JContactLastName" min="-2" pref="158" max="-2" attributes="0"/>
+                                              <Component id="JContactNumber" min="-2" pref="158" max="-2" attributes="0"/>
+                                              <Component id="JContactPosition" min="-2" pref="158" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Component id="label8" min="-2" pref="55" max="-2" attributes="0"/>
+                                          <Component id="label7" min="-2" max="-2" attributes="0"/>
+                                          <Component id="label6" min="-2" max="-2" attributes="0"/>
+                                          <Group type="102" alignment="1" attributes="0">
+                                              <Component id="button1" min="-2" pref="106" max="-2" attributes="0"/>
+                                              <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
+                                          </Group>
                                       </Group>
                                   </Group>
                               </Group>
-                              <EmptySpace min="16" pref="16" max="-2" attributes="0"/>
-                              <Component id="jSeparator2" min="-2" pref="56" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="JContactName" min="-2" pref="158" max="-2" attributes="0"/>
-                                      <Component id="JContactLastName" min="-2" pref="158" max="-2" attributes="0"/>
-                                      <Component id="JContactNumber" min="-2" pref="158" max="-2" attributes="0"/>
-                                      <Component id="JContactPosition" min="-2" pref="158" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Component id="label8" min="-2" pref="55" max="-2" attributes="0"/>
-                                  <Component id="label7" min="-2" max="-2" attributes="0"/>
-                                  <Component id="label6" min="-2" max="-2" attributes="0"/>
-                              </Group>
                           </Group>
                       </Group>
+                      <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -169,7 +179,7 @@
                               <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                               <Component id="label10" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                              <Component id="cmbSector" min="-2" max="-2" attributes="0"/>
+                              <Component id="jSector" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                               <Component id="label13" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
@@ -197,8 +207,12 @@
                               <Component id="JContactPosition" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
-                      <Component id="button1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="button1" min="-2" max="-2" attributes="0"/>
+                          <Component id="Cancelar" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -310,9 +324,6 @@
               </Properties>
             </Component>
             <Component class="java.awt.TextField" name="JContactLastName">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="1"/>
-              </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JContactLastNameActionPerformed"/>
               </Events>
@@ -320,7 +331,6 @@
             <Component class="java.awt.TextField" name="JContactPosition">
               <Properties>
                 <Property name="name" type="java.lang.String" value="" noResource="true"/>
-                <Property name="text" type="java.lang.String" value="1"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JContactPositionActionPerformed"/>
@@ -329,7 +339,6 @@
             <Component class="java.awt.TextField" name="JCompanyNIT">
               <Properties>
                 <Property name="name" type="java.lang.String" value="" noResource="true"/>
-                <Property name="text" type="java.lang.String" value="1"/>
               </Properties>
               <AccessibilityProperties>
                 <Property name="AccessibleContext.accessibleDescription" type="java.lang.String" value=""/>
@@ -341,7 +350,6 @@
             <Component class="java.awt.TextField" name="JContactNumber">
               <Properties>
                 <Property name="name" type="java.lang.String" value="" noResource="true"/>
-                <Property name="text" type="java.lang.String" value="1"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JContactNumberActionPerformed"/>
@@ -393,25 +401,16 @@
               </Properties>
             </Component>
             <Component class="java.awt.TextField" name="JCompanyEmail">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="1"/>
-              </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JCompanyEmailActionPerformed"/>
               </Events>
             </Component>
             <Component class="java.awt.TextField" name="JContactName">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="1"/>
-              </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JContactNameActionPerformed"/>
               </Events>
             </Component>
             <Component class="java.awt.TextField" name="JCompanyName">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="1"/>
-              </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JCompanyNameActionPerformed"/>
               </Events>
@@ -442,9 +441,6 @@
               </Properties>
             </Component>
             <Component class="java.awt.TextField" name="password">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="1"/>
-              </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="passwordActionPerformed"/>
               </Events>
@@ -463,7 +459,7 @@
                 <Property name="text" type="java.lang.String" value="Contrase&#xf1;a*"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JComboBox" name="cmbSector">
+            <Component class="javax.swing.JComboBox" name="jSector">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="4">
@@ -475,11 +471,30 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmbSectorActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jSectorActionPerformed"/>
               </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
+            </Component>
+            <Component class="java.awt.Button" name="Cancelar">
+              <Properties>
+                <Property name="actionCommand" type="java.lang.String" value="Registrar"/>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="0" green="0" red="66" type="rgb"/>
+                </Property>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="12" style="1"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                </Property>
+                <Property name="label" type="java.lang.String" value="Cancelar"/>
+                <Property name="name" type="java.lang.String" value="" noResource="true"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CancelarActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

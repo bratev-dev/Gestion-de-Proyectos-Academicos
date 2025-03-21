@@ -374,7 +374,7 @@ public class GUILogin extends javax.swing.JFrame {
     }
   
 private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {
-   GUIcompanyRegister register = new GUIcompanyRegister(companyService);
+   GUIcompanyRegister register = new GUIcompanyRegister(companyService);    // GUICompany Register
    register.setVisible(true);
 }
 

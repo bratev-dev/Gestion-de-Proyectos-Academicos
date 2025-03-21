@@ -14,6 +14,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -70,7 +72,8 @@ public class ProjectPostgreSQLRepository implements IProjectRepository{
                 LEFT JOIN company c ON p.company_nit = c.companynit;
         """;
     
-    public List<Project> getAllProjects() throws SQLException {
+    @Override
+    public List<Project> getAllProjects(){
         List<Project> projects = new ArrayList<>();
         Connection conn = null;
         Statement stmt = null;
@@ -136,6 +139,8 @@ public class ProjectPostgreSQLRepository implements IProjectRepository{
                     projects.add(project);
                 }
             }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProjectPostgreSQLRepository.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             ConexionPostgreSQL.closeResources(conn, stmt, rs);
         }
@@ -341,7 +346,7 @@ public class ProjectPostgreSQLRepository implements IProjectRepository{
     }
 
     @Override
-    public List<Project> getAllProjects() {
+    public List<Project> getProjectsByAcademicPeriod(String academicPeriod) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
