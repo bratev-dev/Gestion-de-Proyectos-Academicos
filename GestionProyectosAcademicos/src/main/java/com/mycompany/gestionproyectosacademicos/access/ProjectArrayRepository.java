@@ -2,7 +2,6 @@ package com.mycompany.gestionproyectosacademicos.access;
 
 import com.mycompany.gestionproyectosacademicos.entities.Company;
 import com.mycompany.gestionproyectosacademicos.entities.Project;
-import com.mycompany.gestionproyectosacademicos.entities.Request;
 import com.mycompany.gestionproyectosacademicos.entities.Student;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -176,11 +175,6 @@ public class ProjectArrayRepository implements IProjectRepository{
     }
 
     @Override
-    public void updateProjectState(int projectId, String newState, String comment) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
     public void saveProject(Project project) {
         if (projects == null) {
             projects = new ArrayList<>();
@@ -194,7 +188,7 @@ public class ProjectArrayRepository implements IProjectRepository{
     }
 
     @Override
-    public boolean existsProjec(String nit, String email) {
+    public boolean existsProject(String nit, String email) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 

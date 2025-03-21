@@ -243,11 +243,6 @@ public class ProjectPostgreSQLRepository implements IProjectRepository{
     }*/
 
     @Override
-    public void updateProjectState(int projectId, String newState, String comment) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
     public void deleteProject(int projectId) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
@@ -280,7 +275,7 @@ public class ProjectPostgreSQLRepository implements IProjectRepository{
     }
     
     @Override
-    public boolean existsProjec(String nit, String email) {
+    public boolean existsProject(String nit, String email) {
         String sql = "SELECT COUNT(*) FROM project WHERE project_id = ?";
 
         try (Connection conexion = conectar();
