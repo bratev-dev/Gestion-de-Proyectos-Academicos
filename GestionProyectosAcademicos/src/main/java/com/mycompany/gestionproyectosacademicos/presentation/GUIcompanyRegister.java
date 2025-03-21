@@ -20,6 +20,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.math.BigInteger;
 
 //import com.mycompany.gestionproyectosacademicos.presentacion.PanelRound;
 import javax.swing.JOptionPane;
@@ -386,15 +387,19 @@ public class GUIcompanyRegister extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(12, 32, 58, 95);
         jPanel1.add(jPanel4, gridBagConstraints);
 
+        jSeparator1.setBackground(new java.awt.Color(19, 45, 70));
         jSeparator1.setForeground(new java.awt.Color(153, 51, 0));
-        jSeparator1.setPreferredSize(new java.awt.Dimension(50, 30));
+        jSeparator1.setToolTipText("");
+        jSeparator1.setMinimumSize(new java.awt.Dimension(50, 50));
+        jSeparator1.setPreferredSize(new java.awt.Dimension(500, 50));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridheight = 50;
         gridBagConstraints.ipadx = 246;
-        gridBagConstraints.ipady = 7;
+        gridBagConstraints.ipady = 20;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 171, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(1, 171, 0, 0);
         jPanel1.add(jSeparator1, gridBagConstraints);
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
@@ -436,25 +441,47 @@ public class GUIcompanyRegister extends javax.swing.JFrame {
             return ;
         }
         
-        
-         if (!SOLO_NUMEROS.matcher(JCompanyNIT.getText() ).matches()) {
-            System.out.println("❌ Error: NIT debe contener solo números.");
-            return ;
-        }
-        if (!SOLO_NUMEROS.matcher(JContactNumber.getText() ).matches()) {
-            System.out.println("❌ Error: Teléfono debe contener solo números.");
-            return ;
-        }
+        try {
+            BigInteger nit = new BigInteger(JCompanyNIT.getText());
+               // System.out.println("✅ NIT válido: " + nit);
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "❌ Error:"
+                        + " El NIT solo debe contener números.", "Error"
+                                + "", JOptionPane.ERROR_MESSAGE);
+            return;
+            }
+       
+         
+         try {
+            BigInteger nit = new BigInteger(JContactNumber.getText());
+              //  System.out.println("✅ telefono válido: " + nit);
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "❌ Error:"
+                        + " El número de contacto debe contener solo números."
+                        + "", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+      
         if (!SOLO_LETRAS.matcher(JContactName.getText()).matches()) {
-            System.out.println("❌ Error: Nombre debe contener solo letras.");
+            JOptionPane.showMessageDialog(null, 
+                        "Nombre de contacto debe contener solo letras."
+                        , "❌ Error: ", JOptionPane.ERROR_MESSAGE);
+     
             return ;
         }
+        
         if (!SOLO_LETRAS.matcher(JContactLastName.getText() ).matches()) {
-            System.out.println("❌ Error: Apellido debe contener solo letras.");
+            JOptionPane.showMessageDialog(null, 
+                        "Apellido debe contener solo letras."
+                        , "❌ Error: ", JOptionPane.ERROR_MESSAGE);
             return ;
         }
+        
         if (!SOLO_LETRAS.matcher(JContactPosition.getText()).matches()) {
-            System.out.println("❌ Error: Cargo debe contener solo letras.");
+            JOptionPane.showMessageDialog(null, 
+                        "Cargo debe contener solo letras."
+                        , "❌ Error: ", JOptionPane.ERROR_MESSAGE);
+           
             return ;
         }
         
@@ -462,18 +489,9 @@ public class GUIcompanyRegister extends javax.swing.JFrame {
         // Validar NIT
         String nitTexto = JCompanyNIT.getText().trim();
         if (!nitTexto.matches("\\d+")) {
-            JOptionPane.showMessageDialog(null, "Error: El NIT solo debe contener números.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
+            
         }
-        int nit = Integer.parseInt(nitTexto);
 
-        // Validar Número de Contacto
-        String telefonoTexto = JContactNumber.getText().trim();
-        if (!telefonoTexto.matches("\\d+")) {
-            JOptionPane.showMessageDialog(null, "Error: El número de contacto debe contener solo números.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        int telefono = Integer.parseInt(telefonoTexto);
 
         // Crear la empresa
         Company company = new Company(
@@ -504,22 +522,25 @@ public class GUIcompanyRegister extends javax.swing.JFrame {
         if (!companySaved) {
             JOptionPane.showMessageDialog(null, "Error al guardar la empresa.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
+        }else{
+            // Crear el usuario asociado a la empresa
+            int id =Integer.parseInt(JCompanyNIT.getText());
+            User user = new User(
+                     id,
+                    JCompanyEmail.getText().trim(),
+                    password.getText().trim(),
+                    "COMPANY" // Rol fijo para empresas
+            );
+
+            // Guardar el usuario
+            boolean userSaved = userService.saveUser(user);
+            if (!userSaved) {
+                JOptionPane.showMessageDialog(null, "Error al guardar el usuario.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
         }
 
-        // Crear el usuario asociado a la empresa
-        User user = new User(
-                nit,
-                JCompanyEmail.getText().trim(),
-                password.getText().trim(),
-                "COMPANY" // Rol fijo para empresas
-        );
-
-        // Guardar el usuario
-        boolean userSaved = userService.saveUser(user);
-        if (!userSaved) {
-            JOptionPane.showMessageDialog(null, "Error al guardar el usuario.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+        
 
         // Mostrar mensaje de éxito
         JOptionPane.showMessageDialog(null, "✅ Empresa y usuario registrados con éxito.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
