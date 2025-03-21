@@ -11,25 +11,17 @@ import java.util.List;
 
 public class CoordinatorPostgreRepository implements ICoordinatorRepository {
 
-    private Connection connection;
+    private Connection conn;
 
-    public CoordinatorPostgreRepository() {
-        // Configura la conexión a la base de datos PostgreSQL
-        String url = "jdbc:postgresql://localhost:5432/gestion_proyectos";
-        String user = "postgres";
-        String password = "software";
-
-        try {
-            connection = DriverManager.getConnection(url, user, password);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    // Constructor que acepta una conexión
+    public CoordinatorPostgreRepository(Connection conn) {
+        this.conn = conn;
     }
 
     @Override
     public Coordinator getCoordinator(int idCoordinator) {
         String sql = "SELECT id, name, user_id FROM public.coordinator WHERE id = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, idCoordinator);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {

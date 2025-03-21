@@ -4,5 +4,5 @@ import com.mycompany.gestionproyectosacademicos.entities.Coordinator;
 import java.util.List;
 
 public interface ICoordinatorRepository {
-    Coordinator getCoordinator(int idCoordinator);
+     Coordinator getCoordinator(int idCoordinator);
 }

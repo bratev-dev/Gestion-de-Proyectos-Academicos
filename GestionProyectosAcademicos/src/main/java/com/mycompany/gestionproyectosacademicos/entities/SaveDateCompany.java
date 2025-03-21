@@ -1,31 +1,33 @@
-package com.mycompany.gestionproyectosacademicos.access;
+package com.mycompany.gestionproyectosacademicos.entities;
 
-import com.mycompany.gestionproyectosacademicos.entities.Company;
+import com.mycompany.gestionproyectosacademicos.access.ConexionPostgreSQL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
-/**
- * Implementación del repositorio con PostgreSQL
- */
-public class CompanyPostgreSQLRepository implements ICompanyRepository {
+public class SaveDateCompany {
 
-    private Connection conn;
-
-    // Constructor que acepta una conexión
-    public CompanyPostgreSQLRepository(Connection conn) {
-        this.conn = conn;
-    }
-
-    @Override
-    public boolean save(Company company) {
-        ConexionPostgreSQL.conectar();
+    public boolean existsCompany(String nit, String email) {
+        String sql = "SELECT COUNT(*) FROM company WHERE companynit = ? OR companyemail = ?";
         
+        try (Connection conexion = ConexionPostgreSQL.conectar();
+             PreparedStatement pstmt = conexion.prepareStatement(sql)) {
+
+            pstmt.setString(1, nit);
+            pstmt.setString(2, email);
+            ResultSet rs = pstmt.executeQuery();
+            
+            if (rs.next()) {
+                return rs.getInt(1) > 0; // Si COUNT(*) > 0, ya existe una empresa con ese NIT o email
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    public boolean saveCompany(Company company) {
         if (existsCompany(company.getNit(), company.getEmail())) {
             JOptionPane.showMessageDialog(null, "Error: Empresa ya registrada con este NIT o email.","Error",JOptionPane.INFORMATION_MESSAGE);
             return false; 
@@ -36,8 +38,7 @@ public class CompanyPostgreSQLRepository implements ICompanyRepository {
                      "VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
 
         try (Connection conexion = ConexionPostgreSQL.conectar();
-                PreparedStatement pstmt = conexion.prepareStatement(sql)
-                ) {
+             PreparedStatement pstmt = conexion.prepareStatement(sql)) {
 
             pstmt.setString(1, company.getNit());
             pstmt.setString(2, company.getName());
@@ -45,7 +46,7 @@ public class CompanyPostgreSQLRepository implements ICompanyRepository {
             pstmt.setString(4, company.getSector());
             pstmt.setString(5, company.getContactNames());
             pstmt.setString(6, company.getContactLastNames());
-            pstmt.setString(7, company.getContactPhoneNumber() );
+            pstmt.setString(7, company.getContactPhoneNumber());
             pstmt.setString(8, company.getContactPosition());
 
             pstmt.executeUpdate();
@@ -62,23 +63,4 @@ public class CompanyPostgreSQLRepository implements ICompanyRepository {
         }
     }
 
-    @Override
-    public boolean existsCompany(String nit, String email) {
-        String sql = "SELECT COUNT(*) FROM public.company WHERE nit = ? OR email = ?";
-        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, nit);
-            pstmt.setString(2, email);
-
-            try (ResultSet rs = pstmt.executeQuery()) {
-                if (rs.next()) {
-                    return rs.getInt(1) > 0; // Si COUNT(*) > 0, ya existe una empresa con ese NIT o email
-                }
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(CompanyPostgreSQLRepository.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return false;
-    }
-
-    
 }
