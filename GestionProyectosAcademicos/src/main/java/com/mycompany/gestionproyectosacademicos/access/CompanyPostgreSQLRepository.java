@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  * Implementación del repositorio con PostgreSQL
@@ -22,50 +23,41 @@ public class CompanyPostgreSQLRepository implements ICompanyRepository {
     }
 
     @Override
-    public boolean save(Company newCompany, String password) {
-        // Validar la empresa
-        if (newCompany == null || newCompany.getNit().isBlank() || newCompany.getName().isBlank()
-                || newCompany.getEmail().isBlank() || password.isBlank()) {
-            return false;
+    public boolean save(Company company) {
+        ConexionPostgreSQL.conectar();
+        
+        if (existsCompany(company.getNit(), company.getEmail())) {
+            JOptionPane.showMessageDialog(null, "Error: Empresa ya registrada con este NIT o email.","Error",JOptionPane.INFORMATION_MESSAGE);
+            return false; 
         }
+        
+        String sql = "INSERT INTO company (companyNIT, companyName, companyEmail, companySector, " +
+                     "contactName, contactLastName, contactNumber, contactPosition) " +
+                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
 
-        // Paso 1: Guardar el usuario en la tabla user
-        String userSql = "INSERT INTO public.user (email, password, role) VALUES (?, ?, ?)";
-        try (PreparedStatement userStmt = conn.prepareStatement(userSql, Statement.RETURN_GENERATED_KEYS)) {
-            userStmt.setString(1, newCompany.getEmail());
-            userStmt.setString(2, password); // Contraseña proporcionada
-            userStmt.setString(3, "COMPANY"); // Rol fijo para empresas
-            userStmt.executeUpdate();
+        try (Connection conexion = ConexionPostgreSQL.conectar();
+                PreparedStatement pstmt = conexion.prepareStatement(sql)
+                ) {
 
-            // Obtener el ID del usuario recién creado
-            try (ResultSet generatedKeys = userStmt.getGeneratedKeys()) {
-                int userId = -1;
-                if (generatedKeys.next()) {
-                    userId = generatedKeys.getInt(1);
-                } else {
-                    throw new SQLException("No se pudo obtener el ID del usuario.");
-                }
+            pstmt.setString(1, company.getNit());
+            pstmt.setString(2, company.getName());
+            pstmt.setString(3, company.getEmail());
+            pstmt.setString(4, company.getSector());
+            pstmt.setString(5, company.getContactNames());
+            pstmt.setString(6, company.getContactLastNames());
+            pstmt.setString(7, company.getContactPhoneNumber() );
+            pstmt.setString(8, company.getContactPosition());
 
-                // Paso 2: Guardar la empresa en la tabla company
-                String companySql = "INSERT INTO public.company (name, nit, email, sector, contact_names, contact_last_names, contact_phone_number, contact_position, user_id) "
-                        + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-                try (PreparedStatement companyStmt = conn.prepareStatement(companySql)) {
-                    companyStmt.setString(1, newCompany.getName());
-                    companyStmt.setString(2, newCompany.getNit());
-                    companyStmt.setString(3, newCompany.getEmail());
-                    companyStmt.setString(4, newCompany.getSector());
-                    companyStmt.setString(5, newCompany.getContactNames());
-                    companyStmt.setString(6, newCompany.getContactLastNames());
-                    companyStmt.setString(7, newCompany.getContactPhoneNumber());
-                    companyStmt.setString(8, newCompany.getContactPosition());
-                    companyStmt.setInt(9, userId); // user_id obtenido del registro en la tabla user
+            pstmt.executeUpdate();
+            JOptionPane.showMessageDialog(null, "✅ Empresa "
+                    + "registrada con éxito", "Éxito",
+                    JOptionPane.INFORMATION_MESSAGE);
+            return true;
 
-                    companyStmt.executeUpdate();
-                    return true;
-                }
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(CompanyPostgreSQLRepository.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "❌ Error al guardar "
+                    + "la empresa: " + e.getMessage(), "Error",
+                    JOptionPane.ERROR_MESSAGE);
             return false;
         }
     }
@@ -87,4 +79,6 @@ public class CompanyPostgreSQLRepository implements ICompanyRepository {
         }
         return false;
     }
+
+    
 }

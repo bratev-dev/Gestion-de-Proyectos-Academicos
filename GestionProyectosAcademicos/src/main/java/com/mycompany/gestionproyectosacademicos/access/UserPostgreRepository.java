@@ -39,12 +39,13 @@ public class UserPostgreRepository implements IUserRepository {
     }
 
     @Override
-    public boolean saveUser(String email, String password, String role) {
-        String sql = "INSERT INTO public.user (email, password, role) VALUES (?, ?, ?)";
+    public boolean saveUser(int id, String email, String password, String role) {
+        String sql = "INSERT INTO public.user (id, email, password, role) VALUES (?, ?, ?,?)";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, email);
-            stmt.setString(2, password);
-            stmt.setString(3, role);
+            stmt.setInt(1, id);
+            stmt.setString(2, email);
+            stmt.setString(3, password);
+            stmt.setString(4, role);
             stmt.executeUpdate();
             return true;
         } catch (SQLException ex) {

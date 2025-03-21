@@ -51,6 +51,13 @@ public class Factory {
              return new ProjectArrayRepository(); // Para pruebas sin BD
          }
      }
+         else if (repoClass == ICompanyRepository.class) {
+         if ("POSTGRE".equalsIgnoreCase(type)) {
+             return new CompanyPostgreSQLRepository(connection);
+         } else if ("ARRAYS".equalsIgnoreCase(type)) {
+            // return new ProjectArrayRepository(); // Para pruebas sin BD
+         }
+     }
         
         return null; // Agregar más casos según sea necesario
     }

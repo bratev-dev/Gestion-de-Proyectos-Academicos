@@ -1,7 +1,6 @@
 package com.mycompany.gestionproyectosacademicos.presentation;
 
 import javax.swing.*;
-import javax.swing.table.TableCellEditor;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,7 +12,7 @@ public class GUICoordinatorButtonEditor extends DefaultCellEditor {
     private int currentRow;
     private GUICoordinator guiCoordinator;
 
-    public GUICoordinatorButtonEditor(JCheckBox checkBox, GUICoordinator guiCoordinator) {
+    public GUICoordinatorButtonEditor(JCheckBox checkBox, CommentListener commentListener) {
         super(checkBox);
         this.guiCoordinator = guiCoordinator;
         panel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 0));
@@ -36,16 +35,13 @@ public class GUICoordinatorButtonEditor extends DefaultCellEditor {
             }
         });
 
-        btnComment.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Lógica para el botón "Comentar"
-                
-                if (guiCoordinator != null) {
-                    guiCoordinator.comment(currentRow);
-                }
-                
-                fireEditingStopped();
+        btnComment.addActionListener(e -> {
+            // Obtener el proyecto de la fila seleccionada
+            int row = tblRequests.convertRowIndexToModel(tblRequests.getEditingRow());
+            List<Project> projects = guiCoordinator.getProjects(); // Método para obtener la lista de proyectos
+            if (row >= 0 && row < projects.size()) {
+                project = projects.get(row);
+                guiCoordinator.comment(project); // Pasar el proyecto seleccionado
             }
         });
 

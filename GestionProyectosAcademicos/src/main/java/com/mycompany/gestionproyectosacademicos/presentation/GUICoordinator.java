@@ -7,13 +7,17 @@ import com.mycompany.gestionproyectosacademicos.access.IUserRepository;
 import com.mycompany.gestionproyectosacademicos.entities.Company;
 import com.mycompany.gestionproyectosacademicos.entities.Coordinator;
 import com.mycompany.gestionproyectosacademicos.entities.Project;
-import com.mycompany.gestionproyectosacademicos.infra.Messages;
 import com.mycompany.gestionproyectosacademicos.observer.IObserver;
+import com.mycompany.gestionproyectosacademicos.services.AcademicPeriodGeneratorService;
 import com.mycompany.gestionproyectosacademicos.services.CoordinatorService;
 import com.mycompany.gestionproyectosacademicos.services.ProjectService;
 import com.mycompany.gestionproyectosacademicos.services.AuthService;
-//import com.mycompany.gestionproyectosacademicos.services.CompanyService;
+
+import com.mycompany.gestionproyectosacademicos.services.CompanyService;
+
+import com.mycompany.gestionproyectosacademicos.services.CompanyService;
 import com.mycompany.gestionproyectosacademicos.services.UserServices;
+
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -31,7 +35,9 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 
-public class GUICoordinator extends javax.swing.JFrame implements IObserver{
+public class GUICoordinator extends javax.swing.JFrame implements IObserver, CommentListener{
+    private final AcademicPeriodGeneratorService periodGenerator;
+    private final IFilter filter;
     private final Coordinator coordinator;
     private final ProjectService projectService;
     // Colores personalizados
@@ -42,10 +48,12 @@ public class GUICoordinator extends javax.swing.JFrame implements IObserver{
     /**
      * Creates new form GUIMenu
      */
-    public GUICoordinator(CoordinatorService coordinatorService, int idCoordinator) {
+    public GUICoordinator(CoordinatorService coordinatorService, int idCoordinator, IFilter filter) {
         IProjectRepository projectRepository = Factory.getInstance().getRepository(IProjectRepository.class, "ARRAYS");
         //ICompanyRepository companyRepository = Factory.getInstance().getRepository(ICompanyRepository.class, "ARRAYS");
         
+        this.periodGenerator = new AcademicPeriodGeneratorService();
+        this.filter = filter;
         this.projectService = new ProjectService(projectRepository);
         this.coordinator = coordinatorService.getCoordinator(idCoordinator);
         
@@ -53,6 +61,12 @@ public class GUICoordinator extends javax.swing.JFrame implements IObserver{
         this.projectService.addObserver(this);
         
         initComponents();
+        
+        List<String> periods = this.periodGenerator.generateAcademicPeriods();
+        for(String period : periods) {
+            cmbAcademicPeriod.addItem(period);
+        }
+        
     }
     
     private void centerContentCells(JTable table) {
@@ -117,6 +131,7 @@ public class GUICoordinator extends javax.swing.JFrame implements IObserver{
         jScrollPane2 = new javax.swing.JScrollPane();
         txtAreaComments = new javax.swing.JTextArea();
         jLabel7 = new javax.swing.JLabel();
+        btnComment = new javax.swing.JButton();
         jpLeft = new javax.swing.JPanel();
         btnPerfil = new javax.swing.JButton();
         btnRequests = new javax.swing.JButton();
@@ -131,6 +146,9 @@ public class GUICoordinator extends javax.swing.JFrame implements IObserver{
         jPanel4 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblRequests = new javax.swing.JTable();
+        jPanel2 = new javax.swing.JPanel();
+        cmbAcademicPeriod = new javax.swing.JComboBox<>();
+        jLabel8 = new javax.swing.JLabel();
         pnlMonitoring = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         pnlAssingment = new javax.swing.JPanel();
@@ -148,7 +166,7 @@ public class GUICoordinator extends javax.swing.JFrame implements IObserver{
         GUISeeDetails.getContentPane().setLayout(new java.awt.GridLayout(1, 0));
 
         pnlProjectData.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        pnlProjectData.setPreferredSize(new java.awt.Dimension(350, 500));
+        pnlProjectData.setPreferredSize(new java.awt.Dimension(500, 500));
 
         pnl.setPreferredSize(pnlProjectData.getPreferredSize());
 
@@ -322,7 +340,7 @@ public class GUICoordinator extends javax.swing.JFrame implements IObserver{
         GUISeeDetails.getContentPane().add(pnlProjectData);
 
         pnlCompanyData.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        pnlCompanyData.setPreferredSize(new java.awt.Dimension(350, 500));
+        pnlCompanyData.setPreferredSize(new java.awt.Dimension(500, 500));
 
         pnlCom.setPreferredSize(pnlCompanyData.getPreferredSize());
 
@@ -484,10 +502,21 @@ public class GUICoordinator extends javax.swing.JFrame implements IObserver{
         jLabel6.setText("Comentarios");
 
         txtAreaComments.setColumns(20);
+        txtAreaComments.setLineWrap(true);
+        txtAreaComments.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtAreaComments.setWrapStyleWord(true);
         txtAreaComments.setRows(5);
         jScrollPane2.setViewportView(txtAreaComments);
 
         jLabel7.setText("max. 144 caracteres");
+
+        btnComment.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnComment.setText("Comentar");
+        btnComment.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCommentActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout GUICommentsLayout = new javax.swing.GroupLayout(GUIComments.getContentPane());
         GUIComments.getContentPane().setLayout(GUICommentsLayout);
@@ -504,6 +533,10 @@ public class GUICoordinator extends javax.swing.JFrame implements IObserver{
                             .addComponent(jLabel7)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 763, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(128, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, GUICommentsLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(btnComment, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(157, 157, 157))
         );
         GUICommentsLayout.setVerticalGroup(
             GUICommentsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -514,7 +547,9 @@ public class GUICoordinator extends javax.swing.JFrame implements IObserver{
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel7)
-                .addContainerGap(91, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(btnComment)
+                .addContainerGap(49, Short.MAX_VALUE))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -607,7 +642,7 @@ public class GUICoordinator extends javax.swing.JFrame implements IObserver{
 
         pnlRequests.setLayout(new java.awt.BorderLayout());
 
-        lblSolicitudes.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
+        lblSolicitudes.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         lblSolicitudes.setText("Solicitudes de Proyectos");
         lblSolicitudes.setBorder(new EmptyBorder(70, 50, 20, 20)); // Margen superior, izquierdo, inferior, derecho
         pnlRequests.add(lblSolicitudes, java.awt.BorderLayout.NORTH);
@@ -652,10 +687,46 @@ public class GUICoordinator extends javax.swing.JFrame implements IObserver{
         tblRequests.setShowVerticalLines(false);
         jScrollPane1.setViewportView(tblRequests);
         centerContentCells(tblRequests);
-        jScrollPane1.setBorder(new EmptyBorder(20,50,50,50)); // Margen superior, izquierdo, inferior, derecho
+        jScrollPane1.setBorder(new EmptyBorder(10,50,50,50)); // Margen superior, izquierdo, inferior, derecho
         jPanel4.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
         jPanel4.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+
+        jPanel2.setPreferredSize(new java.awt.Dimension(661, 80));
+
+        cmbAcademicPeriod.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        cmbAcademicPeriod.setBorder(null);
+        cmbAcademicPeriod.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbAcademicPeriodActionPerformed(evt);
+            }
+        });
+
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel8.setText("Periodo Académico:");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(314, Short.MAX_VALUE)
+                .addComponent(jLabel8)
+                .addGap(28, 28, 28)
+                .addComponent(cmbAcademicPeriod, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(55, 55, 55))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cmbAcademicPeriod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8))
+                .addContainerGap(33, Short.MAX_VALUE))
+        );
+
+        jPanel4.add(jPanel2, java.awt.BorderLayout.PAGE_START);
 
         pnlRequests.add(jPanel4, java.awt.BorderLayout.CENTER);
 
@@ -722,6 +793,24 @@ public class GUICoordinator extends javax.swing.JFrame implements IObserver{
         changeColorBtn(btnPerfil);
     }//GEN-LAST:event_btnPerfilActionPerformed
 
+    private void cmbAcademicPeriodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbAcademicPeriodActionPerformed
+        List<Project> projects = projectService.getProjects();
+        System.out.println("Total de proyectos: " + projects.size());
+        String selectedPeriod = (String) cmbAcademicPeriod.getSelectedItem();
+        System.out.println("Periodo seleccionado: " + selectedPeriod);
+        List<Project> filteredProjects = filter.filter(projects, selectedPeriod);
+        System.out.println("Proyectos filtrados: " + filteredProjects.size());
+        update(filteredProjects); // Notificar a los observadores con los proyectos filtrados
+    }//GEN-LAST:event_cmbAcademicPeriodActionPerformed
+
+    public List<Project> getProjects() {
+        return projectService.getProjects();
+    }
+    
+    private void btnCommentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCommentActionPerformed
+        
+    }//GEN-LAST:event_btnCommentActionPerformed
+    
     private void changeColorBtn(JButton botonSeleccionado) {
         // Restaurar el estilo de todos los botones
         for (JButton boton : new JButton[]{btnPerfil, btnRequests}) {
@@ -787,30 +876,23 @@ public class GUICoordinator extends javax.swing.JFrame implements IObserver{
         GUISeeDetails.setVisible(true);
     }
 
-    void comment(int row) {
-        // Obtener el proyecto correspondiente a la fila seleccionada
-        List<Project> projects = projectService.getProjects();
+    void comment(Project project) {
+        // Configurar el texto actual del JTextArea con el comentario existente
+        txtAreaComments.setText(project.getComments());
         
-        // Verificar si la lista está vacía
-        if (projects == null || projects.isEmpty()) {
-            System.out.println("No hay proyectos disponibles.");
-            return; // Salir del método si no hay proyectos
-        }
-        
-        // Verificar si el índice (row) es válido
-        if (row < 0 || row >= projects.size()) {
-            System.out.println("Índice fuera de los límites de la lista de proyectos.");
-            return; // Salir del método si el índice no es válido
-        }
-        
-        // Obtener el proyecto correspondiente a la fila seleccionada
-        Project project = projects.get(row);
-        
-        GUIComments.pack();
         // Mostrar la ventana GUIComments
+        GUIComments.pack();
         GUIComments.setVisible(true);
-        
-        project.setComments(txtAreaComments.getText());
+
+        // Configurar la acción del botón btnComentar para guardar el comentario en el proyecto
+        btnComment.addActionListener(e -> {
+            String comment = txtAreaComments.getText();
+            if (comment.length() > 144) {
+                comment = comment.substring(0, 144); // Limitar el comentario a 144 caracteres
+            }
+            project.setComments(comment); // Guardar el comentario en el proyecto
+            GUIComments.dispose(); // Cerrar la ventana de comentarios
+        });
     }
     
     @Override
@@ -845,8 +927,10 @@ public class GUICoordinator extends javax.swing.JFrame implements IObserver{
     private javax.swing.JFrame GUISeeDetails;
     private javax.swing.JButton btnChangeState;
     private javax.swing.JButton btnCloseSession;
+    private javax.swing.JButton btnComment;
     private javax.swing.JButton btnPerfil;
     private javax.swing.JButton btnRequests;
+    private javax.swing.JComboBox<String> cmbAcademicPeriod;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -854,7 +938,9 @@ public class GUICoordinator extends javax.swing.JFrame implements IObserver{
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;

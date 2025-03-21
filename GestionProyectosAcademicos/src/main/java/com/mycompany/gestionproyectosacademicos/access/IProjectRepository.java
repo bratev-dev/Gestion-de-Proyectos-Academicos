@@ -8,6 +8,7 @@ import java.util.List;
  * Define las operaciones que se pueden realizar sobre los proyectos.
  */
 public interface IProjectRepository {
+    List<Project> getAllProjects();
     /**
      * @brief Obtiene una lista de proyectos correspondientes a un período académico específico.
      * 
