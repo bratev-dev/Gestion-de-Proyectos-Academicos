@@ -10,6 +10,7 @@ import com.mycompany.gestionproyectosacademicos.access.IUserRepository;
 import com.mycompany.gestionproyectosacademicos.infra.Messages;
 import com.mycompany.gestionproyectosacademicos.presentation.GUICompany;
 import com.mycompany.gestionproyectosacademicos.presentation.GUICoordinator;
+import com.mycompany.gestionproyectosacademicos.presentation.GUIStudentProjectList;
 //import com.mycompany.gestionproyectosacademicos.presentacion.GUIStudent;
 import javax.swing.JFrame;
 
@@ -41,10 +42,10 @@ public class AuthService {
 
     private JFrame getGUIForRole(User user) {
         switch (user.getRole()) {
-            case "ADMIN":
-              //  return new GUIAdmin();
             case "STUDENT":
-                //return new GUIStudent();
+                GUIStudentProjectList student = new GUIStudentProjectList();
+                student.setExtendedState(JFrame.MAXIMIZED_BOTH);
+                return student;
             case "COMPANY":
                 ICompanyRepository companyRepo = Factory.getInstance().getRepository(ICompanyRepository.class, "POSTGRE");
 
