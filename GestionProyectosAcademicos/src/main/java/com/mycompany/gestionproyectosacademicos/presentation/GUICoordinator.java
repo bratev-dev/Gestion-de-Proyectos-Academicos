@@ -883,12 +883,9 @@ public class GUICoordinator extends javax.swing.JFrame implements IObserver{
 
     private void cmbAcademicPeriodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbAcademicPeriodActionPerformed
         List<Project> projects = projectService.getProjects();
-        System.out.println("Total de proyectos: " + projects.size());
         String selectedPeriod = (String) cmbAcademicPeriod.getSelectedItem();
-        System.out.println("Periodo seleccionado: " + selectedPeriod);
         // Filtrar los proyectos por el período académico seleccionado
         List<Project> filteredProjects = projectService.getProjectsByAcademicPeriod(selectedPeriod);
-        System.out.println("Proyectos filtrados: " + filteredProjects.size());
 
         // Actualizar la tabla con los proyectos filtrados
         update(filteredProjects); // Notificar a los observadores con los proyectos filtrados
