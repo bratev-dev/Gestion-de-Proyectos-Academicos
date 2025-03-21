@@ -11,6 +11,6 @@ public class Rejected {
     }
     
     public String getStateName() {
-        return "rechazado";
+        return "Rechazado";
     }
 }

@@ -14,6 +14,8 @@ import com.mycompany.gestionproyectosacademicos.services.ProjectService;
 import com.mycompany.gestionproyectosacademicos.services.AuthService;
 
 import com.mycompany.gestionproyectosacademicos.services.CompanyService;
+
+import com.mycompany.gestionproyectosacademicos.services.CompanyService;
 import com.mycompany.gestionproyectosacademicos.services.UserServices;
 
 import java.awt.CardLayout;
@@ -769,10 +771,10 @@ public class GUICoordinator extends javax.swing.JFrame implements IObserver, Com
         IUserRepository userRepo = Factory.getInstance().getRepository(IUserRepository.class, "POSTGRE");
         ICompanyRepository compRepo = Factory.getInstance().getRepository(ICompanyRepository.class, "POSTGRE");
         UserServices userService = new UserServices(userRepo);
-        CompanyService companyService = new CompanyService(compRepo, userRepo);
+        //CompanyService companyService = new CompanyService(compRepo, userRepo);
         AuthService authService = new AuthService(null); // Crear la instancia del servicio de autenticación
-        GUILogin login = new GUILogin(authService, userService, companyService); // Pasar la instancia al constructor
-        login.setVisible(true); // Mostrar la ventana
+        //GUILogin login = new GUILogin(authService, userService, companyService); // Pasar la instancia al constructor
+        //login.setVisible(true); // Mostrar la ventana
         this.dispose();
     }//GEN-LAST:event_btnCloseSessionActionPerformed
 

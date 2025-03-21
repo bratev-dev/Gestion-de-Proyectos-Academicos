@@ -46,7 +46,7 @@ public class Factory {
      }
         else if (repoClass == IProjectRepository.class) {
          if ("POSTGRE".equalsIgnoreCase(type)) {
-            // return new ProjectPostgreRepository(connection);
+            //return new ProjectPostgreRepository(connection);
          } else if ("ARRAYS".equalsIgnoreCase(type)) {
              return new ProjectArrayRepository(); // Para pruebas sin BD
          }

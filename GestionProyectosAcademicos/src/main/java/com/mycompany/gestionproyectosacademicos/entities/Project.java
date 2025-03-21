@@ -26,6 +26,10 @@ public class Project {
     private Student[] students;
     private List<IObserver> observers = new ArrayList<>();
 
+    public  Project(){
+        //Constructor por defecto
+    }
+   
     public Project(int id, String name, String summary, String goals, String description, String maxTimeInMonths, String budget, String date, String state, Company company) {
         this.id = id;
         this.name = name;
@@ -66,10 +70,22 @@ public class Project {
         this.goals = goals;
         this.maxTimeInMonths = maxTimeInMonths;
     }
-    
+
+
+    public Project(int id, String name, String description, String state, Company company) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.state = state;
+        this.company = company;
+    }
     
     public int getId(){
         return id;
+    }
+    
+    public void setId(int id){
+        this.id = id;
     }
     
     public String getDescription(){
@@ -91,6 +107,10 @@ public class Project {
     public Company getCompany() {
         return company;
     }
+    
+    public String getCompanyName() { 
+        return (company != null) ? company.getName() : "Sin empresa"; 
+    }
 
     public void setCompany(Company company) {
         this.company = company;
@@ -102,10 +122,6 @@ public class Project {
 
     public void setComments(String comments) {
         this.comments = comments;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public void setName(String name) {
@@ -164,8 +180,6 @@ public class Project {
         this.observers = observers;
     }
     
-    
-    
     public void addObserver(IObserver observer){
         observers.add(observer);
     }
@@ -177,8 +191,8 @@ public class Project {
     }
     
     
-    public void changeState(ProjectState state){
-        state.ManageState(this);
+    public void changeState(String state){
+        this.state = state;
         notifyObservers();
     }
 

@@ -11,6 +11,6 @@ public class Received {
     }
     
     public String getStateName() {
-        return "recibido";
+        return "Recibido";
     }
 }

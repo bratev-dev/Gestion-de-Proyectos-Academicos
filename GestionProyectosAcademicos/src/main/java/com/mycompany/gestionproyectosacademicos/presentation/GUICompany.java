@@ -508,9 +508,7 @@ public class GUICompany extends javax.swing.JFrame {
         description, max_time, budget, date, state, companyNIT) "
         
         */
-        Project project = new Project(id, name, description,state, 
-                date,
-                calificacion,request,company,students,summary,objetives,maxTime);
+        Project project = new Project(id, name, description, state, date, calificacion,request,company,students,summary,objetives,maxTime);
         projectService.addProject(project);
         JOptionPane.showMessageDialog(this, "Datos guardados correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 

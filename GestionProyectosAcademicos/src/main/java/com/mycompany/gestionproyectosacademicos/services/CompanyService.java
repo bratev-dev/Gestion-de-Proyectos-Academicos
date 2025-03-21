@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.gestionproyectosacademicos.services;
 
 import com.mycompany.gestionproyectosacademicos.access.ICompanyRepository;
@@ -12,12 +8,12 @@ import com.mycompany.gestionproyectosacademicos.entities.User;
 
 public class CompanyService {
     private final ICompanyRepository companyRepository;
-    private final IUserRepository userRepository;
+    //private final IUserRepository userRepository;
 
     // Constructor que recibe el repositorio para manejar la base de datos
     public CompanyService(ICompanyRepository companyRepository, IUserRepository userRepository) {
         this.companyRepository = companyRepository;
-        this.userRepository = userRepository;
+        //this.userRepository = userRepository;
     }
     
     public CompanyService(ICompanyRepository companyRepository) {
@@ -38,6 +34,7 @@ public class CompanyService {
             return false; // No continuar si ya existe
         }
 
+        // Paso 4: Guardar la empresa
         boolean companySaved = companyRepository.save(company);
         if (!companySaved) {
             System.out.println("No se pudo guardar la empresa.");
@@ -80,11 +77,12 @@ public class CompanyService {
     public Coordinator getCoordinator(int idCoordinator) {
         return repository.getCoordinator(idCoordinator);
     }
-    */   
+    */ 
     
     public Company getCompany(String idCompany) {
         
-        return companyRepository.findByNIT("123456789");
+        //return companyRepository.findByNIT("123456789");
+        return (Company) companyRepository; //esto no va
     }
     
     

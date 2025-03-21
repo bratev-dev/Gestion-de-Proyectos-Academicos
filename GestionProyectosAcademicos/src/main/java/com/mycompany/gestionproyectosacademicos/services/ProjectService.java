@@ -18,7 +18,7 @@ public class ProjectService implements IObservable{
     
     public ProjectService(IProjectRepository repository) {
         this.repository = repository;
-        this.projects = repository.getProjectsByAcademicPeriod("2");
+        //this.projects = repository.getProjectsByAcademicPeriod("2");
     }
     
     public void addProject(Project project) {
