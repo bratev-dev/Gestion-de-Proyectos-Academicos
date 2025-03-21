@@ -47,7 +47,7 @@ public class AuthService {
                 //return new GUIStudent();
             case "COMPANY":
                 //ICompanyRepository companyRepo = Factory.getInstance().getRepository(ICompanyRepository.class, "POSTGRESQL");
-                ICompanyRepository companyRepo = Factory.getInstance().getRepository(ICompanyRepository.class, "POSTGRESQL");
+                ICompanyRepository companyRepo = Factory.getInstance().getRepository(ICompanyRepository.class, "POSTGRE");
 
                 if (companyRepo == null) {
                     Messages.showMessageDialog("❌ Error: No se encontró el repositorio de Company en Factory", "Error");

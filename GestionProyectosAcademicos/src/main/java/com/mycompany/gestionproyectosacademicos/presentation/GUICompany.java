@@ -18,6 +18,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.regex.Pattern;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -37,11 +38,10 @@ public class GUICompany extends javax.swing.JFrame {
      * Creates new form GUICompany
      */
     private CardLayout card;
-    //private AuthService authService;
     private final Company company ;
     private final CompanyService companyService;
     private ProjectService projectService;
-    private User authenticatedUser;
+    
 
     
     public GUICompany(CompanyService companyService, String idCompany) {
@@ -77,7 +77,7 @@ public class GUICompany extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabelBudget = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jTextDate = new javax.swing.JTextField();
+        jTextDay = new javax.swing.JTextField();
         jLabelSummary = new javax.swing.JLabel();
         jTextSummary = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
@@ -88,6 +88,8 @@ public class GUICompany extends javax.swing.JFrame {
         btnPublish1 = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jTextNameProject = new javax.swing.JTextField();
+        jTextMonth = new javax.swing.JTextField();
+        jTextYear = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
 
@@ -235,9 +237,10 @@ public class GUICompany extends javax.swing.JFrame {
 
         jLabel3.setBackground(new java.awt.Color(19, 45, 70));
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel3.setText("Fecha");
+        jLabel3.setText("Fecha: (dd/mm/yyyy)");
 
-        jTextDate.setBackground(new java.awt.Color(204, 204, 204));
+        jTextDay.setBackground(new java.awt.Color(204, 204, 204));
+        jTextDay.setText("00");
 
         jLabelSummary.setBackground(new java.awt.Color(19, 45, 70));
         jLabelSummary.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -291,21 +294,21 @@ public class GUICompany extends javax.swing.JFrame {
 
         jTextNameProject.setBackground(new java.awt.Color(204, 204, 204));
 
+        jTextMonth.setBackground(new java.awt.Color(204, 204, 204));
+        jTextMonth.setText("00");
+        jTextMonth.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextMonthActionPerformed(evt);
+            }
+        });
+
+        jTextYear.setBackground(new java.awt.Color(204, 204, 204));
+        jTextYear.setText("0000");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabelBudget)
-                    .addComponent(jLabel1)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jTextBudget, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
-                        .addComponent(jTextMaxTime))
-                    .addComponent(jTextDate, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -327,6 +330,22 @@ public class GUICompany extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnPublish1, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(139, 139, 139))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabelBudget)
+                    .addComponent(jLabel1)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                            .addComponent(jTextDay, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(jTextMonth, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(jTextYear))
+                        .addComponent(jTextBudget, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
+                        .addComponent(jTextMaxTime))
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -363,7 +382,10 @@ public class GUICompany extends javax.swing.JFrame {
                         .addGap(10, 10, 10)
                         .addComponent(jLabel3)
                         .addGap(17, 17, 17)
-                        .addComponent(jTextDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextDay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextMonth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jTextDescription))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
                 .addComponent(btnPublish1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -435,31 +457,42 @@ public class GUICompany extends javax.swing.JFrame {
             return 0; // Retorna 0 o cualquier valor por defecto que desees
         }
     }
+    
+
+public void validateDate(String date) throws ParseException {
+    // Expresión regular para validar el formato dd-MM-yyyy
+    String regex = "^(0[1-9]|[12]\\d|3[01])-(0[1-9]|1[0-2])-(\\d{4})$";
+    Pattern pattern = Pattern.compile(regex);
+
+    if (!pattern.matcher(date).matches()) {
+        throw new ParseException("Formato de fecha incorrecto. Usa dd-MM-yyyy", 0);
+    }
+
+    // Verificar si la fecha es válida
+    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+    sdf.setLenient(false); // No permite fechas inválidas como 30-02-2024
+
+    sdf.parse(date); // Si la fecha es inválida, lanzará ParseException
+}
+
+
     private void btnPublish1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPublish1ActionPerformed
         try {
-            JOptionPane.showMessageDialog(this, company.getNit(), "Error", JOptionPane.ERROR_MESSAGE);
-
-            //System.out.println(company.getNit());
             
-            int id = convertStringToInt(company.getNit());//projectService.getNextProjectId();//company.getCompanyNIT();
-            
+            int id = projectService.getNextProjectId();
             String name = jTextNameProject.getText().trim();
+            String summary = jTextSummary.getText().trim();//resumen 
+            String objetives = jTextObjetives.getText().trim(); 
             String description = jTextDescription.getText().trim();
-            String state = "Recibido"; // Estado inicial del proyecto
-            String date = jTextDate.getText().strip();
-            int calificacion = 0; // Inicialmente sin calificación
-            String request = "0"; // Si hay una solicitud relacionada
-            Student[] students =null; // Inicialmente sin estudiantes           
-            String summary = jTextSummary.getText().trim();//resumen           
-            String objetives = jTextObjetives.getText().trim();            
             String maxTime = jTextMaxTime.getText().strip();
-
-            System.out.println(company.getName());
+            String budget = jTextBudget.getText().strip();
+            //company
+            String date = jTextDay.getText().strip() + "-"+ jTextMonth.getText().strip() +"-"+ jTextYear.getText().strip();
+            String state = "Recibido"; // Estado inicial del proyecto
+                      
             
-            //Company companyy = findByNIT(this.company.getNit());
-            // Array con los JTextField y sus valores
             JTextField[] campos = {jTextNameProject, jTextSummary, jTextObjetives,
-                jTextDescription, jTextMaxTime, jTextDate};
+                jTextDescription, jTextMaxTime, jTextDay,jTextMonth,jTextYear};
             String[] valores = {name, summary, objetives, description, maxTime, date};
                 
             boolean hayError = false;
@@ -484,33 +517,16 @@ public class GUICompany extends javax.swing.JFrame {
                 jTextMaxTime.setBackground(Color.RED);
                 throw new IllegalArgumentException("El tiempo máximo debe ser un número positivo.");
             } else {
-                jTextMaxTime.setBackground(Color.CYAN);
+                jTextMaxTime.setBackground(Color.LIGHT_GRAY);
             }
-
-            // Validar formato de fecha (ejemplo: dd/MM/yyyy)
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");//Validar Formato de fecha
-            dateFormat.setLenient(false);  // Evita fechas inválidas como 32/01/2023
-            dateFormat.parse(date);  // Lanza excepción si la fecha no es válida
-            jTextDate.setBackground(Color.CYAN);
+            // Validar fecha
+            validateDate(date);
             
-            
-        if (company == null) {
-            JOptionPane.showMessageDialog(this, "❌ No se encontró la empresa asociada al usuario.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-// Aquí puedes continuar con el proceso de guardado...
-        /*
-        public Project(ime)
-        */
-        LocalDate datee = convertStringToLocalDate(date);
-        /*
-        String sql = "INSERT INTO project (name, summary, objectives,
-        description, max_time, budget, date, state, companyNIT) "
-        
-        */
-        Project project = new Project(id, name, description, state, date, calificacion,request,company,students,summary,objetives,maxTime);
+            jTextDay.setBackground(Color.LIGHT_GRAY);
+        Project project = new Project(id, name,summary ,objetives,description ,
+                maxTime,budget,date,state,company);
         projectService.addProject(project);
-        JOptionPane.showMessageDialog(this, "Datos guardados correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Proyecto subido con exito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 
         
         // TODO add your handling code here:
@@ -519,15 +535,21 @@ public class GUICompany extends javax.swing.JFrame {
             jTextMaxTime.setBackground(Color.RED);
             JOptionPane.showMessageDialog(this, "El tiempo máximo debe ser un número válido y positivo.", "Error", JOptionPane.ERROR_MESSAGE);
         } catch (ParseException e) {
-            jTextDate.setBackground(Color.RED);
+            jTextDay.setBackground(Color.RED);
+            jTextMonth.setBackground(Color.RED);
+            jTextYear.setBackground(Color.RED);
             JOptionPane.showMessageDialog(this, "La fecha debe tener el formato dd/MM/yyyy.", "Error", JOptionPane.ERROR_MESSAGE);
         } catch (IllegalArgumentException e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Ocurrió un error inesperado: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-        
+      
     }//GEN-LAST:event_btnPublish1ActionPerformed
+
+    private void jTextMonthActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextMonthActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextMonthActionPerformed
     
     
     private void changeColorBtn(JButton botonSeleccionado) {
@@ -564,12 +586,14 @@ public class GUICompany extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelChangingPanel;
     private javax.swing.JPanel jPanelDashboard;
     private javax.swing.JTextField jTextBudget;
-    private javax.swing.JTextField jTextDate;
+    private javax.swing.JTextField jTextDay;
     private javax.swing.JTextField jTextDescription;
     private javax.swing.JTextField jTextMaxTime;
+    private javax.swing.JTextField jTextMonth;
     private javax.swing.JTextField jTextNameProject;
     private javax.swing.JTextField jTextObjetives;
     private javax.swing.JTextField jTextSummary;
+    private javax.swing.JTextField jTextYear;
     private javax.swing.JLabel lblEstudiante;
     private javax.swing.JLabel lblUser;
     private javax.swing.JSeparator sepUserCoord;

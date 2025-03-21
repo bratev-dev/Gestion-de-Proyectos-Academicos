@@ -79,6 +79,32 @@ public class CompanyPostgreSQLRepository implements ICompanyRepository {
         }
         return false;
     }
+    public Company findByNIT(String idCompany) {
+        String sql = "SELECT * FROM company WHERE companyNIT = ?";
 
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, idCompany);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return new Company(
+                    rs.getString("companyNIT"),
+                    rs.getString("companyName"),
+                    rs.getString("companyEmail"),
+                    rs.getString("companySector"),
+                    rs.getString("contactName"),
+                    rs.getString("contactLastName"),
+                    rs.getString("contactNumber"),
+                    rs.getString("contactPosition")
+                );
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;  // Retorna null si la empresa no se encuentra
+    }
     
 }
