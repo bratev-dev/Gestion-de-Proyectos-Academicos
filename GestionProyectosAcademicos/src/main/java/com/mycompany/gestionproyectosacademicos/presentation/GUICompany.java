@@ -441,7 +441,7 @@ public class GUICompany extends javax.swing.JFrame {
 
             //System.out.println(company.getNit());
             
-            int id = convertStringToInt(company.getNit());//projectService.getNextProjectId();//company.getCompanyNIT();
+            Long id = company.getNit();//projectService.getNextProjectId();//company.getCompanyNIT();
             
             String name = jTextNameProject.getText().trim();
             String description = jTextDescription.getText().trim();

@@ -547,7 +547,7 @@ public class GUIStudentProjectList extends javax.swing.JFrame implements IObserv
                 // Y otras propiedades de la empresa si son necesarias
 
                 Project project = new Project(
-                    rs.getInt("id"),
+                    rs.getLong("id"),
                     rs.getString("name"),
                     rs.getString("description"),
                     rs.getString("state"),

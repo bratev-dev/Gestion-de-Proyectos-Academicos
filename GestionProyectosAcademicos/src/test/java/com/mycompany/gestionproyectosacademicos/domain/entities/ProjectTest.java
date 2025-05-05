@@ -12,7 +12,7 @@ public class ProjectTest {
         Company company = new Company("Tech Corp", Long.valueOf(123456789), "info@techcorp.com", "TECHNOLOGY", 
                                       "John", "Doe", "555-1234", "CEO","1234");
 
-        Project project = new Project(1, "Project Alpha", "Summary of Project Alpha", "Goals of Project Alpha", 
+        Project project = new Project(Long.valueOf(1), "Project Alpha", "Summary of Project Alpha", "Goals of Project Alpha", 
                                       "Description of Project Alpha", "12", "100000", "2023-10-01", "ACTIVE", company);
 
         assertThat(project.getId()).isEqualTo(1);
@@ -32,9 +32,9 @@ public class ProjectTest {
         Company company = new Company("Tech Corp", Long.valueOf(123456789), "info@techcorp.com", "TECHNOLOGY", 
                                       "John", "Doe", "555-1234", "CEO","1234");
 
-        Project project = new Project(0, "", "", "", "", "", "", "", "", null);
+        Project project = new Project(Long.valueOf(0), "", "", "", "", "", "", "", "", null);
 
-        project.setId(2);
+        project.setId(Long.valueOf(2));
         project.setName("Project Beta");
         project.setSummary("Summary of Project Beta");
         project.setGoals("Goals of Project Beta");

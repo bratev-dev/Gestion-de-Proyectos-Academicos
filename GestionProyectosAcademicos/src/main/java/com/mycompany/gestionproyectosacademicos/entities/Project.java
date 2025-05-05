@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 
 public class Project {
     
-    private int id;
+    private Long id;
     private String name;
     private String summary;
     private String goals;
@@ -30,7 +30,7 @@ public class Project {
         //Constructor por defecto
     }
    
-    public Project(int id, String name, String summary, String goals, String description, String maxTimeInMonths, String budget, String date, String state, Company company) {
+    public Project(Long id, String name, String summary, String goals, String description, String maxTimeInMonths, String budget, String date, String state, Company company) {
         this.id = id;
         this.name = name;
         this.summary = summary;
@@ -56,7 +56,7 @@ public class Project {
         }
     }
 
-    public Project(int id, String name, String description, String state, String date, int calificacion, String request, Company company, Student[] students, String summary, String goals, String maxTimeInMonths) {
+    public Project(Long id, String name, String description, String state, String date, int calificacion, String request, Company company, Student[] students, String summary, String goals, String maxTimeInMonths) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -72,7 +72,7 @@ public class Project {
     }
 
 
-    public Project(int id, String name, String description, String state, Company company) {
+    public Project(Long id, String name, String description, String state, Company company) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -80,11 +80,11 @@ public class Project {
         this.company = company;
     }
     
-    public int getId(){
+    public Long getId(){
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
     

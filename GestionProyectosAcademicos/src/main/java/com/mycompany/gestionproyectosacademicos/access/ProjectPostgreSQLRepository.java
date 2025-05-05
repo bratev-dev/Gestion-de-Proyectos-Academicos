@@ -105,7 +105,7 @@ public class ProjectPostgreSQLRepository implements IProjectRepository{
 
                 while (rs.next()) {
                     Project project = new Project();
-                    project.setId(rs.getInt("id"));
+                    project.setId(rs.getLong("id"));
                     project.setName(rs.getString("name"));
                     project.setDescription(rs.getString("description"));
 
@@ -169,7 +169,7 @@ public class ProjectPostgreSQLRepository implements IProjectRepository{
 
                     // Crear y retornar el proyecto
                     return new Project(
-                        rs.getInt("id"),
+                        rs.getLong("id"),
                         rs.getString("name"),
                         rs.getString("description"),
                         rs.getString("state"),
@@ -187,7 +187,7 @@ public class ProjectPostgreSQLRepository implements IProjectRepository{
     
     private Project mapProject(ResultSet rs) throws SQLException {
         Project project = new Project();
-        project.setId(rs.getInt("id"));
+        project.setId(rs.getLong("id"));
         project.setName(rs.getString("name"));
         project.setDescription(rs.getString("description"));
 
