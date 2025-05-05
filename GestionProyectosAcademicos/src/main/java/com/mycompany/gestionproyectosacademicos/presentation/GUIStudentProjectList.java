@@ -543,7 +543,7 @@ public class GUIStudentProjectList extends javax.swing.JFrame implements IObserv
             while (rs.next()) {
                 Company company = new Company();
                 company.setName(rs.getString("companyname"));
-                company.setNit(rs.getString("companynit")); // Si necesitas este valor
+                company.setNit(rs.getLong("companynit")); // Si necesitas este valor
                 // Y otras propiedades de la empresa si son necesarias
 
                 Project project = new Project(

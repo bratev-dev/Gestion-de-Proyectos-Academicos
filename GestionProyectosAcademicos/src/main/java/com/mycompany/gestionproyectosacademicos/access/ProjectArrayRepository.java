@@ -25,7 +25,7 @@ public class ProjectArrayRepository implements IProjectRepository{
         if (projects == null) {
             projects = new ArrayList<>();
             // Datos de ejemplo
-            Company company = new Company("Projects SAS", "4", "empresa@gmail.com", "THECNOLOGY", "EDUARDO", "GALINZDEZ", "3154789645", "MANAGER");
+            Company company = new Company("Projects SAS", Long.valueOf(4), "empresa@gmail.com", "THECNOLOGY", "EDUARDO", "GALINZDEZ", "3154789645", "MANAGER","1234");
             
             projects.add(new Project(1, "Sistema de Gestión de Inventarios", 
             "Gestión de inventario en tiempo real", 

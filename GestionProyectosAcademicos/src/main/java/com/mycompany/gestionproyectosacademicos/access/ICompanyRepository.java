@@ -13,5 +13,6 @@ import java.util.List;
  */
 public interface ICompanyRepository {
     boolean save(Company newCompany);
-    boolean existsCompany(String nit, String email);
+    boolean existsCompany(Long nit, String email);
+    Company findByNIT(Long idCompany);
 }

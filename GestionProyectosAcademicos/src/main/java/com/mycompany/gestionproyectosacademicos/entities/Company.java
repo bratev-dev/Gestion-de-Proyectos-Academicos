@@ -2,16 +2,17 @@ package com.mycompany.gestionproyectosacademicos.entities;
 
 public class Company {
     private String name;
-    private String nit;
+    private Long nit;
     private String email;
     private String sector;
     private String contactNames;
     private String contactLastNames;
     private String contactPhoneNumber;
     private String contactPosition;
+    private String password;
     
-    public Company(String name, String nit, String email, String sector, String contactNames,
-        String contactLastNames, String contactPhoneNumber, String contactPosition){
+    public Company(String name, Long nit, String email, String sector, String contactNames,
+        String contactLastNames, String contactPhoneNumber, String contactPosition, String password){
         this.name = name;
         this.nit = nit;
         this.email = email;
@@ -20,6 +21,7 @@ public class Company {
         this.contactLastNames = contactLastNames;
         this.contactPhoneNumber = contactPhoneNumber;
         this.contactPosition = contactPosition;
+        this.password=password;
     }
 
     public Company() {
@@ -32,11 +34,11 @@ public class Company {
         return name;
     }
 
-    public String getNit() {
+    public Long getNit() {
         return nit;
     }
 
-    public void setNit(String nit) {
+    public void setNit(Long nit) {
         this.nit = nit;
     }
     
@@ -126,5 +128,19 @@ public class Company {
      */
     public void setContactPosition(String contactPosition) {
         this.contactPosition = contactPosition;
+    }
+
+    /**
+     * @return the password
+     */
+    public String getPassword() {
+        return password;
+    }
+
+    /**
+     * @param password the password to set
+     */
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

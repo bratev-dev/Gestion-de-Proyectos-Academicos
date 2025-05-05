@@ -496,13 +496,14 @@ public class GUIcompanyRegister extends javax.swing.JFrame {
         // Crear la empresa
         Company company = new Company(
                 JCompanyName.getText().trim(),
-                JCompanyNIT.getText().trim(),
+                Long.valueOf(JCompanyNIT.getText().trim()),
                 JCompanyEmail.getText().trim(),
                 jSector.getSelectedItem().toString().trim(),
                 JContactName.getText().trim(),
                 JContactLastName.getText().trim(),
                 JContactNumber.getText().trim(),
-                JContactPosition.getText().trim()
+                JContactPosition.getText().trim(),
+                password.getText().trim()
         );
 
         // Obtener el repositorio de usuarios desde la fábrica

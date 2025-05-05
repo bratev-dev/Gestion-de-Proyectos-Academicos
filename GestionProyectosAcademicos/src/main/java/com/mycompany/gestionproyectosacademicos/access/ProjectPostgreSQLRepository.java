@@ -128,7 +128,7 @@ public class ProjectPostgreSQLRepository implements IProjectRepository{
 
                     Company company = new Company();
                     company.setName(rs.getString("companyname"));
-                    company.setNit(rs.getString("companynit"));
+                    company.setNit(rs.getLong("companynit"));
                     company.setSector(rs.getString("companysector"));
                     company.setContactNames(rs.getString("contactname"));
                     company.setContactLastNames(rs.getString("contactlastname"));
@@ -164,7 +164,7 @@ public class ProjectPostgreSQLRepository implements IProjectRepository{
                     // Crear la compañía
                     Company company = new Company();
                     company.setName(rs.getString("companyname"));
-                    company.setNit(rs.getString("companynit"));
+                    company.setNit(rs.getLong("companynit"));
                     // Añade otros campos de la compañía si los necesitas
 
                     // Crear y retornar el proyecto
@@ -209,7 +209,7 @@ public class ProjectPostgreSQLRepository implements IProjectRepository{
 
         Company company = new Company();
         company.setName(rs.getString("companyname"));
-        company.setNit(rs.getString("companynit"));
+        company.setNit(rs.getLong("companynit"));
         company.setSector(rs.getString("companysector"));
         company.setContactNames(rs.getString("contactname"));
         company.setContactLastNames(rs.getString("contactlastname"));
@@ -268,7 +268,7 @@ public class ProjectPostgreSQLRepository implements IProjectRepository{
             pstmt.setString(6, project.getBudget());
             pstmt.setDate(7, Date.valueOf(project.getDate())); // Convertir LocalDate a SQL Date
             pstmt.setString(8, "Received"); // Estado inicial por defecto
-            pstmt.setString(9, project.getCompany().getNit()); // Relación con la empresa
+            pstmt.setLong(9, project.getCompany().getNit()); // Relación con la empresa
 
             pstmt.executeUpdate(); // Ejecuta la inserción
             System.out.println("✅ Proyecto guardado correctamente");
